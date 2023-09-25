@@ -76,5 +76,33 @@ final class EndpointTests: XCTestCase {
             URL(string: "https://api.podcastindex.org/api/1.0/podcasts/bymedium?medium=audiobook&max=1")
         )
     }
+    
+    func test_feedsByTitle() {
+        XCTAssertEqual(
+            Endpoint.feeds(byTitle: "everything everywhere daily").url,
+            URL(string: "https://api.podcastindex.org/api/1.0/search/bytitle?q=everything+everywhere+daily&similar=true&max=20")
+        )
+    }
+    
+    func test_feedsByTitleWithMaxParameter() {
+        XCTAssertEqual(
+            Endpoint.feeds(byTitle: "everything everywhere daily", max: 1).url,
+            URL(string: "https://api.podcastindex.org/api/1.0/search/bytitle?q=everything+everywhere+daily&similar=true&max=1")
+        )
+    }
+    
+    func test_feedsByTerm() {
+        XCTAssertEqual(
+            Endpoint.feeds(byTerm: "everything everywhere daily").url,
+            URL(string: "https://api.podcastindex.org/api/1.0/search/byterm?q=everything+everywhere+daily&max=20")
+        )
+    }
+    
+    func test_feedsByTermWithMaxParameter() {
+        XCTAssertEqual(
+            Endpoint.feeds(byTerm: "everything everywhere daily", max: 1).url,
+            URL(string: "https://api.podcastindex.org/api/1.0/search/byterm?q=everything+everywhere+daily&max=1")
+        )
+    }
 
 }

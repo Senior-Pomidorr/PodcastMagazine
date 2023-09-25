@@ -116,5 +116,39 @@ public struct Endpoint {
             ])
     }
     
+    /// This call returns all of the feeds where the title of the feed matches the search term (ignores case).
+    /// - Parameters:
+    ///   - title: Terms to search for. Example "everything everywhere daily" will match the podcast Everything Everywhere Daily by "everything everywhere" will not.
+    ///   - max: Maximum number of results to return.
+    /// - Returns: Call to this endpoint return `FeedResponse` model
+    public static func feeds(
+        byTitle title: String,
+        max: Int = 20
+    ) -> Self {
+        .init(
+            path: "search/bytitle",
+            queryItems: [
+                .init(name: "q", value: title.replacingOccurrences(of: " ", with: "+")),
+                .init(name: "similar", value: true.description),
+                .init(name: "max", value: max.description)
+            ])
+    }
+    
+    /// This call returns all of the feeds that match the search terms in the title, author or owner of the feed.
+    /// - Parameters:
+    ///   - term: Terms to search for. Example "everything everywhere daily" will match the podcast Everything Everywhere Daily by "everything everywhere" will not.
+    ///   - max: Maximum number of results to return.
+    /// - Returns: Call to this endpoint return `FeedResponse` model
+    public static func feeds(
+        byTerm term: String,
+        max: Int = 20
+    ) -> Self {
+        .init(
+            path: "search/byterm",
+            queryItems: [
+                .init(name: "q", value: term.replacingOccurrences(of: " ", with: "+")),
+                .init(name: "max", value: max.description)
+            ])
+    }
     
 }
