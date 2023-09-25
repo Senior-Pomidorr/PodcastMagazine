@@ -26,15 +26,6 @@
         "branch" : "main",
         "revision" : "45f181cbd64eefe6bacc4c64601dd421038ae1aa"
       }
-    },
-    {
-      "identity" : "swiftudf",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/ShapovalovIlya/SwiftUDF.git",
-      "state" : {
-        "branch" : "main",
-        "revision" : "fd9bc1b9a7f6bc69a6ab3aa5dd5d7e9e9a288990"
-      }
     }
   ],
   "version" : 2
