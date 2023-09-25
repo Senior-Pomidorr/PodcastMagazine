@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		86F3420B2AC19B590007213C /* Repository in Resources */ = {isa = PBXBuildFile; fileRef = 86F3420A2AC19B590007213C /* Repository */; };
 		86F3420E2AC19B870007213C /* Repository in Frameworks */ = {isa = PBXBuildFile; productRef = 86F3420D2AC19B870007213C /* Repository */; };
 		86F342102AC19B8D0007213C /* Models in Frameworks */ = {isa = PBXBuildFile; productRef = 86F3420F2AC19B8D0007213C /* Models */; };
+		86F342122AC19DBD0007213C /* Repository in Resources */ = {isa = PBXBuildFile; fileRef = 86F342112AC19DBD0007213C /* Repository */; };
 		A1A44D232AC18C9700F2FED9 /* PodcastMagazineApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A44D222AC18C9700F2FED9 /* PodcastMagazineApp.swift */; };
 		A1A44D272AC18C9800F2FED9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A1A44D262AC18C9800F2FED9 /* Assets.xcassets */; };
 		A1A44D2A2AC18C9800F2FED9 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A1A44D292AC18C9800F2FED9 /* Preview Assets.xcassets */; };
@@ -17,7 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		86F3420A2AC19B590007213C /* Repository */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = Repository; path = ../Repository; sourceTree = "<group>"; };
+		86F342112AC19DBD0007213C /* Repository */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Repository; sourceTree = "<group>"; };
 		A1A44D1F2AC18C9700F2FED9 /* PodcastMagazine.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PodcastMagazine.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1A44D222AC18C9700F2FED9 /* PodcastMagazineApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastMagazineApp.swift; sourceTree = "<group>"; };
 		A1A44D262AC18C9800F2FED9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -48,7 +48,7 @@
 		A1A44D162AC18C9700F2FED9 = {
 			isa = PBXGroup;
 			children = (
-				86F3420A2AC19B590007213C /* Repository */,
+				86F342112AC19DBD0007213C /* Repository */,
 				A1A44D212AC18C9700F2FED9 /* PodcastMagazine */,
 				A1A44D202AC18C9700F2FED9 /* Products */,
 				86F3420C2AC19B870007213C /* Frameworks */,
@@ -210,7 +210,7 @@
 			files = (
 				A1A44D2A2AC18C9800F2FED9 /* Preview Assets.xcassets in Resources */,
 				A1A44D272AC18C9800F2FED9 /* Assets.xcassets in Resources */,
-				86F3420B2AC19B590007213C /* Repository in Resources */,
+				86F342122AC19DBD0007213C /* Repository in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
