@@ -1,0 +1,41 @@
+{
+  "pins" : [
+    {
+      "identity" : "realm-core",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/realm/realm-core.git",
+      "state" : {
+        "revision" : "1eb93c9619f6a05b5a91c2719690606016802e0b",
+        "version" : "13.20.1"
+      }
+    },
+    {
+      "identity" : "realm-swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/realm/realm-swift.git",
+      "state" : {
+        "revision" : "8ee4c1ce5006ca706b9450771fa7e9b5b1510785",
+        "version" : "10.42.3"
+      }
+    },
+    {
+      "identity" : "swiftfp",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/ShapovalovIlya/SwiftFP.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "45f181cbd64eefe6bacc4c64601dd421038ae1aa"
+      }
+    },
+    {
+      "identity" : "swiftudf",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/ShapovalovIlya/SwiftUDF.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "fd9bc1b9a7f6bc69a6ab3aa5dd5d7e9e9a288990"
+      }
+    }
+  ],
+  "version" : 2
+}
