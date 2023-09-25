@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		103A1B9A2AC1F3DD00F337B7 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 103A1B992AC1F3DD00F337B7 /* SearchView.swift */; };
+		103A1B9C2AC1F40200F337B7 /* SearchScreenDomain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 103A1B9B2AC1F40200F337B7 /* SearchScreenDomain.swift */; };
+		103A1B9E2AC1FB9E00F337B7 /* SearchScreenResultDomain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 103A1B9D2AC1FB9E00F337B7 /* SearchScreenResultDomain.swift */; };
 		86F3420E2AC19B870007213C /* Repository in Frameworks */ = {isa = PBXBuildFile; productRef = 86F3420D2AC19B870007213C /* Repository */; };
 		86F342102AC19B8D0007213C /* Models in Frameworks */ = {isa = PBXBuildFile; productRef = 86F3420F2AC19B8D0007213C /* Models */; };
 		86F342122AC19DBD0007213C /* Repository in Resources */ = {isa = PBXBuildFile; fileRef = 86F342112AC19DBD0007213C /* Repository */; };
@@ -17,6 +20,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		103A1B992AC1F3DD00F337B7 /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
+		103A1B9B2AC1F40200F337B7 /* SearchScreenDomain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchScreenDomain.swift; sourceTree = "<group>"; };
+		103A1B9D2AC1FB9E00F337B7 /* SearchScreenResultDomain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchScreenResultDomain.swift; sourceTree = "<group>"; };
 		86F342112AC19DBD0007213C /* Repository */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Repository; sourceTree = "<group>"; };
 		A1A44D1F2AC18C9700F2FED9 /* PodcastMagazine.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PodcastMagazine.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1A44D222AC18C9700F2FED9 /* PodcastMagazineApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastMagazineApp.swift; sourceTree = "<group>"; };
@@ -38,6 +44,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		103A1B982AC1F2AF00F337B7 /* SearchView */ = {
+			isa = PBXGroup;
+			children = (
+				103A1B992AC1F3DD00F337B7 /* SearchView.swift */,
+				103A1B9B2AC1F40200F337B7 /* SearchScreenDomain.swift */,
+				103A1B9D2AC1FB9E00F337B7 /* SearchScreenResultDomain.swift */,
+			);
+			path = SearchView;
+			sourceTree = "<group>";
+		};
 		86F3420C2AC19B870007213C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -97,6 +113,7 @@
 		A1A44D312AC18D3300F2FED9 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				103A1B982AC1F2AF00F337B7 /* SearchView */,
 				A1A44D322AC18D4A00F2FED9 /* HomePageView */,
 			);
 			path = Screens;
@@ -222,6 +239,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				A1A44D342AC18D6A00F2FED9 /* HomePageView.swift in Sources */,
+				103A1B9E2AC1FB9E00F337B7 /* SearchScreenResultDomain.swift in Sources */,
+				103A1B9C2AC1F40200F337B7 /* SearchScreenDomain.swift in Sources */,
+				103A1B9A2AC1F3DD00F337B7 /* SearchView.swift in Sources */,
 				A1A44D232AC18C9700F2FED9 /* PodcastMagazineApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
