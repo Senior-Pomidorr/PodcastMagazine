@@ -10,17 +10,28 @@ import Combine
 import SwiftFP
 
 public struct APIManager {
+    //MARK: - Private properties
+    private let session: URLSession
+    private let decoder: JSONDecoder
     
+    public init() {
+        let config = URLSessionConfiguration.default
+        
+        self.session = URLSession(configuration: config)
+        self.decoder = JSONDecoder()
+    }
+    
+    //MARK: - Public methods
     public func request<T: Decodable>(
         method: HTTPMethod,
         _ endpoint: Endpoint
     ) -> AnyPublisher<T, APIError> {
         Box(endpoint.url)
             .map(makeRequest(method))
-            .map(addAuthenticationHeaders(.init()))
-            .flatMap(dataTaskPublisher(.shared))
+            .map(addAuthHeaders(.init()))
+            .flatMap(dataTaskPublisher(session))
             .tryMap(parseResponse(_:))
-            .decode(type: T.self, decoder: JSONDecoder())
+            .decode(type: T.self, decoder: decoder)
             .mapError(APIError.map(_:))
             .eraseToAnyPublisher()
     }
@@ -33,30 +44,6 @@ public extension APIManager {
         case POST
         case PUT
         case DELETE
-    }
-    
-    //MARK: - APIError
-    enum APIError: Error, LocalizedError {
-        case urlError(URLError)
-        case decodingError(DecodingError)
-        case unknown(Error)
-        
-        public var errorDescription: String {
-            switch self {
-            case let .urlError(urlError): return urlError.localizedDescription
-            case let .decodingError(decodingError): return decodingError.localizedDescription
-            case let .unknown(error): return error.localizedDescription
-            }
-        }
-        
-        static func map(_ error: Error) -> Self {
-            switch error {
-            case let apiError as APIError: return apiError
-            case let urlError as URLError: return .urlError(urlError)
-            case let decodingError as DecodingError: return .decodingError(decodingError)
-            default: return .unknown(error)
-            }
-        }
     }
     
     //MARK: - StatusCodes
@@ -80,7 +67,7 @@ private extension APIManager {
         }
     }
     
-    func addAuthenticationHeaders(_ secret: Secret) -> (URLRequest) -> URLRequest {
+    func addAuthHeaders(_ secret: Secret) -> (URLRequest) -> URLRequest {
         { request in
             var request = request
             request.addValue("SuperPodcastPlayer/1.3", forHTTPHeaderField: "User-Agent")
@@ -109,9 +96,15 @@ private extension APIManager {
             throw MachError(.failure)
         }
         switch StatusCodes(rawValue: httpResponse.statusCode) {
-        case .success: return response.data
-        case .invalidRequest: throw URLError(.badServerResponse)
-        case .notAuthenticated: throw URLError(.userAuthenticationRequired)
+        case .success: 
+            return response.data
+            
+        case .invalidRequest:
+            throw APIError.invalidRequest(response.response.url?.description ?? "empty")
+            
+        case .notAuthenticated: 
+            throw URLError(.userAuthenticationRequired)
+            
         case .none: throw URLError(.badServerResponse)
         }
         
