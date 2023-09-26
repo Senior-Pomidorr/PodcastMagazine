@@ -41,6 +41,29 @@ public struct Feed: Decodable, Identifiable {
         self.categories = categories
     }
     
+    //MARK: - CodingKeys
+    enum CodingKeys: CodingKey {
+        case feeds
+        case id
+        case url
+        case title
+        case language
+        case medium
+        case categories
+    }
+    
+    //MARK: - init(from:)
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        let nestedContainer = try container.nestedContainer(keyedBy: CodingKeys.self, forKey: .feeds)
+        self.id = try nestedContainer.decode(Int.self, forKey: .id)
+        self.url = try nestedContainer.decode(URL.self, forKey: .url)
+        self.title = try nestedContainer.decode(String.self, forKey: .title)
+        self.language = try nestedContainer.decode(String.self, forKey: .language)
+        self.medium = try nestedContainer.decode(Medium.self, forKey: .medium)
+        self.categories = try nestedContainer.decode([Category].self, forKey: .categories)
+    }
+    
     //MARK: - Sample
     public static let sample: Feed = .init(
         id: 75075,
