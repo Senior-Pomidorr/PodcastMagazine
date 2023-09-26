@@ -20,31 +20,32 @@ let package = Package(
             name: "APIProvider",
             dependencies: [
                 "Models",
-                Dependencies.SwiftFP.target
+                Dependencies.SwiftFP.target,
             ]),
         .target(
             name: "RealmProvider",
             dependencies: [
-                Dependencies.Realm.target
+                Dependencies.Realm.target,
+                "Models",
             ]),
         .target(
             name: "FirebaseAuthProvider",
             dependencies: [
-                Dependencies.FirebaseAuth.target
+                Dependencies.FirebaseAuth.target,
             ]),
         .target(
             name: "Repository",
             dependencies: [
                 "APIProvider",
                 "RealmProvider",
-                "FirebaseAuthProvider"
+                "FirebaseAuthProvider",
             ]),
         .testTarget(
             name: "RepositoryTests",
             dependencies: [
                 "Repository",
                 "APIProvider",
-                "Models"
+                "Models",
             ]),
     ]
 )
