@@ -10,8 +10,8 @@ import SwiftUI
 struct ProfileSettingsView: View {
     
     @StateObject var store = ProfileStore(
-        state: ProfileScreenDomain.ProfileState(dataLoadingStatus: .none),
-        reducer: ProfileScreenDomain.live.reduce(_:with:))
+        state: ProfileDomain.State(dataLoadingStatus: .none),
+        reducer: ProfileDomain.live.reduce(_:with:))
     
     let url: String
     
@@ -22,7 +22,7 @@ struct ProfileSettingsView: View {
                 .padding(.bottom, 30)
             
             NavigationLink {
-                AccountSettingsView(url: "https://loremflickr.com/cache/resized/65535_52661697260_0d20d6fed2_320_240_nofilter.jpg")
+                AccountSettingsView(store: ProfileDomain.previewStore)
             } label: {
                 ProfileSettingsRowView(image: "person", title: "Account Settings")
             }

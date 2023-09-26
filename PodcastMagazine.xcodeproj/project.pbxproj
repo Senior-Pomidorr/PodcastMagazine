@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3C7D49C72AC2F29C0084CD25 /* ProfileScreenDomain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7D49C62AC2F29C0084CD25 /* ProfileScreenDomain.swift */; };
+		3C7D49C72AC2F29C0084CD25 /* ProfileDomain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7D49C62AC2F29C0084CD25 /* ProfileDomain.swift */; };
 		3C7D49C92AC2F2C00084CD25 /* AccountSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7D49C82AC2F2C00084CD25 /* AccountSettingsView.swift */; };
 		3C7D49CB2AC2F2D10084CD25 /* ProfileSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7D49CA2AC2F2D10084CD25 /* ProfileSettingsView.swift */; };
 		3C7D49CD2AC2F9350084CD25 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7D49CC2AC2F9350084CD25 /* CustomTextField.swift */; };
@@ -27,7 +27,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		3C7D49C62AC2F29C0084CD25 /* ProfileScreenDomain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileScreenDomain.swift; sourceTree = "<group>"; };
+		3C7D49C62AC2F29C0084CD25 /* ProfileDomain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileDomain.swift; sourceTree = "<group>"; };
 		3C7D49C82AC2F2C00084CD25 /* AccountSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSettingsView.swift; sourceTree = "<group>"; };
 		3C7D49CA2AC2F2D10084CD25 /* ProfileSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingsView.swift; sourceTree = "<group>"; };
 		3C7D49CC2AC2F9350084CD25 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
@@ -61,7 +61,7 @@
 		3C7D49C52AC2F2870084CD25 /* ProfileScreen */ = {
 			isa = PBXGroup;
 			children = (
-				3C7D49C62AC2F29C0084CD25 /* ProfileScreenDomain.swift */,
+				3C7D49C62AC2F29C0084CD25 /* ProfileDomain.swift */,
 				3C7D49CA2AC2F2D10084CD25 /* ProfileSettingsView.swift */,
 				3C7D49C82AC2F2C00084CD25 /* AccountSettingsView.swift */,
 				3C7D49CE2AC2FADD0084CD25 /* Components */,
@@ -267,7 +267,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3C7D49C72AC2F29C0084CD25 /* ProfileScreenDomain.swift in Sources */,
+				3C7D49C72AC2F29C0084CD25 /* ProfileDomain.swift in Sources */,
 				3C7D49C92AC2F2C00084CD25 /* AccountSettingsView.swift in Sources */,
 				3C7D49CD2AC2F9350084CD25 /* CustomTextField.swift in Sources */,
 				3C7D49DB2AC31AF00084CD25 /* GenderSectionView.swift in Sources */,

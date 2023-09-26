@@ -9,7 +9,7 @@ import SwiftUI
 
 struct GenderSectionView: View {
     
-    @Binding var selectedGender: Gender
+    @Binding var selectedGender: User.Gender
     
     var body: some View {
         VStack(alignment: .leading) {
