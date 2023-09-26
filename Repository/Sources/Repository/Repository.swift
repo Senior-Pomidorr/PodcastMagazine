@@ -16,19 +16,31 @@ public struct Repository {
         apiManager = .init()
     }
     
+    public func perform<T: Decodable>(_ request: Repository.Request) -> AnyPublisher<Response<T>, Never> {
+        switch request {
+        case let .api(endpoint):
+            apiManager.request(method: .GET, endpoint)
+                .map(Response.success)
+                .mapError(RepositoryError.init)
+                .catch(Response.catchError(_:))
+                .eraseToAnyPublisher()
+        }
+    }
+    
 }
 
 public extension Repository {
     enum Request {
-        
+        case api(Endpoint)
     }
     
-    enum Response {
-        case success
+    enum Response<Wrapped> {
+        case success(Wrapped)
         case error(RepositoryError)
+        
+        static func catchError(_ error: RepositoryError) -> Just<Self> {
+            Just(.error(error))
+        }
     }
     
-    enum RepositoryError {
-        
-    }
 }
