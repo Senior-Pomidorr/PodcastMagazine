@@ -10,7 +10,14 @@ import Foundation
 
 
 struct SearchScreenResultDomain {
+    // MARK: - State
+    struct State: Equatable {
+        var textQuery: String
+        var allGenres: [MocGenre]
+        var searchScreenStatus: ScreenStatus
+    }
     
+    // MARK: - Action
     enum Action {
         case viewAppeared
         case didTypeQuery(String)
@@ -23,7 +30,7 @@ struct SearchScreenResultDomain {
     }
     
     // MARK: - Dependencies
-    let getTopGenres: (String) -> AnyPublisher<[MocGenre], Error>
+    let getQueryGenres: (String) -> AnyPublisher<[MocGenre], Error>
     let getAllGenres: (String) -> AnyPublisher<[MocGenre], Error>
     
 }
