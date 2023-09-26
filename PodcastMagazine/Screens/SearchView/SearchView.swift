@@ -14,10 +14,33 @@ struct SearchView: View {
     )
     
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationView {
+            switch store.state.searchScreenStatus {
+            case .none:
+                SearchScreenView()
+            case .loading:
+                ProgressView()
+            case .error(let error):
+                Text("Произошла ошибка: \(error.localizedDescription)")
+            }
+        }
     }
 }
 
 #Preview {
     SearchView()
+}
+
+struct SearchScreenView: View {
+    var body: some View {
+        ZStack {
+            // Временный фоновый цвет
+            Color.gray.opacity(0.2)
+                .ignoresSafeArea(edges: .all)
+            VStack {
+                Text("Search")
+                SearchBarView(searchText: .constant(""))
+            }
+        }
+    }
 }
