@@ -7,6 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3C7D49C72AC2F29C0084CD25 /* ProfileDomain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7D49C62AC2F29C0084CD25 /* ProfileDomain.swift */; };
+		3C7D49C92AC2F2C00084CD25 /* AccountSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7D49C82AC2F2C00084CD25 /* AccountSettingsView.swift */; };
+		3C7D49CB2AC2F2D10084CD25 /* ProfileSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7D49CA2AC2F2D10084CD25 /* ProfileSettingsView.swift */; };
+		3C7D49CD2AC2F9350084CD25 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7D49CC2AC2F9350084CD25 /* CustomTextField.swift */; };
+		3C7D49D02AC2FAF30084CD25 /* ProfileSettingsRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7D49CF2AC2FAF30084CD25 /* ProfileSettingsRowView.swift */; };
+		3C7D49D22AC2FDEC0084CD25 /* ProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7D49D12AC2FDEC0084CD25 /* ProfileHeaderView.swift */; };
+		3C7D49D52AC31AA20084CD25 /* AccountHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7D49D42AC31AA20084CD25 /* AccountHeaderView.swift */; };
+		3C7D49D72AC31ABB0084CD25 /* SaveButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7D49D62AC31ABB0084CD25 /* SaveButtonView.swift */; };
+		3C7D49D92AC31AD40084CD25 /* ProfileImageSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7D49D82AC31AD40084CD25 /* ProfileImageSectionView.swift */; };
+		3C7D49DB2AC31AF00084CD25 /* GenderSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7D49DA2AC31AF00084CD25 /* GenderSectionView.swift */; };
 		86F3420E2AC19B870007213C /* Repository in Frameworks */ = {isa = PBXBuildFile; productRef = 86F3420D2AC19B870007213C /* Repository */; };
 		86F342102AC19B8D0007213C /* Models in Frameworks */ = {isa = PBXBuildFile; productRef = 86F3420F2AC19B8D0007213C /* Models */; };
 		86F342122AC19DBD0007213C /* Repository in Resources */ = {isa = PBXBuildFile; fileRef = 86F342112AC19DBD0007213C /* Repository */; };
@@ -18,6 +28,16 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3C7D49C62AC2F29C0084CD25 /* ProfileDomain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileDomain.swift; sourceTree = "<group>"; };
+		3C7D49C82AC2F2C00084CD25 /* AccountSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSettingsView.swift; sourceTree = "<group>"; };
+		3C7D49CA2AC2F2D10084CD25 /* ProfileSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingsView.swift; sourceTree = "<group>"; };
+		3C7D49CC2AC2F9350084CD25 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
+		3C7D49CF2AC2FAF30084CD25 /* ProfileSettingsRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingsRowView.swift; sourceTree = "<group>"; };
+		3C7D49D12AC2FDEC0084CD25 /* ProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderView.swift; sourceTree = "<group>"; };
+		3C7D49D42AC31AA20084CD25 /* AccountHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountHeaderView.swift; sourceTree = "<group>"; };
+		3C7D49D62AC31ABB0084CD25 /* SaveButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveButtonView.swift; sourceTree = "<group>"; };
+		3C7D49D82AC31AD40084CD25 /* ProfileImageSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageSectionView.swift; sourceTree = "<group>"; };
+		3C7D49DA2AC31AF00084CD25 /* GenderSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenderSectionView.swift; sourceTree = "<group>"; };
 		86F342112AC19DBD0007213C /* Repository */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Repository; sourceTree = "<group>"; };
 		A17F6E8E2AC217D800819964 /* HomePageDomain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageDomain.swift; sourceTree = "<group>"; };
 		A1A44D1F2AC18C9700F2FED9 /* PodcastMagazine.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PodcastMagazine.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -40,6 +60,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3C7D49C52AC2F2870084CD25 /* ProfileScreen */ = {
+			isa = PBXGroup;
+			children = (
+				3C7D49C62AC2F29C0084CD25 /* ProfileDomain.swift */,
+				3C7D49CA2AC2F2D10084CD25 /* ProfileSettingsView.swift */,
+				3C7D49C82AC2F2C00084CD25 /* AccountSettingsView.swift */,
+				3C7D49CE2AC2FADD0084CD25 /* Components */,
+			);
+			path = ProfileScreen;
+			sourceTree = "<group>";
+		};
+		3C7D49CE2AC2FADD0084CD25 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				3C7D49CC2AC2F9350084CD25 /* CustomTextField.swift */,
+				3C7D49DA2AC31AF00084CD25 /* GenderSectionView.swift */,
+				3C7D49CF2AC2FAF30084CD25 /* ProfileSettingsRowView.swift */,
+				3C7D49D82AC31AD40084CD25 /* ProfileImageSectionView.swift */,
+				3C7D49D42AC31AA20084CD25 /* AccountHeaderView.swift */,
+				3C7D49D62AC31ABB0084CD25 /* SaveButtonView.swift */,
+				3C7D49D12AC2FDEC0084CD25 /* ProfileHeaderView.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
 		86F3420C2AC19B870007213C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -99,6 +144,7 @@
 		A1A44D312AC18D3300F2FED9 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				3C7D49C52AC2F2870084CD25 /* ProfileScreen */,
 				A1A44D322AC18D4A00F2FED9 /* HomePageView */,
 			);
 			path = Screens;
@@ -224,8 +270,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3C7D49C72AC2F29C0084CD25 /* ProfileDomain.swift in Sources */,
+				3C7D49C92AC2F2C00084CD25 /* AccountSettingsView.swift in Sources */,
+				3C7D49CD2AC2F9350084CD25 /* CustomTextField.swift in Sources */,
+				3C7D49DB2AC31AF00084CD25 /* GenderSectionView.swift in Sources */,
+				3C7D49D92AC31AD40084CD25 /* ProfileImageSectionView.swift in Sources */,
+				3C7D49D72AC31ABB0084CD25 /* SaveButtonView.swift in Sources */,
+				3C7D49D02AC2FAF30084CD25 /* ProfileSettingsRowView.swift in Sources */,
 				A1A44D342AC18D6A00F2FED9 /* HomePageView.swift in Sources */,
+				3C7D49D52AC31AA20084CD25 /* AccountHeaderView.swift in Sources */,
+				3C7D49CB2AC2F2D10084CD25 /* ProfileSettingsView.swift in Sources */,
 				A1A44D232AC18C9700F2FED9 /* PodcastMagazineApp.swift in Sources */,
+				3C7D49D22AC2FDEC0084CD25 /* ProfileHeaderView.swift in Sources */,
 				A17F6E8F2AC217D800819964 /* HomePageDomain.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
