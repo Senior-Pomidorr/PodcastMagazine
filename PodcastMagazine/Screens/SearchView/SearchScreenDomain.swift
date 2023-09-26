@@ -23,10 +23,10 @@ struct MocGenre: Equatable { }
 struct SearchScreenDomain {
     
     struct State: Equatable {
-        var textQuery: String
-        var topGenres: [MocGenre]
-        var allGenres: [MocGenre]
-        var searchScreenStatus: ScreenStatus
+        var textQuery: String = ""
+        var topGenres: [MocGenre] = []
+        var allGenres: [MocGenre] = []
+        var searchScreenStatus: ScreenStatus = .none
     }
     
     // MARK: - Action
@@ -51,6 +51,10 @@ struct SearchScreenDomain {
         
         switch action {
         case .viewAppeared:
+            // Проверка чтоб не повторять запрос
+            guard state.searchScreenStatus != .loading else {
+                break
+            }
             state.searchScreenStatus = .loading
             return Publishers.Merge(
                 Just(._getAllRequest),
@@ -115,4 +119,8 @@ struct SearchScreenDomain {
     func changeString(_ query: String) -> String {
         return query.trimmingCharacters(in: .whitespacesAndNewlines)
     }
+    
+    static var live = Self(
+        getTopGenres: {_ in Empty().eraseToAnyPublisher() },
+        getAllGenres: {_ in Empty().eraseToAnyPublisher() })
 }
