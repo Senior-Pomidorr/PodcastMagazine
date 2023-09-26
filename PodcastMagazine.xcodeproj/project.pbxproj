@@ -115,10 +115,6 @@
 			children = (
 				A1A44D302AC18D1C00F2FED9 /* Application */,
 				A1A44D312AC18D3300F2FED9 /* Screens */,
-				A1A44D362AC18DE900F2FED9 /* Models */,
-				A1A44D382AC18E1500F2FED9 /* Services */,
-				A1A44D372AC18E0300F2FED9 /* Components */,
-				A1A44D392AC18E2900F2FED9 /* Extensions */,
 				A1A44D352AC18D8000F2FED9 /* Resources */,
 				A1A44D282AC18C9800F2FED9 /* Preview Content */,
 			);
@@ -165,34 +161,6 @@
 				A1A44D262AC18C9800F2FED9 /* Assets.xcassets */,
 			);
 			path = Resources;
-			sourceTree = "<group>";
-		};
-		A1A44D362AC18DE900F2FED9 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Models;
-			sourceTree = "<group>";
-		};
-		A1A44D372AC18E0300F2FED9 /* Components */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Components;
-			sourceTree = "<group>";
-		};
-		A1A44D382AC18E1500F2FED9 /* Services */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Services;
-			sourceTree = "<group>";
-		};
-		A1A44D392AC18E2900F2FED9 /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
