@@ -8,13 +8,16 @@
 import Foundation
 import Combine
 import SwiftFP
+import OSLog
 
 public struct APIManager {
     //MARK: - Private properties
     private let session: URLSession
     private let decoder: JSONDecoder
+    private var logger: Logger?
     
-    public init() {
+    public init(logger: Logger? = nil) {
+        self.logger = logger
         let config = URLSessionConfiguration.default
         
         self.session = URLSession(configuration: config)
@@ -26,7 +29,8 @@ public struct APIManager {
         method: HTTPMethod,
         _ endpoint: Endpoint
     ) -> AnyPublisher<T, APIError> {
-        Box(endpoint.url)
+        logger?.debug(#function)
+        return Box(endpoint.url)
             .map(makeRequest(method))
             .map(addAuthHeaders(.init()))
             .flatMap(dataTaskPublisher(session))
@@ -92,6 +96,8 @@ private extension APIManager {
     }
     
     func parseResponse(_ response: Response) throws -> Data {
+        logger?.debug("\(String(describing: response.response))")
+        
         guard let httpResponse = response.response as? HTTPURLResponse else {
             throw MachError(.failure)
         }
@@ -100,12 +106,17 @@ private extension APIManager {
             return response.data
             
         case .invalidRequest:
+            let message = String(data: response.data, encoding: .utf8)
+            logger?.error("\(message ?? "empty")")
             throw APIError.invalidRequest(response.response.url?.description ?? "empty")
             
-        case .notAuthenticated: 
+        case .notAuthenticated:
+            let message = String(data: response.data, encoding: .utf8)
+            logger?.error("\(message ?? "empty")")
             throw URLError(.userAuthenticationRequired)
             
-        case .none: throw URLError(.badServerResponse)
+        case .none:
+            throw URLError(.badServerResponse)
         }
         
     }

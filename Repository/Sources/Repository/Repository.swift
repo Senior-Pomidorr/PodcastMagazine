@@ -5,6 +5,7 @@ import Combine
 import APIProvider
 import RealmProvider
 import FirebaseAuthProvider
+import OSLog
 
 /// Псевдоним, описывающий взаимодействие с репозиторием.
 /// Для корректного использование, нужно явно указать тип возвращаемого значения.
@@ -23,10 +24,14 @@ public final class Repository {
     //MARK: - Private properties
     private let apiManager: APIManager
     private let mainQueue: DispatchQueue = .main
+    private let logger = Logger(
+        subsystem: Bundle.main.bundleIdentifier!,
+        category: String(describing: Repository.self)
+    )
     
     //MARK: - init(_:)
     private init() {
-        apiManager = .init()
+        apiManager = .init(logger: logger)
     }
     
     //MARK: - Public methods
