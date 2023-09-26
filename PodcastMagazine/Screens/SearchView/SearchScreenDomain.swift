@@ -7,6 +7,7 @@
 
 import Combine
 import Foundation
+import Models
 
 enum ScreenStatus: Equatable {
     case none
@@ -18,14 +19,12 @@ enum ScreenStatus: Equatable {
     }
 }
 
-struct MocGenre: Equatable { }
-
 struct SearchScreenDomain {
     
-    struct State: Equatable {
+    struct State {
         var textQuery: String = ""
-        var topGenres: [MocGenre] = []
-        var allGenres: [MocGenre] = []
+        var topGenres: [Feed] = []
+        var allGenres: [Feed] = []
         var searchScreenStatus: ScreenStatus = .none
     }
     
@@ -35,13 +34,13 @@ struct SearchScreenDomain {
         case didTypeQuery(String)
         case _getTopRequest
         case _getAllRequest
-        case _topGenresResponce(Result<[MocGenre], Error>)
-        case _allGenresResponce(Result<[MocGenre], Error>)
+        case _topGenresResponce(Result<[Feed], Error>)
+        case _allGenresResponce(Result<[Feed], Error>)
     }
     
     // MARK: - Dependencies
-    let getTopGenres: (String) -> AnyPublisher<[MocGenre], Error>
-    let getAllGenres: (String) -> AnyPublisher<[MocGenre], Error>
+    let getTopGenres: (String) -> AnyPublisher<[Feed], Error>
+    let getAllGenres: (String) -> AnyPublisher<[Feed], Error>
     
     // MARK: - reduce
     func reduce(
@@ -96,7 +95,7 @@ struct SearchScreenDomain {
     }
     
     
-    func toSuccessTopGenres(_ genres: [MocGenre]) -> Action {
+    func toSuccessTopGenres(_ genres: [Feed]) -> Action {
         ._topGenresResponce(.success(genres))
     }
     
@@ -105,7 +104,7 @@ struct SearchScreenDomain {
         Just(._topGenresResponce(.failure(error)))
     }
     
-    func toSuccessAllGenres(_ genres: [MocGenre]) -> Action {
+    func toSuccessAllGenres(_ genres: [Feed]) -> Action {
         ._allGenresResponce(.success(genres))
     }
     

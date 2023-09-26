@@ -7,13 +7,14 @@
 
 import Combine
 import Foundation
+import Models
 
 
 struct SearchScreenResultDomain {
     // MARK: - State
-    struct State: Equatable {
+    struct State {
         var textQuery: String
-        var allGenres: [MocGenre]
+        var allGenres: [Feed]
         var searchScreenStatus: ScreenStatus
     }
     
@@ -22,15 +23,15 @@ struct SearchScreenResultDomain {
         case viewAppeared
         case didTypeQuery(String)
         case _getQueryGenresRequest(String)
-        case _queryGenresResponce(Result<[MocGenre], Error>)
+        case _queryGenresResponce(Result<[Feed], Error>)
         case _getAllGenresRequest(String)
-        case _allGenresResponce(Result<[MocGenre], Error>)
+        case _allGenresResponce(Result<[Feed], Error>)
         case pressedSearchClearButton
         case pressedButtonBack
     }
     
     // MARK: - Dependencies
-    let getQueryGenres: (String) -> AnyPublisher<[MocGenre], Error>
-    let getAllGenres: (String) -> AnyPublisher<[MocGenre], Error>
+    let getQueryGenres: (String) -> AnyPublisher<[Feed], Error>
+    let getAllGenres: (String) -> AnyPublisher<[Feed], Error>
     
 }
