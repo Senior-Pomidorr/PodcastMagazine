@@ -8,8 +8,33 @@
 import SwiftUI
 
 struct FavoritesCell: View {
+    private var ColourGenre = Color.blue
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack(alignment: .center) {
+            ZStack {
+                Rectangle()
+                    .foregroundColor(Color("Blue"))
+                    .frame(width: 120, height: 160)
+                    .cornerRadius(16)
+                VStack {
+                    Rectangle()
+                        .foregroundColor(Color("Grey"))
+                        .frame(width: 60, height: 60)
+                        .cornerRadius(8)
+//
+                    Text("Baby Pesut")
+                        .font(.system(size: 14))
+                        .padding(.bottom, 4)
+                        .padding(.top, 8)
+                    Text("Dr. Oi om jean")
+                        .font(.system(size: 12))
+                        
+                    
+                }
+              
+            }
+        }
     }
 }
 
