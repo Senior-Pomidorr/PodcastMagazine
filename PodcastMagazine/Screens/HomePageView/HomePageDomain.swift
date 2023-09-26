@@ -9,9 +9,9 @@ import Foundation
 import Models
 import Combine
 
-// MARK: - DataLoadingStatus
-enum DataLoadingStatus: Equatable {
-    static func == (lhs: DataLoadingStatus, rhs: DataLoadingStatus) -> Bool {
+// MARK: - HomePageLoadingStatus
+private enum HomePageLoadingStatus: Equatable {
+    static func == (lhs: HomePageLoadingStatus, rhs: HomePageLoadingStatus) -> Bool {
         String(describing: lhs) == String(describing: rhs)
     }
     
@@ -24,16 +24,16 @@ enum DataLoadingStatus: Equatable {
 private struct State: Equatable {
     var categoryList: [Models.Category]
     var podcastsList: [Feed]
-    var dataLoadingStatus: DataLoadingStatus
+    var homePageLoadingStatus: HomePageLoadingStatus
     
     init(
         categoryList: [Models.Category] = .init(),
         podcastsList: [Feed] = .init(),
-        dataLoadingStatus: DataLoadingStatus = .none
+        homePageLoadingStatus: HomePageLoadingStatus = .none
     ) {
         self.categoryList = categoryList
         self.podcastsList = podcastsList
-        self.dataLoadingStatus = dataLoadingStatus
+        self.homePageLoadingStatus = homePageLoadingStatus
     }
 }
 
@@ -75,8 +75,8 @@ fileprivate func reduce(
             .eraseToAnyPublisher()
         
     case .viewAppeared:
-        guard state.dataLoadingStatus != .loading else { break }
-        state.dataLoadingStatus = .loading
+        guard state.homePageLoadingStatus != .loading else { break }
+        state.homePageLoadingStatus = .loading
         
         return Publishers.Merge(
             Just(._getCategoryRequest),
@@ -85,15 +85,15 @@ fileprivate func reduce(
             .eraseToAnyPublisher()
         
     case let ._getCategoryResponse(.success(apiCategories)):
-        state.dataLoadingStatus = .none
+        state.homePageLoadingStatus = .none
         state.categoryList = apiCategories
         
     case let ._getPodcastsResponse(.success(feeds)):
-        state.dataLoadingStatus = .none
+        state.homePageLoadingStatus = .none
         state.podcastsList = feeds
         
     case let ._getCategoryResponse(.failure(error)), let ._getPodcastsResponse(.failure(error)):
-        state.dataLoadingStatus = .error(error)
+        state.homePageLoadingStatus = .error(error)
         
     case .categoryCellDidTap:
         break
