@@ -24,4 +24,29 @@ public struct EpisodesResponse: Decodable {
     
     /// Description of the response
     public let description: String
+    
+    public init(
+        status: String,
+        liveItems: [Episode]?,
+        items: [Episode],
+        count: Int,
+        max: Int?,
+        description: String
+    ) {
+        self.status = status
+        self.liveItems = liveItems
+        self.items = items
+        self.count = count
+        self.max = max
+        self.description = description
+    }
+    
+    public static let sample = Self(
+        status: "true",
+        liveItems: nil,
+        items: [.sample],
+        count: 1,
+        max: nil,
+        description: "Sample response"
+    )
 }
