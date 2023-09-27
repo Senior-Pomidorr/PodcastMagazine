@@ -19,10 +19,10 @@ public struct Feed: Decodable, Identifiable, Equatable {
     /// The channel-level language specification of the feed. Languages accord with the RSS Language Spec - https://www.rssboard.org/rss-language-codes
     public let language: String
     
-    public let medium: Medium
+    public let medium: Medium?
     
     /// An array of categories, where the index is the Category ID and the value is the Category Name.
-    public let categories: [Category]
+    public let categories: [String: String]
     
     //MARK: - init(_:)
     public init(
@@ -30,8 +30,8 @@ public struct Feed: Decodable, Identifiable, Equatable {
         url: URL,
         title: String,
         language: String,
-        medium: Medium,
-        categories: [Category]
+        medium: Medium?,
+        categories: [String: String]
     ) {
         self.id = id
         self.url = url
@@ -48,6 +48,6 @@ public struct Feed: Decodable, Identifiable, Equatable {
         title: "Batman University",
         language: "en-us", 
         medium: .music,
-        categories: [.sample]
+        categories: [:]
     )
 }
