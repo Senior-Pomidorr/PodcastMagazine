@@ -80,7 +80,7 @@ private extension APIManager {
             let currentTime = String().currentTime
             request.addValue(currentTime, forHTTPHeaderField: "X-Auth-Date")
             
-            let hash = [secret.apiKey, secret.secretKey, currentTime].joined().sha1
+            let hash = [secret.apiKey, secret.secretKey, currentTime].joined().sha1()
             request.addValue(hash, forHTTPHeaderField: "Authorization")
             
             return request
