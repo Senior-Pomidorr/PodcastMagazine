@@ -20,7 +20,7 @@ struct PodcastElement: View {
                     Text(mocItem.title)
                         .font(.body)
 //                    Text(mocItem.categories.first!.name)
-                    Text(mocItem.medium.rawValue)
+//                    Text(mocItem.medium.rawValue)
                 }
                 .font(.caption)
                 .padding(.horizontal, 4)
