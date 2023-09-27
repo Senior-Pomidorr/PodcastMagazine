@@ -7,9 +7,9 @@
 
 import Foundation
 
-struct CategoryResponse: Decodable {
-    let status: Bool
-    let feeds: [Category]
-    let count: Int
-    let description: String
+public struct CategoryResponse: Decodable {
+    public let status: String
+    public let feeds: [Category]
+    public let count: Int
+    public let description: String
 }

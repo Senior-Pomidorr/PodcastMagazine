@@ -10,4 +10,5 @@ import Foundation
 struct Secret {
     let apiKey = "HKWJATHMJCTP2GTNMN7N"
     let secretKey = "7J7aM2znBBbEbudcbJT7$wvXbnk7uKUeKy9ZbM28"
+    let userAgent = "PodcastMagazine"
 }

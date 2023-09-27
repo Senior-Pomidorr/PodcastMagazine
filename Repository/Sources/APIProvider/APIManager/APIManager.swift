@@ -74,7 +74,7 @@ private extension APIManager {
     func addAuthHeaders(_ secret: Secret) -> (URLRequest) -> URLRequest {
         { request in
             var request = request
-            request.addValue("SuperPodcastPlayer/1.3", forHTTPHeaderField: "User-Agent")
+            request.addValue(secret.userAgent, forHTTPHeaderField: "User-Agent")
             request.addValue(secret.apiKey, forHTTPHeaderField: "X-Auth-Key")
             
             let currentTime = String().currentTime

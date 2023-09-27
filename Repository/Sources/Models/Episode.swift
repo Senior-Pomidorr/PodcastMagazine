@@ -101,55 +101,6 @@ public struct Episode: Identifiable, Decodable {
         self.feedLanguage = feedLanguage
         self.chaptersUrl = chaptersUrl
     }
-    
-    //MARK: - Coding keys
-    enum CodingKeys: CodingKey {
-        case items
-        case id
-        case title
-        case link
-        case description
-        case guid
-        case datePublished
-        case datePublishedPretty
-        case dateCrawled
-        case enclosureUrl
-        case explicit
-        case episode
-        case episodeType
-        case season
-        case image
-        case feedImage
-        case feedId
-        case feedTitle
-        case feedLanguage
-        case chaptersUrl
-    }
-    
-    //MARK: - init(from:)
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        let nestedContainer = try container.nestedContainer(keyedBy: CodingKeys.self, forKey: .items)
-        self.id = try nestedContainer.decode(Int.self, forKey: .id)
-        self.title = try nestedContainer.decode(String.self, forKey: .title)
-        self.link = try nestedContainer.decode(URL.self, forKey: .link)
-        self.description = try nestedContainer.decode(String.self, forKey: .description)
-        self.guid = try nestedContainer.decode(String.self, forKey: .guid)
-        self.datePublished = try nestedContainer.decode(Int.self, forKey: .datePublished)
-        self.datePublishedPretty = try nestedContainer.decode(String.self, forKey: .datePublishedPretty)
-        self.dateCrawled = try nestedContainer.decode(Int.self, forKey: .dateCrawled)
-        self.enclosureUrl = try nestedContainer.decode(URL.self, forKey: .enclosureUrl)
-        self.explicit = try nestedContainer.decode(Int.self, forKey: .explicit)
-        self.episode = try nestedContainer.decodeIfPresent(Int.self, forKey: .episode)
-        self.episodeType = try nestedContainer.decodeIfPresent(Episode.EpisodeType.self, forKey: .episodeType)
-        self.season = try nestedContainer.decodeIfPresent(Int.self, forKey: .season)
-        self.image = try nestedContainer.decode(URL.self, forKey: .image)
-        self.feedImage = try nestedContainer.decode(URL.self, forKey: .feedImage)
-        self.feedId = try nestedContainer.decode(Int.self, forKey: .feedId)
-        self.feedTitle = try nestedContainer.decode(String.self, forKey: .feedTitle)
-        self.feedLanguage = try nestedContainer.decode(String.self, forKey: .feedLanguage)
-        self.chaptersUrl = try nestedContainer.decodeIfPresent(URL.self, forKey: .chaptersUrl)
-    }
 }
 
 public extension Episode {

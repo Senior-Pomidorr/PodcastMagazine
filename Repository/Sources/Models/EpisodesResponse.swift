@@ -7,21 +7,21 @@
 
 import Foundation
 
-struct EpisodesResponse: Decodable {
-    let status: Bool
+public struct EpisodesResponse: Decodable {
+    public let status: String
     
     /// List of live episodes for feed
-    let liveItems: [Episode]?
+    public let liveItems: [Episode]?
     
     /// List of episodes matching request
-    let items: [Episode]
+    public let items: [Episode]
     
     /// Number of items returned in request
-    let count: Int
+    public let count: Int
     
     /// Value of max parameter passed to request.
-    let max: Int?
+    public let max: Int?
     
     /// Description of the response
-    let description: String
+    public let description: String
 }

@@ -19,10 +19,10 @@ public struct Feed: Decodable, Identifiable {
     /// The channel-level language specification of the feed. Languages accord with the RSS Language Spec - https://www.rssboard.org/rss-language-codes
     public let language: String
     
-    public let medium: Medium
+    public let medium: Medium?
     
     /// An array of categories, where the index is the Category ID and the value is the Category Name.
-    public let categories: [Category]
+    public let categories: [String: String]
     
     //MARK: - init(_:)
     public init(
@@ -30,8 +30,8 @@ public struct Feed: Decodable, Identifiable {
         url: URL,
         title: String,
         language: String,
-        medium: Medium,
-        categories: [Category]
+        medium: Medium?,
+        categories: [String: String]
     ) {
         self.id = id
         self.url = url
@@ -41,29 +41,6 @@ public struct Feed: Decodable, Identifiable {
         self.categories = categories
     }
     
-    //MARK: - CodingKeys
-    enum CodingKeys: CodingKey {
-        case feeds
-        case id
-        case url
-        case title
-        case language
-        case medium
-        case categories
-    }
-    
-    //MARK: - init(from:)
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        let nestedContainer = try container.nestedContainer(keyedBy: CodingKeys.self, forKey: .feeds)
-        self.id = try nestedContainer.decode(Int.self, forKey: .id)
-        self.url = try nestedContainer.decode(URL.self, forKey: .url)
-        self.title = try nestedContainer.decode(String.self, forKey: .title)
-        self.language = try nestedContainer.decode(String.self, forKey: .language)
-        self.medium = try nestedContainer.decode(Medium.self, forKey: .medium)
-        self.categories = try nestedContainer.decode([Category].self, forKey: .categories)
-    }
-    
     //MARK: - Sample
     public static let sample: Feed = .init(
         id: 75075,
@@ -71,6 +48,6 @@ public struct Feed: Decodable, Identifiable {
         title: "Batman University",
         language: "en-us", 
         medium: .music,
-        categories: [.sample]
+        categories: [:]
     )
 }
