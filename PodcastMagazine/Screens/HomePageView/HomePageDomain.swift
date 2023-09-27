@@ -8,6 +8,7 @@
 import Foundation
 import Models
 import Combine
+import Repository
 
 // MARK: - HomePageLoadingStatus
 enum HomePageLoadingStatus: Equatable {
@@ -18,6 +19,19 @@ enum HomePageLoadingStatus: Equatable {
     case none
     case loading
     case error(Error)
+}
+
+// MARK: - SelectedCategoryRequest
+enum SelectedCategoryRequest {
+    case popular
+    case recent
+    case audiobook
+    case blog
+    case film
+    case music
+    case newsletter
+    case podcast
+    case video
 }
 
 struct HomePageDomain {
@@ -44,13 +58,15 @@ struct HomePageDomain {
         case categoryCellDidTap
         case _getCategoryRequest
         case _getPodcastRequest
-        case _getCategoryResponse(Result<[Models.Category], Error>)
-        case _getPodcastsResponse(Result<[Feed], Error>)
+        case _getCategoryResponse(Repository.Response<CategoryResponse>)
+        case _getPodcastsResponse(Repository.Response<FeedResponse>)
+        case getSelectedCategory(SelectedCategoryRequest)
     }
     
     // MARK: - Dependencies
-    let getCategoryList: (String) -> AnyPublisher<[Models.Category], Error>
-    let getPodcastsList: (String) -> AnyPublisher<[Feed], Error>
+
+    let getCategoryList: RepositoryRequest<CategoryResponse>
+    let getPodcastsList: RepositoryRequest<FeedResponse>
     
     // MARK: - Reducer
     func reduce(
@@ -65,29 +81,30 @@ struct HomePageDomain {
             
             return Publishers.Merge(
                 Just(._getCategoryRequest),
+                //Empty()
                 Just(._getPodcastRequest)
             )
             .eraseToAnyPublisher()
             
         case ._getCategoryRequest:
-            return getCategoryList("categoryUrl")
-                .map(toSuccessCategory(_:))
-                .catch(toFailCategory(_:))
+            return getCategoryList(.api(.categories))
+                .map(Action._getCategoryResponse)
                 .eraseToAnyPublisher()
             
         case ._getPodcastRequest:
-            return getPodcastsList("podcastsUrl")
-                .map(toSuccessFeed(_:))
-                .catch(toFailFeed(_:))
+            return getPodcastsList(.api(.trendingFeeds()))
+                .map(Action._getPodcastsResponse)
                 .eraseToAnyPublisher()
-            
-        case let ._getCategoryResponse(.success(apiCategories)):
+                  
+        case let ._getCategoryResponse(.success(response)):
             state.homePageLoadingStatus = .none
-            state.categoryList = apiCategories
+            state.categoryList = response.feeds
+            print("!!!!!!!!!! --- category =", state.categoryList.count)
             
-        case let ._getPodcastsResponse(.success(feeds)):
+        case let ._getPodcastsResponse(.success(response)):
             state.homePageLoadingStatus = .none
-            state.podcastsList = feeds
+            state.podcastsList = response.feeds
+            print("!!!!!!!!!! --- podcast =", state.podcastsList.count)
             
         case let ._getCategoryResponse(.failure(error)), let ._getPodcastsResponse(.failure(error)):
             state.homePageLoadingStatus = .error(error)
@@ -95,29 +112,83 @@ struct HomePageDomain {
         case .categoryCellDidTap:
             break
             
+        case let .getSelectedCategory(selectedCategory):
+            return fetchCategoryRequest(selected: selectedCategory)
+            
         }
+        
         return Empty().eraseToAnyPublisher()
     }
     
-    // MARK: - SuccessActionCategory
-    func toSuccessCategory(_ apiCategories: [Models.Category]) -> Action {
-        ._getCategoryResponse(.success(apiCategories))
+    func fetchCategoryRequest(selected: SelectedCategoryRequest) -> AnyPublisher<Action, Never> {
+        switch selected {
+        case .popular:
+            return getPodcastsList(.api(.trendingFeeds()))
+                .map(Action._getPodcastsResponse)
+                .eraseToAnyPublisher()
+        case .recent:
+            return getPodcastsList(.api(.recentFeeds()))
+                .map(Action._getPodcastsResponse)
+                .eraseToAnyPublisher()
+        case .audiobook:
+            return getPodcastsList(.api(.feeds(by: .audiobook)))
+                .map(Action._getPodcastsResponse)
+                .eraseToAnyPublisher()
+        case .blog:
+            return getPodcastsList(.api(.feeds(by: .blog)))
+                .map(Action._getPodcastsResponse)
+                .eraseToAnyPublisher()
+        case .film:
+            return getPodcastsList(.api(.feeds(by: .film)))
+                .map(Action._getPodcastsResponse)
+                .eraseToAnyPublisher()
+        case .music:
+            return getPodcastsList(.api(.feeds(by: .music)))
+                .map(Action._getPodcastsResponse)
+                .eraseToAnyPublisher()
+        case .newsletter:
+            return getPodcastsList(.api(.feeds(by: .newsletter)))
+                .map(Action._getPodcastsResponse)
+                .eraseToAnyPublisher()
+        case .podcast:
+            return getPodcastsList(.api(.feeds(by: .podcast)))
+                .map(Action._getPodcastsResponse)
+                .eraseToAnyPublisher()
+        case .video:
+            return getPodcastsList(.api(.feeds(by: .video)))
+                .map(Action._getPodcastsResponse)
+                .eraseToAnyPublisher()
+        }
     }
     
-    // MARK: - FailActionCategory
-    func toFailCategory(_ error: Error) -> Just<Action> {
-        Just(._getCategoryResponse(.failure(error)))
-    }
+//    // MARK: - SuccessActionCategory
+//    func toSuccessCategory(_ apiCategories: [Models.Category]) -> Action {
+//        ._getCategoryResponse(.success(apiCategories))
+//    }
+//    
+//    // MARK: - FailActionCategory
+//    func toFailCategory(_ error: Error) -> Just<Action> {
+//        Just(._getCategoryResponse(.failure(error)))
+//    }
+//    
+//    // MARK: - SuccessActionFeed
+//    func toSuccessFeed(_ feeds: [Feed]) -> Action {
+//        ._getPodcastsResponse(.success(feeds))
+//    }
+//    
+//    // MARK: - FailActionFeed
+//    func toFailFeed(_ error: Error) -> Just<Action> {
+//        Just(._getPodcastsResponse(.failure(error)))
+//    }
     
-    // MARK: - SuccessActionFeed
-    func toSuccessFeed(_ feeds: [Feed]) -> Action {
-        ._getPodcastsResponse(.success(feeds))
-    }
+    static let liveStore = HomePageStore(
+        state: Self.State(),
+        reducer: Self(
+            getCategoryList: Repository.shared.perform(request: ),
+            getPodcastsList: Repository.shared.perform(request: )
+        ).reduce(_:with:)
+    )
     
-    // MARK: - FailActionFeed
-    func toFailFeed(_ error: Error) -> Just<Action> {
-        Just(._getPodcastsResponse(.failure(error)))
-    }
 }
 
 // MARK: - HomePageStore

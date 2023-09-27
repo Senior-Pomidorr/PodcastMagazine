@@ -24,7 +24,7 @@ struct CategoryCellView: View {
                 .frame(width: 150, height: 60)
                 .padding(.bottom, 0)
             
-            Text("\(categoryCellData.id)")
+            Text("\(categoryCellData.name)")
                 .foregroundStyle(.white)
                 .padding(.bottom, 20)
         }

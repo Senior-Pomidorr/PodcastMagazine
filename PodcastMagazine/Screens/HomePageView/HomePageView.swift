@@ -6,45 +6,53 @@
 //
 
 import SwiftUI
-import Models
 
 struct HomePageView: View {
 
-   // @State var homePageViewLoadingStatus: HomePageLoadingStatus = .none
-    @StateObject var store: HomePageStore = HomePageStore(
-        state: HomePageDomain.State(),
-        reducer: HomePageDomain(
-            getCategoryList: <#(String) -> AnyPublisher<[Category], Error>#>,
-            getPodcastsList: <#(String) -> AnyPublisher<[Feed], Error>#>
-        ).reduce(_:with:)
-    )
+    @StateObject var store: HomePageStore = HomePageDomain.liveStore
     
     var body: some View {
-        
-        switch homePageViewLoadingStatus {
-        case .none:
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 20) {
-                    ForEach(1..<11) { item in
-                        CategoryCellView(categoryCellData: Models.Category(id: item, name: ""))
-                    }
+        VStack {
+            HStack {
+                VStack {
+                    
+                    
                 }
-                .padding()
+                
+                
             }
-        case .loading:
-            ProgressView()
-        case let .error(error):
-            VStack {
-                Text(error.localizedDescription)
-                Image(systemName: "wifi.slash")
-                    .frame(width: 100, height: 100, alignment: .center)
-            }
+            
+         
+            
         }
-        
-
+        .onAppear {
+            store.send(.viewAppeared)
+        }
     }
 }
 
 #Preview {
     HomePageView()
 }
+
+//VStack {
+//    switch store.state.homePageLoadingStatus {
+//    case .none:
+//        ScrollView(.vertical, showsIndicators: false) {
+//         //   HStack(spacing: 20) {
+//                ForEach(store.state.podcastsList) { item in
+//                    Text("\(item.id)")
+//                }
+//        //    }
+//       //     .padding()
+//        }
+//    case .loading:
+//        ProgressView()
+//    case let .error(error):
+//        VStack {
+//            Text(error.localizedDescription)
+//            Image(systemName: "wifi.slash")
+//                .frame(width: 100, height: 100, alignment: .center)
+//        }
+//    }
+//}
