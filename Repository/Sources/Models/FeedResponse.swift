@@ -7,15 +7,12 @@
 
 import Foundation
 
-struct FeedResponse: Decodable {
-    let status: Bool
-    let feeds: [Feed]
+public struct FeedResponse: Decodable {
+    public let status: String
+    public let feeds: [Feed]
     
     /// Number of items returned in request
-    let count: Int
-    
-    /// Value of max parameter passed to request.
-    let max: Int
-    
-    let description: String
+    public let count: Int
+       
+    public let description: String
 }

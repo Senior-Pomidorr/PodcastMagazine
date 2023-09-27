@@ -6,12 +6,12 @@ import PackageDescription
 let package = Package(
     name: "Repository",
     platforms: [
-        .iOS(.v15)
+        .iOS(.v15),
+        .macOS(.v10_15),
     ],
     products: [
         .library(name: "Repository", targets: ["Repository"]),
         .library(name: "Models", targets: ["Models"]),
-        .library(name: "APIProvider", targets: ["APIProvider"]),
     ],
     dependencies: Dependencies.allCases.map(\.package),
     targets: [
@@ -19,35 +19,59 @@ let package = Package(
         .target(
             name: "APIProvider",
             dependencies: [
-                Dependencies.SwiftFP.target
+                "Models",
+                Dependencies.SwiftFP.target,
             ]),
         .target(
-            name: "Repository"),
+            name: "RealmProvider",
+            dependencies: [
+                Dependencies.Realm.target,
+                "Models",
+            ]),
+        .target(
+            name: "FirebaseAuthProvider",
+            dependencies: [
+                Dependencies.FirebaseAuth.target,
+            ]),
+        .target(
+            name: "Repository",
+            dependencies: [
+                "APIProvider",
+                "RealmProvider",
+                "FirebaseAuthProvider",
+            ]),
         .testTarget(
             name: "RepositoryTests",
-            dependencies: ["Repository"]),
+            dependencies: [
+                "Repository",
+                "APIProvider",
+                "Models",
+            ]),
     ]
 )
 
 //MARK: - Dependencies
 fileprivate enum Dependencies: CaseIterable {
-    case SwiftUDF
     case SwiftFP
     case Realm
+    case FirebaseAuth
     
     var package: Package.Dependency {
         switch self {
-        case .SwiftUDF: return .package(url: "https://github.com/ShapovalovIlya/SwiftUDF.git", branch: "main")
         case .SwiftFP: return .package(url: "https://github.com/ShapovalovIlya/SwiftFP.git", branch: "main")
         case .Realm: return .package(url: "https://github.com/realm/realm-swift.git", from: "10.42.3")
+        case .FirebaseAuth:
+            return .package(
+                url: "https://github.com/firebase/firebase-ios-sdk",
+                .upToNextMajor(from: "10.15.0"))
         }
     }
     
     var target: Target.Dependency {
         switch self {
-        case .SwiftUDF: return .product(name: "SwiftUDF", package: "SwiftUDF")
+        case .FirebaseAuth: return .product(name: "FirebaseAuth", package: "firebase-ios-sdk")
         case .SwiftFP: return .product(name: "SwiftFP", package: "SwiftFP")
-        case .Realm: return .product(name: "Realm-swift", package: "realm-swift")
+        case .Realm: return .product(name: "RealmSwift", package: "realm-swift")
         }
     }
 }
