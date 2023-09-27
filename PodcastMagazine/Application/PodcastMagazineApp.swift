@@ -12,7 +12,7 @@ struct PodcastMagazineApp: App {
     var body: some Scene {
         WindowGroup {
 //            HomePageView()
-            SearchView()
+            SearchContentView()
         }
     }
 }

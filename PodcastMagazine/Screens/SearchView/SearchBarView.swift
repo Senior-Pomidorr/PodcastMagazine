@@ -17,8 +17,8 @@ struct SearchBarView: View {
                 .foregroundColor(Color.searchBarText)
             
             Image(systemName: searchText.isEmpty ? "magnifyingglass" : "xmark.square")
-                .font(.title2)
                 .foregroundColor(Color.secondaryText)
+                .font(.title2)
                 .onTapGesture {
                     searchText = ""
                 }
@@ -30,7 +30,6 @@ struct SearchBarView: View {
             RoundedRectangle(cornerRadius: 12)
                 .fill(Color.white)
         }
-//        .padding()
     }
 }
 

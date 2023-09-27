@@ -2,64 +2,16 @@
 //  SearchView.swift
 //  PodcastMagazine
 //
-//  Created by Павел Грицков on 25.09.23.
+//  Created by Павел Грицков on 27.09.23.
 //
-
-import SwiftUI
 import Models
+import SwiftUI
 
 struct SearchView: View {
-    @StateObject private var store = SearchStore(
-        state: SearchDomain.State(),
-        reduser: SearchDomain.live.reduce(_:with:)
-    )
-    
-    var body: some View {
-        NavigationView {
-            switch store.state.searchScreenStatus {
-            case .none:
-                SearchScreenView(text: searchText())
-            case .loading:
-                ProgressView()
-            case .error(let error):
-                Text("Произошла ошибка: \(error.localizedDescription)")
-            }
-        }
-    }
-    
-    func searchText() -> Binding<String> {
-        .init {
-            store.state.textQuery
-        } set: {
-            store.send(.didTypeQuery($0))
-        }
-        
-    }
-}
-
-// MARK: - Previews
-struct SearchView_Previews: PreviewProvider {
-    static var previews: some View {
-        SearchView()
-    }
-}
-
-//#Preview {
-//    SearchView()
-//}
-
-struct SearchScreenView: View {
     @Binding var text: String
-    
-//    var rows = [
-//        GridItem(.flexible(minimum: 60, maximum: 84))
-//    ]
-    
-//    var colum: [GridItem] = [
-//        GridItem(.flexible(), spacing: 17),
-//        GridItem(.flexible())
-//    ]
-    
+    var topTtems: [Feed]?
+    var allTtems: [Feed]?
+
     var body: some View {
         ZStack {
             // Временный фоновый цвет
@@ -73,6 +25,7 @@ struct SearchScreenView: View {
                         Text("Search")
                             .frame(maxWidth: .infinity)
                         SearchBarView(searchText: $text)
+                            .frame(height: 48.0)
                     }
                     .padding(.horizontal, 32)
                     
@@ -87,11 +40,27 @@ struct SearchScreenView: View {
     }
 }
 
+// MARK: - SearchView_Previews
+struct SearchView_Previews: PreviewProvider {
+    static var item = Feed.sample
+    
+    static var previews: some View {
+        SearchView(
+            text: .constant("Ppdlodca"),
+            topTtems: [item],
+            allTtems: [item]
+        )
+    }
+}
+
 
 // MARK: - SearchHGridView
 struct SearchHGridView: View {
+    let mocItems: [Feed] = Array(repeating: Feed.sample, count: 20)
+    var topItems: [Feed]?
+    
     var rows = [
-        GridItem(.flexible(minimum: 60, maximum: 84))
+        GridItem(.flexible(minimum: 84, maximum: 84))
     ]
     
     var body: some View {
@@ -109,9 +78,8 @@ struct SearchHGridView: View {
                           spacing: 17,
                           pinnedViews: [],
                           content: {
-                    ForEach(0..<30) { index in
-                        Rectangle()
-                            .fill(.gray)
+                    ForEach(mocItems.indices, id: \.self) { index in
+                        PodcastElement(item: nil)
                             .frame(width: calculateItemWidth())
                     }
                 })
@@ -130,9 +98,11 @@ struct SearchHGridView: View {
     }
 }
 
-
 // MARK: - SearchVGridView
 struct SearchVGridView: View {
+    let mocItems: [Feed] = Array(repeating: Feed.sample, count: 20)
+    var allItems: [Feed]?
+    
     var colum: [GridItem] = [
         GridItem(.flexible(), spacing: 17),
         GridItem(.flexible())
@@ -153,29 +123,13 @@ struct SearchVGridView: View {
                     alignment: .center,
                     spacing: 17,
                     pinnedViews: []) {
-                        ForEach(0..<30) { index in
-                            Rectangle()
+                        ForEach(mocItems.indices, id: \.self) { index in
+                            PodcastElement(item: nil)
                                 .frame(height: 84)
                         }
                     }
             }
             .padding(.horizontal, 33)
-        }
-    }
-}
-
-
-struct GenreItemView: View {
-    let mocData = Feed.sample
-    
-    var body: some View {
-        HStack {
-            Text(mocData.title)
-        }
-        .frame(width: 147, height: 84)
-        .background {
-            RoundedRectangle(cornerRadius: 10)
-                .fill(Color.blue)
         }
     }
 }
