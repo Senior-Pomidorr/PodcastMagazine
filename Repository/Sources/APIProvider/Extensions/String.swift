@@ -9,7 +9,7 @@ import Foundation
 import CommonCrypto
 
 extension String {
-    var sha1: String {
+    func sha1() -> String {
         let data = Data(self.utf8)
         var digest = [UInt8](
             repeating: 0,
