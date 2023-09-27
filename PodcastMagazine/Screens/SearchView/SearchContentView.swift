@@ -14,7 +14,6 @@ struct SearchContentView: View {
         reduser: SearchDomain.live.reduce(_:with:)
     )
     
-    // данные
     let items: [Feed] = [Feed.sample]
     
     var body: some View {

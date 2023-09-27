@@ -10,12 +10,22 @@ import Foundation
 import Models
 
 
-struct SearchResultDomain {
+struct ResultDomain {
     // MARK: - State
     struct State {
         var textQuery: String
         var allGenres: [Feed]
         var searchScreenStatus: ScreenStatus
+        
+        init(
+            textQuery: String = .init(),
+            allGenres: [Feed] = .init(),
+            searchScreenStatus: ScreenStatus = .none
+        ) {
+            self.textQuery = textQuery
+            self.allGenres = allGenres
+            self.searchScreenStatus = searchScreenStatus
+        }
     }
     
     // MARK: - Action

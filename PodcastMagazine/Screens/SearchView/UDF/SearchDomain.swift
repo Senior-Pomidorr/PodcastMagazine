@@ -20,7 +20,7 @@ enum ScreenStatus: Equatable {
 }
 
 struct SearchDomain {
-    
+    // MARK: - State
     struct State {
         var textQuery: String
         var topGenres: [Feed]

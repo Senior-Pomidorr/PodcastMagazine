@@ -11,6 +11,8 @@ struct SearchView: View {
     @Binding var text: String
     var topTtems: [Feed]?
     var allTtems: [Feed]?
+    
+    @State private var showingDetailView = false
 
     var body: some View {
         ZStack {
@@ -26,6 +28,9 @@ struct SearchView: View {
                             .frame(maxWidth: .infinity)
                         SearchBarView(searchText: $text)
                             .frame(height: 48.0)
+                            .onSubmit {
+                                showingDetailView = true
+                            }
                     }
                     .padding(.horizontal, 32)
                     
@@ -36,6 +41,10 @@ struct SearchView: View {
                 
                 SearchVGridView()
             }
+        }
+        .navigationBarHidden(true)
+        .fullScreenCover(isPresented: $showingDetailView) {
+            Text("Destination DetailView. User text is \(text)")
         }
     }
 }
@@ -79,8 +88,12 @@ struct SearchHGridView: View {
                           pinnedViews: [],
                           content: {
                     ForEach(mocItems.indices, id: \.self) { index in
-                        PodcastElement(item: nil)
-                            .frame(width: calculateItemWidth())
+                        NavigationLink(
+                            destination: Text("Destination. id: \(index), Category - top"),
+                            label: {
+                                PodcastElement(item: nil)
+                                    .frame(width: calculateItemWidth())
+                            })
                     }
                 })
                 .padding(.horizontal, 33)
@@ -124,8 +137,12 @@ struct SearchVGridView: View {
                     spacing: 17,
                     pinnedViews: []) {
                         ForEach(mocItems.indices, id: \.self) { index in
-                            PodcastElement(item: nil)
-                                .frame(height: 84)
+                            NavigationLink(
+                                destination: Text("Destination. id: \(index), Category - all"),
+                                label: {
+                                    PodcastElement(item: nil)
+                                        .frame(height: 84)
+                                })
                         }
                     }
             }

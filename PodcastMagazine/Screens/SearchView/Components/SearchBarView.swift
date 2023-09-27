@@ -14,6 +14,7 @@ struct SearchBarView: View {
         HStack {
             TextField("Podcast, channel, or artists", text: $searchText)
                 .autocorrectionDisabled(true)
+                .keyboardType(.webSearch)
                 .foregroundColor(Color.searchBarText)
             
             Image(systemName: searchText.isEmpty ? "magnifyingglass" : "xmark.square")
