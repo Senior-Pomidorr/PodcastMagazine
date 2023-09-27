@@ -14,7 +14,7 @@ struct ResultDomain {
     // MARK: - State
     struct State {
         var textQuery: String
-        var allGenres: [Feed]
+        var genres: [Feed]
         var searchScreenStatus: ScreenStatus
         
         init(
@@ -23,7 +23,7 @@ struct ResultDomain {
             searchScreenStatus: ScreenStatus = .none
         ) {
             self.textQuery = textQuery
-            self.allGenres = allGenres
+            self.genres = allGenres
             self.searchScreenStatus = searchScreenStatus
         }
     }
@@ -31,17 +31,52 @@ struct ResultDomain {
     // MARK: - Action
     enum Action {
         case viewAppeared
-        case didTypeQuery(String)
-        case _getQueryGenresRequest(String)
-        case _queryGenresResponce(Result<[Feed], Error>)
-        case _getAllGenresRequest(String)
-        case _allGenresResponce(Result<[Feed], Error>)
-        case pressedSearchClearButton
-        case pressedButtonBack
+        case _getQueryRequest
+        case _queryResponce(Result<[Feed], Error>)
     }
     
     // MARK: - Dependencies
     let getQueryGenres: (String) -> AnyPublisher<[Feed], Error>
-    let getAllGenres: (String) -> AnyPublisher<[Feed], Error>
     
+    func reduce(
+        _ state: inout State,
+        with action: Action
+    ) -> AnyPublisher<Action, Never> {
+        
+        switch action {
+        case .viewAppeared:
+            guard state.searchScreenStatus != .loading else {
+                break
+            }
+            state.searchScreenStatus = .loading
+            return Just(._getQueryRequest)
+                .eraseToAnyPublisher()
+            
+        case ._getQueryRequest:
+            return getQueryGenres("url")
+                .map(toSuccess(_:))
+                .catch(toFail(_:))
+                .eraseToAnyPublisher()
+            
+        case let ._queryResponce(.success(result)):
+            state.searchScreenStatus = .none
+            state.genres = result
+            
+        case let ._queryResponce(.failure(error)):
+            state.searchScreenStatus = .error(error)
+        }
+        
+        return Empty().eraseToAnyPublisher()
+    }
+    
+    func toSuccess(_ genres: [Feed]) -> Action {
+        ._queryResponce(.success(genres))
+    }
+    
+    func toFail(_ error: Error) -> Just<Action> {
+        Just(._queryResponce(.failure(error)))
+    }
+    
+    static var live = Self(
+        getQueryGenres: {_ in Empty().eraseToAnyPublisher() })
 }
