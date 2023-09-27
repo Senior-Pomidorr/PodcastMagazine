@@ -8,25 +8,25 @@ import Combine
 import Foundation
 
 final class SearchStore: ObservableObject {
-    @Published private(set) var state: SearchScreenDomain.State
+    @Published private(set) var state: SearchDomain.State
     
     private var reduser: (
-        inout SearchScreenDomain.State,
-        SearchScreenDomain.Action
-    ) -> AnyPublisher<SearchScreenDomain.Action, Never>
+        inout SearchDomain.State,
+        SearchDomain.Action
+    ) -> AnyPublisher<SearchDomain.Action, Never>
     
     // сет который хранит подписки
     private var canseleble: Set<AnyCancellable> = .init()
     
     init(
-        state: SearchScreenDomain.State,
-        reduser: @escaping (inout SearchScreenDomain.State, SearchScreenDomain.Action) -> AnyPublisher<SearchScreenDomain.Action, Never>
+        state: SearchDomain.State,
+        reduser: @escaping (inout SearchDomain.State, SearchDomain.Action) -> AnyPublisher<SearchDomain.Action, Never>
     ) {
         self.state = state
         self.reduser = reduser
     }
     
-    func send(_ action: SearchScreenDomain.Action) {
+    func send(_ action: SearchDomain.Action) {
         reduser(&state, action)
         // thread, с помощью которого следует получать элементы от издателя.
             .receive(on: DispatchQueue.main)

@@ -19,13 +19,25 @@ enum ScreenStatus: Equatable {
     }
 }
 
-struct SearchScreenDomain {
+struct SearchDomain {
     
     struct State {
-        var textQuery: String = ""
-        var topGenres: [Feed] = []
-        var allGenres: [Feed] = []
-        var searchScreenStatus: ScreenStatus = .none
+        var textQuery: String
+        var topGenres: [Feed]
+        var allGenres: [Feed]
+        var searchScreenStatus: ScreenStatus
+        
+        init(
+            textQuery: String = .init(),
+            topGenres: [Feed] = .init(),
+            allGenres: [Feed] = .init(),
+            searchScreenStatus: ScreenStatus = .none
+        ) {
+            self.textQuery = textQuery
+            self.topGenres = topGenres
+            self.allGenres = allGenres
+            self.searchScreenStatus = searchScreenStatus
+        }
     }
     
     // MARK: - Action

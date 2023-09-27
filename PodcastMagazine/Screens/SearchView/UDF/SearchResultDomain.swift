@@ -10,7 +10,7 @@ import Foundation
 import Models
 
 
-struct SearchScreenResultDomain {
+struct SearchResultDomain {
     // MARK: - State
     struct State {
         var textQuery: String
