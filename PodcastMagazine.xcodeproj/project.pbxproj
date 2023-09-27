@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0D6F8C192AC30DDC00FB963B /* PlaylistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D6F8C182AC30DDC00FB963B /* PlaylistView.swift */; };
+		0D6F8C1D2AC3136F00FB963B /* FavoritesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D6F8C1C2AC3136E00FB963B /* FavoritesCell.swift */; };
+		0D6F8C212AC3688D00FB963B /* PlaylistCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D6F8C202AC3688D00FB963B /* PlaylistCell.swift */; };
+		0D6F8C232AC3784700FB963B /* CreatePlaylistButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D6F8C222AC3784700FB963B /* CreatePlaylistButton.swift */; };
 		3C7D49C72AC2F29C0084CD25 /* ProfileDomain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7D49C62AC2F29C0084CD25 /* ProfileDomain.swift */; };
 		3C7D49C92AC2F2C00084CD25 /* AccountSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7D49C82AC2F2C00084CD25 /* AccountSettingsView.swift */; };
 		3C7D49CB2AC2F2D10084CD25 /* ProfileSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7D49CA2AC2F2D10084CD25 /* ProfileSettingsView.swift */; };
@@ -17,10 +21,6 @@
 		3C7D49D72AC31ABB0084CD25 /* SaveButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7D49D62AC31ABB0084CD25 /* SaveButtonView.swift */; };
 		3C7D49D92AC31AD40084CD25 /* ProfileImageSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7D49D82AC31AD40084CD25 /* ProfileImageSectionView.swift */; };
 		3C7D49DB2AC31AF00084CD25 /* GenderSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7D49DA2AC31AF00084CD25 /* GenderSectionView.swift */; };
-		0D6F8C192AC30DDC00FB963B /* Playlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D6F8C182AC30DDC00FB963B /* Playlist.swift */; };
-		0D6F8C1D2AC3136F00FB963B /* FavoritesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D6F8C1C2AC3136E00FB963B /* FavoritesCell.swift */; };
-		0D6F8C212AC3688D00FB963B /* PlaylistCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D6F8C202AC3688D00FB963B /* PlaylistCell.swift */; };
-		0D6F8C232AC3784700FB963B /* CreatePlaylistButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D6F8C222AC3784700FB963B /* CreatePlaylistButton.swift */; };
 		86F3420E2AC19B870007213C /* Repository in Frameworks */ = {isa = PBXBuildFile; productRef = 86F3420D2AC19B870007213C /* Repository */; };
 		86F342102AC19B8D0007213C /* Models in Frameworks */ = {isa = PBXBuildFile; productRef = 86F3420F2AC19B8D0007213C /* Models */; };
 		86F342122AC19DBD0007213C /* Repository in Resources */ = {isa = PBXBuildFile; fileRef = 86F342112AC19DBD0007213C /* Repository */; };
@@ -32,6 +32,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0D6F8C182AC30DDC00FB963B /* PlaylistView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistView.swift; sourceTree = "<group>"; };
+		0D6F8C1C2AC3136E00FB963B /* FavoritesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesCell.swift; sourceTree = "<group>"; };
+		0D6F8C202AC3688D00FB963B /* PlaylistCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistCell.swift; sourceTree = "<group>"; };
+		0D6F8C222AC3784700FB963B /* CreatePlaylistButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePlaylistButton.swift; sourceTree = "<group>"; };
 		3C7D49C62AC2F29C0084CD25 /* ProfileDomain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileDomain.swift; sourceTree = "<group>"; };
 		3C7D49C82AC2F2C00084CD25 /* AccountSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSettingsView.swift; sourceTree = "<group>"; };
 		3C7D49CA2AC2F2D10084CD25 /* ProfileSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingsView.swift; sourceTree = "<group>"; };
@@ -42,10 +46,6 @@
 		3C7D49D62AC31ABB0084CD25 /* SaveButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveButtonView.swift; sourceTree = "<group>"; };
 		3C7D49D82AC31AD40084CD25 /* ProfileImageSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageSectionView.swift; sourceTree = "<group>"; };
 		3C7D49DA2AC31AF00084CD25 /* GenderSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenderSectionView.swift; sourceTree = "<group>"; };
-		0D6F8C182AC30DDC00FB963B /* Playlist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Playlist.swift; sourceTree = "<group>"; };
-		0D6F8C1C2AC3136E00FB963B /* FavoritesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesCell.swift; sourceTree = "<group>"; };
-		0D6F8C202AC3688D00FB963B /* PlaylistCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistCell.swift; sourceTree = "<group>"; };
-		0D6F8C222AC3784700FB963B /* CreatePlaylistButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePlaylistButton.swift; sourceTree = "<group>"; };
 		86F342112AC19DBD0007213C /* Repository */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Repository; sourceTree = "<group>"; };
 		A17F6E8E2AC217D800819964 /* HomePageDomain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageDomain.swift; sourceTree = "<group>"; };
 		A1A44D1F2AC18C9700F2FED9 /* PodcastMagazine.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PodcastMagazine.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -68,6 +68,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0D0E87AE2AC48BD00036FE52 /* PlaylistView */ = {
+			isa = PBXGroup;
+			children = (
+				0D6F8C182AC30DDC00FB963B /* PlaylistView.swift */,
+				0D0E87AF2AC48C1B0036FE52 /* Components */,
+			);
+			path = PlaylistView;
+			sourceTree = "<group>";
+		};
+		0D0E87AF2AC48C1B0036FE52 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				0D6F8C1C2AC3136E00FB963B /* FavoritesCell.swift */,
+				0D6F8C202AC3688D00FB963B /* PlaylistCell.swift */,
+				0D6F8C222AC3784700FB963B /* CreatePlaylistButton.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
 		3C7D49C52AC2F2870084CD25 /* ProfileScreen */ = {
 			isa = PBXGroup;
 			children = (
@@ -150,6 +169,7 @@
 			children = (
 				3C7D49C52AC2F2870084CD25 /* ProfileScreen */,
 				A1A44D322AC18D4A00F2FED9 /* HomePageView */,
+				0D0E87AE2AC48BD00036FE52 /* PlaylistView */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -159,7 +179,6 @@
 			children = (
 				A1A44D332AC18D6A00F2FED9 /* HomePageView.swift */,
 				A17F6E8E2AC217D800819964 /* HomePageDomain.swift */,
-				0D6F8C182AC30DDC00FB963B /* Playlist.swift */,
 			);
 			path = HomePageView;
 			sourceTree = "<group>";
@@ -167,9 +186,6 @@
 		A1A44D352AC18D8000F2FED9 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				0D6F8C1C2AC3136E00FB963B /* FavoritesCell.swift */,
-				0D6F8C202AC3688D00FB963B /* PlaylistCell.swift */,
-				0D6F8C222AC3784700FB963B /* CreatePlaylistButton.swift */,
 				A1A44D262AC18C9800F2FED9 /* Assets.xcassets */,
 			);
 			path = Resources;
@@ -265,7 +281,7 @@
 				3C7D49D22AC2FDEC0084CD25 /* ProfileHeaderView.swift in Sources */,
 				A17F6E8F2AC217D800819964 /* HomePageDomain.swift in Sources */,
 				0D6F8C212AC3688D00FB963B /* PlaylistCell.swift in Sources */,
-				0D6F8C192AC30DDC00FB963B /* Playlist.swift in Sources */,
+				0D6F8C192AC30DDC00FB963B /* PlaylistView.swift in Sources */,
 				0D6F8C232AC3784700FB963B /* CreatePlaylistButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

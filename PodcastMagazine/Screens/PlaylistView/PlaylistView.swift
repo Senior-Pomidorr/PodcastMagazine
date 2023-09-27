@@ -8,7 +8,7 @@
 import SwiftUI
 import Models
 
-struct Playlist: View {
+struct PlaylistView: View {
     var mockFeed: [Feed] = [Feed.sample]
     
     
@@ -67,5 +67,5 @@ struct Playlist: View {
 
 
 #Preview {
-    Playlist()
+    PlaylistView()
 }
