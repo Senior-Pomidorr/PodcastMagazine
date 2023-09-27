@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Feed: Decodable, Identifiable {
+public struct Feed: Decodable, Identifiable, Equatable {
     /// The internal PodcastIndex.org Feed ID.
     public let id: Int
     
