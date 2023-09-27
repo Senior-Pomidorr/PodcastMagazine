@@ -17,7 +17,7 @@ extension Episode: Persistable {
             let image = URL(string: managedObject.image),
             let feedImage = URL(string: managedObject.feedImage)
         else {
-            throw RealmError.missingValue
+            throw RealmManager.RealmError.missingValue
         }
         self.init(
             id: managedObject.id,

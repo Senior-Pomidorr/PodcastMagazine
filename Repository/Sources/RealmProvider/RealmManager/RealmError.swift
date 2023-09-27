@@ -7,6 +7,8 @@
 
 import Foundation
 
-public enum RealmError: Error, LocalizedError {
-    case missingValue
+public extension RealmManager {
+    enum RealmError: Error, LocalizedError {
+        case missingValue
+    }
 }
