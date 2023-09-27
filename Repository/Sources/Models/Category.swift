@@ -7,10 +7,11 @@
 
 import Foundation
 
-public struct Category: Identifiable, Decodable {
+public struct Category: Identifiable, Decodable, Equatable {
     public let id: Int
     public let name: String
     
+    //MARK: - init(_:)
     public init(
         id: Int,
         name: String
@@ -18,7 +19,8 @@ public struct Category: Identifiable, Decodable {
         self.id = id
         self.name = name
     }
-    
+
+    //MARK: - Sample
     public static let sample: Category = .init(
         id: 2,
         name: "Books"
