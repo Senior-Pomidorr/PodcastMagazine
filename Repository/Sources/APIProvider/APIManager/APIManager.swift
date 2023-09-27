@@ -106,13 +106,11 @@ private extension APIManager {
             return response.data
             
         case .invalidRequest:
-            let message = String(data: response.data, encoding: .utf8)
-            logger?.error("\(message ?? "empty")")
+            logger?.error("\(String(data: response.data, encoding: .utf8) ?? "empty")")
             throw APIError.invalidRequest(response.response.url?.description ?? "empty")
             
         case .notAuthenticated:
-            let message = String(data: response.data, encoding: .utf8)
-            logger?.error("\(message ?? "empty")")
+            logger?.error("\(String(data: response.data, encoding: .utf8) ?? "empty")")
             throw URLError(.userAuthenticationRequired)
             
         case .none:

@@ -19,6 +19,7 @@ public final class Repository {
     public typealias ResponsePublisher<T> = AnyPublisher<Response<T>, Never>
     
     /// Shared singleton Repository object
+    @available(*, deprecated, message: "Для работы с репозиторием используйте провайдеры.")
     public static let shared = Repository()
     
     //MARK: - Private properties

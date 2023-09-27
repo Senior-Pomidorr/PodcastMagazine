@@ -9,43 +9,7 @@ import Foundation
 import RealmSwift
 import Models
 
-extension Medium: PersistableEnum {
-    public static var allCases: [Medium] {
-        var arr = [Medium]()
-        arr.append(.audiobook)
-        arr.append(.blog)
-        arr.append(.film)
-        arr.append(.music)
-        arr.append(.newsletter)
-        arr.append(.podcast)
-        arr.append(.video)
-        return arr
-    }
-}
-
-extension Feed: Persistable {
-    init(_ managedObject: FeedObject) {
-        let categories = managedObject.categories
-            .reduce(into: [String: String]()
-            ) { partialResult, object in
-                partialResult.updateValue(object.name, forKey: object.id)
-            }
-        self.init(
-            id: managedObject.id,
-            url: URL(string: managedObject.url)!,
-            title: managedObject.title,
-            language: managedObject.language,
-            medium:  managedObject.medium,
-            categories: categories
-        )
-    }
-    
-    func managedObject() -> FeedObject {
-        FeedObject(feed: self)
-    }
-}
-
-final class FeedObject: Object, ObjectKeyIdentifiable, Encodable {
+final class FeedObject: Object, ObjectKeyIdentifiable {
     @Persisted var id: Int
     @Persisted var url: String
     @Persisted var title: String
@@ -64,7 +28,9 @@ final class FeedObject: Object, ObjectKeyIdentifiable, Encodable {
     override class func primaryKey() -> String? {
         "id"
     }
-    
+}
+
+extension FeedObject: Encodable {
     //MARK: - CodingKeys
     enum CodingKeys: String, CodingKey {
         case id
@@ -74,7 +40,7 @@ final class FeedObject: Object, ObjectKeyIdentifiable, Encodable {
         case medium
         case categories
     }
-
+    
     //MARK: - encode(to:)
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
