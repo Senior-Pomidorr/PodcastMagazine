@@ -19,7 +19,7 @@ struct PodcastElement: View {
                 VStack(alignment: .leading) {
                     Text(mocItem.title)
                         .font(.body)
-                    Text(mocItem.categories.first!.name)
+//                    Text(mocItem.categories.first!.name)
                     Text(mocItem.medium.rawValue)
                 }
                 .font(.caption)
