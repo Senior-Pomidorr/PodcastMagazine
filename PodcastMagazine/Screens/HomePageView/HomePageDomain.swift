@@ -26,11 +26,8 @@ enum SelectedCategoryRequest {
     case popular
     case recent
     case audiobook
-    case blog
     case film
     case music
-    case newsletter
-    case podcast
     case video
 }
 
@@ -64,9 +61,8 @@ struct HomePageDomain {
     }
     
     // MARK: - Dependencies
-
-    let getCategoryList: RepositoryRequest<CategoryResponse>
-    let getPodcastsList: RepositoryRequest<FeedResponse>
+    
+    let provider: HomeRepositoryProvider
     
     // MARK: - Reducer
     func reduce(
@@ -87,12 +83,12 @@ struct HomePageDomain {
             .eraseToAnyPublisher()
             
         case ._getCategoryRequest:
-            return getCategoryList(.api(.categories))
+            return provider.getCategoryRequest()
                 .map(Action._getCategoryResponse)
                 .eraseToAnyPublisher()
             
         case ._getPodcastRequest:
-            return getPodcastsList(.api(.trendingFeeds()))
+            return provider.getFeedRequest(.trendingFeeds())
                 .map(Action._getPodcastsResponse)
                 .eraseToAnyPublisher()
                   
@@ -123,39 +119,39 @@ struct HomePageDomain {
     func fetchCategoryRequest(selected: SelectedCategoryRequest) -> AnyPublisher<Action, Never> {
         switch selected {
         case .popular:
-            return getPodcastsList(.api(.trendingFeeds()))
+            return provider.getFeedRequest(.trendingFeeds())
                 .map(Action._getPodcastsResponse)
                 .eraseToAnyPublisher()
         case .recent:
-            return getPodcastsList(.api(.recentFeeds()))
+            return provider.getFeedRequest(.recentFeeds())
                 .map(Action._getPodcastsResponse)
                 .eraseToAnyPublisher()
         case .audiobook:
-            return getPodcastsList(.api(.feeds(by: .audiobook)))
+            return provider.getFeedRequest(.feeds(by: .audiobook))
                 .map(Action._getPodcastsResponse)
                 .eraseToAnyPublisher()
-        case .blog:
-            return getPodcastsList(.api(.feeds(by: .blog)))
-                .map(Action._getPodcastsResponse)
-                .eraseToAnyPublisher()
+//        case .blog:
+//            return provider.getFeedRequest(.feeds(by: .blog))
+//                .map(Action._getPodcastsResponse)
+//                .eraseToAnyPublisher()
         case .film:
-            return getPodcastsList(.api(.feeds(by: .film)))
+            return provider.getFeedRequest(.feeds(by: .film))
                 .map(Action._getPodcastsResponse)
                 .eraseToAnyPublisher()
         case .music:
-            return getPodcastsList(.api(.feeds(by: .music)))
+            return provider.getFeedRequest(.feeds(by: .music))
                 .map(Action._getPodcastsResponse)
                 .eraseToAnyPublisher()
-        case .newsletter:
-            return getPodcastsList(.api(.feeds(by: .newsletter)))
-                .map(Action._getPodcastsResponse)
-                .eraseToAnyPublisher()
-        case .podcast:
-            return getPodcastsList(.api(.feeds(by: .podcast)))
-                .map(Action._getPodcastsResponse)
-                .eraseToAnyPublisher()
+//        case .newsletter:
+//            return provider.getFeedRequest(.feeds(by: .newsletter))
+//                .map(Action._getPodcastsResponse)
+//                .eraseToAnyPublisher()
+//        case .podcast:
+//            return provider.getFeedRequest(.feeds(by: .podcast))
+//                .map(Action._getPodcastsResponse)
+//                .eraseToAnyPublisher()
         case .video:
-            return getPodcastsList(.api(.feeds(by: .video)))
+            return provider.getFeedRequest(.feeds(by: .video))
                 .map(Action._getPodcastsResponse)
                 .eraseToAnyPublisher()
         }
@@ -183,10 +179,7 @@ struct HomePageDomain {
     
     static let liveStore = HomePageStore(
         state: Self.State(),
-        reducer: Self(
-            getCategoryList: Repository.shared.perform(request: ),
-            getPodcastsList: Repository.shared.perform(request: )
-        ).reduce(_:with:)
+        reducer: Self(provider: .live).reduce(_:with:)
     )
     
 }

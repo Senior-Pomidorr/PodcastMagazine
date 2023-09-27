@@ -8,21 +8,13 @@
 import SwiftUI
 
 struct HomePageView: View {
-
+    
     @StateObject var store: HomePageStore = HomePageDomain.liveStore
     
     var body: some View {
-        VStack {
-            HStack {
-                VStack {
-                    
-                    
-                }
-                
-                
-            }
-            
-         
+        GeometryReader { geometry in
+            Text("Tony Stark")
+                .font(.custom(.light, size: 30))
             
         }
         .onAppear {
