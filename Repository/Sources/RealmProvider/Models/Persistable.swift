@@ -10,8 +10,6 @@ import RealmSwift
 
 protocol Persistable {
     associatedtype ManagedObject: RealmSwift.Object
-    
-    init(_ managedObject: ManagedObject)
-    
+    init(_ managedObject: ManagedObject) throws
     func managedObject() -> ManagedObject
 }

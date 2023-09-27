@@ -18,11 +18,18 @@ final class FeedObject: Object, ObjectKeyIdentifiable {
     @Persisted var categories: List<CategoryObject>
     
     init(feed: Feed) {
+        super.init()
         self.id = feed.id
         self.url = feed.url.absoluteString
         self.title = feed.title
         self.language = feed.language
         self.medium = feed.medium
+        guard let categories = feed.categories else {
+            return
+        }
+        self.categories = categories.reduce(into: self.categories, { partialResult, category in
+            partialResult.append(.init(id: category.key, name: category.value))
+        })
     }
     
     override class func primaryKey() -> String? {

@@ -10,7 +10,11 @@ import Models
 import RealmSwift
 
 extension Feed: Persistable {
-    init(_ managedObject: FeedObject) {
+    init(_ managedObject: FeedObject) throws {
+        guard let url = URL(string: managedObject.url) else {
+            throw RealmError.missingValue
+        }
+        
         let categories = managedObject.categories
             .reduce(into: [String: String]()
             ) { partialResult, object in
@@ -18,7 +22,7 @@ extension Feed: Persistable {
             }
         self.init(
             id: managedObject.id,
-            url: URL(string: managedObject.url)!,
+            url: url,
             title: managedObject.title,
             language: managedObject.language,
             medium:  managedObject.medium,
