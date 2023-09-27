@@ -22,7 +22,7 @@ public struct Feed: Decodable, Identifiable, Equatable {
     public let medium: Medium?
     
     /// An array of categories, where the index is the Category ID and the value is the Category Name.
-    public let categories: [String: String]
+    public let categories: [String: String]?
     
     //MARK: - init(_:)
     public init(
@@ -31,7 +31,7 @@ public struct Feed: Decodable, Identifiable, Equatable {
         title: String,
         language: String,
         medium: Medium?,
-        categories: [String: String]
+        categories: [String: String]?
     ) {
         self.id = id
         self.url = url
