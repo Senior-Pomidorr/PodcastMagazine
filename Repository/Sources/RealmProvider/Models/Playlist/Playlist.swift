@@ -10,16 +10,16 @@ import Models
 import RealmSwift
 
 extension Playlist: Persistable {
-    typealias ManagedObject = PlaylistObject
+    public typealias ManagedObject = PlaylistObject
     
     //MARK: - PropertyValue
-    enum PropertyValue: PropertyValueType {
+    public enum PropertyValue: PropertyValueType {
         case id(UUID)
         case image(String)
         case name(String)
         case episodes([Episode])
         
-        var propertyValuePair: PropertyValuePair {
+        public var propertyValuePair: PropertyValuePair {
             switch self {
             case let .id(id): return ("id", id)
             case let .image(image): return ("image", image)
@@ -30,7 +30,7 @@ extension Playlist: Persistable {
     }
     
     //MARK: - init(managedObject:)
-    init(_ managedObject: PlaylistObject) throws {
+    public init(_ managedObject: PlaylistObject) throws {
         let episodes = try managedObject.episodes.map(Episode.init)
         self.init(
             id: managedObject.id,
@@ -40,7 +40,7 @@ extension Playlist: Persistable {
         )
     }
     
-    func managedObject() -> PlaylistObject {
+    public func managedObject() -> PlaylistObject {
         PlaylistObject(playlist: self)
     }
 }

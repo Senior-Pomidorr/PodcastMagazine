@@ -8,8 +8,8 @@
 import Foundation
 import RealmSwift
 
-final class CategoryObject: Object, ObjectKeyIdentifiable {
-    @Persisted var id: String
+public final class CategoryObject: Object, ObjectKeyIdentifiable {
+    @Persisted public var id: String
     @Persisted var name: String
     
     init(id: String, name: String) {

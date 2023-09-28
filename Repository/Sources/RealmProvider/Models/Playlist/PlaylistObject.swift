@@ -9,11 +9,11 @@ import Foundation
 import RealmSwift
 import Models
 
-final class PlaylistObject: Object, ObjectKeyIdentifiable {
-    @Persisted var id: UUID
-    @Persisted var image: String
-    @Persisted var name: String
-    @Persisted var episodes: List<EpisodeObject>
+public final class PlaylistObject: Object, ObjectKeyIdentifiable {
+    @Persisted public var id: UUID
+    @Persisted public var image: String
+    @Persisted public var name: String
+    @Persisted public var episodes: List<EpisodeObject>
     
     init(playlist: Playlist) {
         super.init()

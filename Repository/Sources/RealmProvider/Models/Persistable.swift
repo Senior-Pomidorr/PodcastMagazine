@@ -8,7 +8,7 @@
 import Foundation
 import RealmSwift
 
-protocol Persistable {
+public protocol Persistable {
     associatedtype ManagedObject: RealmSwift.Object
     associatedtype PropertyValue: PropertyValueType
     

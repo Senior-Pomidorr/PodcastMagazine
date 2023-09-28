@@ -10,10 +10,10 @@ import Models
 import RealmSwift
 
 extension Feed: Persistable {
-    typealias ManagedObject = FeedObject
+    public typealias ManagedObject = FeedObject
     
     //MARK: - PropertyValue
-    enum PropertyValue: PropertyValueType {
+    public enum PropertyValue: PropertyValueType {
         case id(Int)
         case url(URL)
         case title(String)
@@ -21,7 +21,7 @@ extension Feed: Persistable {
         case medium(Medium)
         case categories([String: String])
         
-        var propertyValuePair: PropertyValuePair {
+        public var propertyValuePair: PropertyValuePair {
             switch self {
             case let .id(id):                 return ("id", id)
             case let .url(url):               return ("url", url)
@@ -34,7 +34,7 @@ extension Feed: Persistable {
     }
     
     //MARK: - init(managedObject:)
-    init(_ managedObject: FeedObject) throws {
+    public init(_ managedObject: FeedObject) throws {
         guard let url = URL(string: managedObject.url) else {
             throw RealmManager.RealmError.missingValue
         }
@@ -54,7 +54,7 @@ extension Feed: Persistable {
         )
     }
     
-    func managedObject() -> FeedObject {
+    public func managedObject() -> FeedObject {
         FeedObject(feed: self)
     }
 }

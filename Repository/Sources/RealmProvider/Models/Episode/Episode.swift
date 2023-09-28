@@ -9,8 +9,37 @@ import Foundation
 import Models
 
 extension Episode: Persistable {
+    public typealias ManagedObject = EpisodeObject
+    
+    //MARK: - PropertyValue
+    public enum PropertyValue: PropertyValueType {
+        case id(Int)
+        case title(String)
+        case link(URL)
+        case description(String)
+        case guid(String)
+        case datePublished(Int)
+        case datePublishedPretty(String)
+        case dateCrawled(Int)
+        case enclosureUrl(URL)
+        case explicit(Int)
+        case episode(Int?)
+        case episodeType(EpisodeType?)
+        case season(Int?)
+        case image(URL)
+        case feedImage(URL)
+        case feedId(Int)
+        case feedTitle(String)
+        case feedLanguage(String)
+        case chaptersUrl(URL?)
+        
+        public var propertyValuePair: PropertyValuePair {
+            return ("", "")
+        }
+    }
+    
     //MARK: - init(managedObject:)
-    init(_ managedObject: EpisodeObject) throws {
+    public init(_ managedObject: EpisodeObject) throws {
         guard
             let link = URL(string: managedObject.link),
             let enclosureUrl = URL(string: managedObject.enclosureUrl),
@@ -42,7 +71,7 @@ extension Episode: Persistable {
         )
     }
     
-    func managedObject() -> EpisodeObject {
+    public func managedObject() -> EpisodeObject {
         EpisodeObject(episode: self)
     }
 }

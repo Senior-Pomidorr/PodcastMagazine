@@ -9,13 +9,13 @@ import Foundation
 import RealmSwift
 import Models
 
-final class FeedObject: Object, ObjectKeyIdentifiable {
-    @Persisted var id: Int
-    @Persisted var url: String
-    @Persisted var title: String
-    @Persisted var language: String
-    @Persisted var medium: Medium?
-    @Persisted var categories: List<CategoryObject>
+public final class FeedObject: Object, ObjectKeyIdentifiable {
+    @Persisted public var id: Int
+    @Persisted public var url: String
+    @Persisted public var title: String
+    @Persisted public var language: String
+    @Persisted public var medium: Medium?
+    @Persisted public var categories: List<CategoryObject>
     
     init(feed: Feed) {
         super.init()
@@ -32,7 +32,7 @@ final class FeedObject: Object, ObjectKeyIdentifiable {
         })
     }
     
-    override class func primaryKey() -> String? {
+    public override class func primaryKey() -> String? {
         "id"
     }
 }
@@ -49,7 +49,7 @@ extension FeedObject: Encodable {
     }
     
     //MARK: - encode(to:)
-    func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(id, forKey: .id)
         try container.encode(url, forKey: .url)
