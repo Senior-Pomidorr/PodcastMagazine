@@ -14,19 +14,19 @@ public final class FeedObject: Object, ObjectKeyIdentifiable {
     @Persisted public var url: String
     @Persisted public var title: String
     @Persisted public var feedDescription: String
-    @Persisted public var image: String
-    @Persisted public var author: String
-    @Persisted public var ownerName: String
+    @Persisted public var image: String?
+    @Persisted public var author: String?
+    @Persisted public var ownerName: String?
     @Persisted public var artwork: String
     @Persisted public var language: String
     @Persisted public var medium: Medium?
     @Persisted public var categories: List<CategoryObject>
-    @Persisted public var episodeCount: Int
+    @Persisted public var episodeCount: Int?
     
     init(feed: Feed) {
         super.init()
         self.id = feed.id
-        self.url = feed.url.absoluteString
+        self.url = feed.url
         self.title = feed.title
         self.language = feed.language
         self.medium = feed.medium
@@ -67,11 +67,11 @@ extension FeedObject: Encodable {
         try container.encode(url, forKey: .url)
         try container.encode(title, forKey: .title)
         try container.encode(feedDescription, forKey: .feedDescription)
-        try container.encode(image, forKey: .image)
-        try container.encode(author, forKey: .author)
-        try container.encode(ownerName, forKey: .ownerName)
+        try container.encodeIfPresent(image, forKey: .image)
+        try container.encodeIfPresent(author, forKey: .author)
+        try container.encodeIfPresent(ownerName, forKey: .ownerName)
         try container.encode(artwork, forKey: .artwork)
-        try container.encode(episodeCount, forKey: .episodeCount)
+        try container.encodeIfPresent(episodeCount, forKey: .episodeCount)
         try container.encodeIfPresent(medium, forKey: .medium)
         
         let encoded = categories.reduce(into: [String: String]()

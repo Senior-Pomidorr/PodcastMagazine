@@ -15,13 +15,13 @@ extension Feed: Persistable {
     //MARK: - PropertyValue
     public enum PropertyValue: PropertyValueType {
         case id(Int)
-        case url(URL)
+        case url(String)
         case title(String)
         case description(String)
-        case image(URL)
+        case image(String)
         case author(String)
         case ownerName(String)
-        case artwork(URL)
+        case artwork(String)
         case language(String)
         case medium(Medium)
         case episodeCount(Int)
@@ -36,25 +36,17 @@ extension Feed: Persistable {
             case let .medium(medium):           return ("medium", medium)
             case let .categories(categories):   return ("categories", categories.map(CategoryObject.init))
             case let .description(description): return ("description", description)
-            case let .image(url):               return ("image", url.absoluteString)
+            case let .image(url):               return ("image", url)
             case let .author(author):           return ("author", author)
             case let .ownerName(name):          return ("ownerName", name)
-            case let .artwork(url):             return ("artwork", url.absoluteString)
+            case let .artwork(url):             return ("artwork", url)
             case let .episodeCount(count):      return ("episodeCount", count)
             }
         }
     }
     
     //MARK: - init(managedObject:)
-    public init(_ managedObject: FeedObject) throws {
-        guard 
-            let url = URL(string: managedObject.url),
-            let imageUrl = URL(string: managedObject.image),
-            let artwork = URL(string: managedObject.artwork)
-        else {
-            throw RealmManager.RealmError.missingValue
-        }
-        
+    public init(_ managedObject: FeedObject) {
         let categories = managedObject.categories
             .reduce(into: [String: String]()
             ) { partialResult, object in
@@ -62,13 +54,13 @@ extension Feed: Persistable {
             }
         self.init(
             id: managedObject.id,
-            url: url,
+            url: managedObject.url,
             title: managedObject.title,
             description: managedObject.feedDescription,
-            image: imageUrl,
+            image: managedObject.image,
             author: managedObject.author,
             ownerName: managedObject.ownerName,
-            artwork: artwork,
+            artwork: managedObject.artwork,
             language: managedObject.language,
             medium: managedObject.medium,
             episodeCount: managedObject.episodeCount,

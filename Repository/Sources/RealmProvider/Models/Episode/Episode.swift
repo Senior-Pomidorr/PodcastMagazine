@@ -15,23 +15,23 @@ extension Episode: Persistable {
     public enum PropertyValue: PropertyValueType {
         case id(Int)
         case title(String)
-        case link(URL)
+        case link(String)
         case description(String)
         case guid(String)
         case datePublished(Int)
         case datePublishedPretty(String)
         case dateCrawled(Int)
-        case enclosureUrl(URL)
+        case enclosureUrl(String)
         case explicit(Int)
-        case episode(Int?)
+        case episode(Int)
         case episodeType(EpisodeType?)
-        case season(Int?)
-        case image(URL)
-        case feedImage(URL)
+        case season(Int)
+        case image(String)
+        case feedImage(String)
         case feedId(Int)
         case feedTitle(String)
         case feedLanguage(String)
-        case chaptersUrl(URL?)
+        case chaptersUrl(String)
         
         public var propertyValuePair: PropertyValuePair {
             return ("", "")
@@ -39,35 +39,27 @@ extension Episode: Persistable {
     }
     
     //MARK: - init(managedObject:)
-    public init(_ managedObject: EpisodeObject) throws {
-        guard
-            let link = URL(string: managedObject.link),
-            let enclosureUrl = URL(string: managedObject.enclosureUrl),
-            let image = URL(string: managedObject.image),
-            let feedImage = URL(string: managedObject.feedImage)
-        else {
-            throw RealmManager.RealmError.missingValue
-        }
+    public init(_ managedObject: EpisodeObject) {
         self.init(
             id: managedObject.id,
             title: managedObject.title,
-            link: link,
+            link: managedObject.link,
             description: managedObject.episodeDescription,
             guid: managedObject.guid,
             datePublished: managedObject.datePublished,
             datePublishedPretty: managedObject.datePublishedPretty,
             dateCrawled: managedObject.dateCrawled,
-            enclosureUrl: enclosureUrl,
+            enclosureUrl: managedObject.enclosureUrl,
             explicit: managedObject.explicit,
             episode: managedObject.episode,
             episodeType: managedObject.episodeType,
             season: managedObject.season,
-            image: image,
-            feedImage: feedImage,
+            image: managedObject.image,
+            feedImage: managedObject.feedImage,
             feedId: managedObject.feedId,
             feedTitle: managedObject.feedTitle,
             feedLanguage: managedObject.feedLanguage,
-            chaptersUrl: URL(string: managedObject.chaptersUrl ?? "")
+            chaptersUrl: managedObject.chaptersUrl
         )
     }
     

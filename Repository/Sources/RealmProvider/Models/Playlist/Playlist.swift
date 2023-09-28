@@ -30,13 +30,12 @@ extension Playlist: Persistable {
     }
     
     //MARK: - init(managedObject:)
-    public init(_ managedObject: PlaylistObject) throws {
-        let episodes = try managedObject.episodes.map(Episode.init)
+    public init(_ managedObject: PlaylistObject) {
         self.init(
             id: managedObject.id,
             image: managedObject.image,
             name: managedObject.name,
-            episodes: episodes
+            episodes: managedObject.episodes.map(Episode.init)
         )
     }
     

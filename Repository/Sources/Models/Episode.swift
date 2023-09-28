@@ -14,7 +14,7 @@ public struct Episode: Identifiable, Decodable, Equatable {
     public let title: String
     
     /// The channel-level link in the feed
-    public let link: URL
+    public let link: String
     
     public let description: String
     
@@ -31,7 +31,7 @@ public struct Episode: Identifiable, Decodable, Equatable {
     public let dateCrawled: Int
     
     /// URL/link to the episode file
-    public let enclosureUrl: URL
+    public let enclosureUrl: String
     
     /// Is feed or episode marked as explicit. 0 - not marked explicit, 1 - marked explicit.
     public let explicit: Int
@@ -43,10 +43,10 @@ public struct Episode: Identifiable, Decodable, Equatable {
     public let season: Int?
     
     /// The item-level image for the episode
-    public let image: URL
+    public let image: String
     
     /// The item-level image for the episode
-    public let feedImage: URL
+    public let feedImage: String
     
     /// The internal PodcastIndex.org Feed ID.
     public let feedId: Int
@@ -57,29 +57,29 @@ public struct Episode: Identifiable, Decodable, Equatable {
     public let feedLanguage: String
     
     /// Link to the JSON file containing the episode chapters
-    public let chaptersUrl: URL?
+    public let chaptersUrl: String?
     
     //MARK: - init(_:)
     public init(
         id: Int,
         title: String,
-        link: URL,
+        link: String,
         description: String,
         guid: String,
         datePublished: Int,
         datePublishedPretty: String,
         dateCrawled: Int,
-        enclosureUrl: URL,
+        enclosureUrl: String,
         explicit: Int,
         episode: Int?,
         episodeType: EpisodeType?,
         season: Int?,
-        image: URL,
-        feedImage: URL,
+        image: String,
+        feedImage: String,
         feedId: Int,
         feedTitle: String,
         feedLanguage: String,
-        chaptersUrl: URL?
+        chaptersUrl: String?
     ) {
         self.id = id
         self.title = title
@@ -113,19 +113,19 @@ public extension Episode {
     static let sample: Episode = .init(
         id: 16795088,
         title: "Batman University",
-        link: URL(string: "https://www.theincomparable.com/batmanuniversity/")!,
+        link: "https://www.theincomparable.com/batmanuniversity/",
         description: "Batman University is back in session! James Thomson and Nathan Alderman join Tony for a discussion of Fox’s “Gotham.” Tune in to hear our thoughts on how a half-baked comic book show was reborn into an unmissable train wreck.",
         guid: "incomparable/batman/19",
         datePublished: 1546399813, 
         datePublishedPretty: "January 01, 2019 9:30pm",
         dateCrawled: 1598369047,
-        enclosureUrl: URL(string: "https://www.theincomparable.com/podcast/batmanuniversity302.mp3")!,
+        enclosureUrl: "https://www.theincomparable.com/podcast/batmanuniversity302.mp3",
         explicit: 0,
         episode: 19,
         episodeType: .full,
         season: 3, 
-        image: URL(string: "https://www.theincomparable.com/imgs/logos/logo-batmanuniversity-3x.jpg?cache-buster=2019-06-11")!,
-        feedImage: URL(string: "https://www.theincomparable.com/imgs/logos/logo-batmanuniversity-3x.jpg?cache-buster=2019-06-11")!,
+        image: "https://www.theincomparable.com/imgs/logos/logo-batmanuniversity-3x.jpg?cache-buster=2019-06-11",
+        feedImage: "https://www.theincomparable.com/imgs/logos/logo-batmanuniversity-3x.jpg?cache-buster=2019-06-11",
         feedId: 75075,
         feedTitle: "Batman University",
         feedLanguage: "en-us",

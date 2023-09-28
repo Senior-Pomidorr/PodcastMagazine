@@ -34,23 +34,23 @@ public final class EpisodeObject: Object, ObjectKeyIdentifiable {
         super.init()
         self.id = episode.id
         self.title = episode.title
-        self.link = episode.link.absoluteString
+        self.link = episode.link
         self.episodeDescription = episode.description
         self.guid = episode.guid
         self.datePublished = episode.datePublished
         self.datePublishedPretty = episode.datePublishedPretty
         self.dateCrawled = episode.dateCrawled
-        self.enclosureUrl = episode.enclosureUrl.absoluteString
+        self.enclosureUrl = episode.enclosureUrl
         self.explicit = episode.explicit
         self.episode = episode.episode
         self.episodeType = episode.episodeType
         self.season = episode.season
-        self.image = episode.image.absoluteString
-        self.feedImage = episode.feedImage.absoluteString
+        self.image = episode.image
+        self.feedImage = episode.feedImage
         self.feedId = episode.feedId
         self.feedTitle = episode.feedTitle
         self.feedLanguage = episode.feedLanguage
-        self.chaptersUrl = episode.chaptersUrl?.absoluteString
+        self.chaptersUrl = episode.chaptersUrl
     }
     
     public override class func primaryKey() -> String? {
