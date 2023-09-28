@@ -11,8 +11,7 @@ import SwiftUI
 struct PodcastMagazineApp: App {
     var body: some Scene {
         WindowGroup {
-//            HomePageView()
-            SearchContentView()
+            HomePageView()
         }
     }
 }
