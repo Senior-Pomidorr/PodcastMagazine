@@ -35,6 +35,7 @@
 		86F3420E2AC19B870007213C /* Repository in Frameworks */ = {isa = PBXBuildFile; productRef = 86F3420D2AC19B870007213C /* Repository */; };
 		86F342102AC19B8D0007213C /* Models in Frameworks */ = {isa = PBXBuildFile; productRef = 86F3420F2AC19B8D0007213C /* Models */; };
 		86F342122AC19DBD0007213C /* Repository in Resources */ = {isa = PBXBuildFile; fileRef = 86F342112AC19DBD0007213C /* Repository */; };
+		86FF7EF62AC630F500A8FE52 /* LoadableImage in Frameworks */ = {isa = PBXBuildFile; productRef = 86FF7EF52AC630F500A8FE52 /* LoadableImage */; };
 		A17F6E8F2AC217D800819964 /* HomePageDomain.swift in Sources */ = {isa = PBXBuildFile; fileRef = A17F6E8E2AC217D800819964 /* HomePageDomain.swift */; };
 		A17F6E922AC36D9600819964 /* HomePageHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A17F6E912AC36D9600819964 /* HomePageHeaderView.swift */; };
 		A17F6E952AC36E2000819964 /* CategoryCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A17F6E942AC36E2000819964 /* CategoryCellView.swift */; };
@@ -105,6 +106,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				86FF7EF62AC630F500A8FE52 /* LoadableImage in Frameworks */,
 				86F342102AC19B8D0007213C /* Models in Frameworks */,
 				86F3420E2AC19B870007213C /* Repository in Frameworks */,
 			);
@@ -342,6 +344,7 @@
 			packageProductDependencies = (
 				86F3420D2AC19B870007213C /* Repository */,
 				86F3420F2AC19B8D0007213C /* Models */,
+				86FF7EF52AC630F500A8FE52 /* LoadableImage */,
 			);
 			productName = PodcastMagazine;
 			productReference = A1A44D1F2AC18C9700F2FED9 /* PodcastMagazine.app */;
@@ -663,6 +666,10 @@
 		86F3420F2AC19B8D0007213C /* Models */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Models;
+		};
+		86FF7EF52AC630F500A8FE52 /* LoadableImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = LoadableImage;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
