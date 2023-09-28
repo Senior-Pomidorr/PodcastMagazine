@@ -7,12 +7,9 @@
 
 import Foundation
 
-public enum Medium: String, Decodable {
+public enum Medium: String, Codable {
     case audiobook
-    case blog
     case film
     case music
-    case newsletter
-    case podcast
     case video
 }
