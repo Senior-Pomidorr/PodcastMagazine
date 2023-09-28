@@ -13,9 +13,15 @@ public final class FeedObject: Object, ObjectKeyIdentifiable {
     @Persisted public var id: Int
     @Persisted public var url: String
     @Persisted public var title: String
+    @Persisted public var feedDescription: String
+    @Persisted public var image: String
+    @Persisted public var author: String
+    @Persisted public var ownerName: String
+    @Persisted public var artwork: String
     @Persisted public var language: String
     @Persisted public var medium: Medium?
     @Persisted public var categories: List<CategoryObject>
+    @Persisted public var episodeCount: Int
     
     init(feed: Feed) {
         super.init()
@@ -43,9 +49,15 @@ extension FeedObject: Encodable {
         case id
         case url
         case title
+        case feedDescription
+        case image
+        case author
+        case ownerName
+        case artwork
         case language
         case medium
         case categories
+        case episodeCount
     }
     
     //MARK: - encode(to:)
@@ -54,6 +66,12 @@ extension FeedObject: Encodable {
         try container.encode(id, forKey: .id)
         try container.encode(url, forKey: .url)
         try container.encode(title, forKey: .title)
+        try container.encode(feedDescription, forKey: .feedDescription)
+        try container.encode(image, forKey: .image)
+        try container.encode(author, forKey: .author)
+        try container.encode(ownerName, forKey: .ownerName)
+        try container.encode(artwork, forKey: .artwork)
+        try container.encode(episodeCount, forKey: .episodeCount)
         try container.encodeIfPresent(medium, forKey: .medium)
         
         let encoded = categories.reduce(into: [String: String]()
