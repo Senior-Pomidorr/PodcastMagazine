@@ -10,6 +10,12 @@ import SwiftUI
 struct HeaderResultView: View {
     let title: String
     
+    init(
+        title: String
+    ) {
+        self.title = title
+    }
+    
     var body: some View {
         VStack(spacing: 18) {
             HStack {

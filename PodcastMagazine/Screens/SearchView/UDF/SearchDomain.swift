@@ -8,6 +8,7 @@
 import Combine
 import Foundation
 import Models
+import Repository
 
 enum ScreenStatus: Equatable {
     case none
@@ -20,6 +21,12 @@ enum ScreenStatus: Equatable {
 }
 
 struct SearchDomain {
+    // MARK: - StoreLive
+    static let searchStoreLive = SearchStore(
+        state: Self.State(),
+        reduser: Self.reduce(Self.init(provider: HomeRepositoryProvider.live))
+    )
+    
     // MARK: - State
     struct State {
         var textQuery: String
@@ -46,14 +53,13 @@ struct SearchDomain {
         case didTypeQuery(String)
         case _getTopRequest
         case _getAllRequest
-        case _topGenresResponce(Result<[Feed], Error>)
-        case _allGenresResponce(Result<[Feed], Error>)
+        case _topGenresResponce(Repository.Response<FeedResponse>)
+        case _allGenresResponce(Repository.Response<FeedResponse>)
     }
     
     // MARK: - Dependencies
-    let getTopGenres: (String) -> AnyPublisher<[Feed], Error>
-    let getAllGenres: (String) -> AnyPublisher<[Feed], Error>
-    
+    let provider: HomeRepositoryProvider
+    let pr: SearchRepositoryProvider = .preview(.)
     // MARK: - reduce
     func reduce(
         _ state: inout State,
@@ -74,27 +80,25 @@ struct SearchDomain {
             .eraseToAnyPublisher()
             
         case ._getTopRequest:
-            return getTopGenres("url")
-                .map(toSuccessTopGenres(_:))
-                .catch(toFailTopGenres(_:))
+            return provider.getFeedRequest(.feeds(by: .audiobook, max: 30))
+                .map(Action._topGenresResponce)
                 .eraseToAnyPublisher()
             
         case ._getAllRequest:
-            return getAllGenres("url")
-                .map(toSuccessAllGenres(_:))
-                .catch(toFailAllGenres(_:))
+            return provider.getFeedRequest(.feeds(by: .film, max: 20))
+                .map(Action._allGenresResponce)
                 .eraseToAnyPublisher()
             
         case let ._topGenresResponce(.success(result)):
             state.searchScreenStatus = .none
-            state.topGenres = result
+            state.topGenres = result.feeds
             
         case let ._topGenresResponce(.failure(error)):
             state.searchScreenStatus = .error(error)
             
         case let ._allGenresResponce(.success(result)):
             state.searchScreenStatus = .none
-            state.allGenres = result
+            state.allGenres = result.feeds
             
         case let ._allGenresResponce(.failure(error)):
             state.searchScreenStatus = .error(error)
@@ -106,32 +110,10 @@ struct SearchDomain {
         return Empty().eraseToAnyPublisher()
     }
     
-    
-    func toSuccessTopGenres(_ genres: [Feed]) -> Action {
-        ._topGenresResponce(.success(genres))
-    }
-    
-
-    func toFailTopGenres(_ error: Error) -> Just<Action> {
-        Just(._topGenresResponce(.failure(error)))
-    }
-    
-    func toSuccessAllGenres(_ genres: [Feed]) -> Action {
-        ._allGenresResponce(.success(genres))
-    }
-    
-    func toFailAllGenres(_ error: Error) -> Just<Action> {
-        Just(._allGenresResponce(.failure(error)))
-    }
-    
     /// Изменения строки введеннкой в SearchBar
     /// - Parameter query: Строка введенная пользователем
     /// - Returns: String.trimmingCharacters(in: .whitespacesAndNewlines)
     func changeString(_ query: String) -> String {
         return query.trimmingCharacters(in: .whitespacesAndNewlines)
     }
-    
-    static var live = Self(
-        getTopGenres: {_ in Empty().eraseToAnyPublisher() },
-        getAllGenres: {_ in Empty().eraseToAnyPublisher() })
 }

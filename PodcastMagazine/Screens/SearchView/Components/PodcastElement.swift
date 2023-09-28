@@ -9,15 +9,21 @@ import SwiftUI
 import Models
 
 struct PodcastElement: View {
-    let mocItem: Feed = Feed.sample
-    var item: Feed?
+//    private let mocItem: Feed = Feed.sample
+    var item: Feed
+    
+    init(
+        item: Feed
+    ) {
+        self.item = item
+    }
     
     var body: some View {
         RoundedRectangle(cornerRadius: 12)
             .fill(Color.orange)
             .overlay {
                 VStack(alignment: .leading) {
-                    Text(mocItem.title)
+                    Text(item.title)
                         .font(.body)
 //                    Text(mocItem.categories.first!.name)
 //                    Text(mocItem.medium.rawValue)
@@ -31,7 +37,7 @@ struct PodcastElement: View {
 
 struct PodcastElement_Previews: PreviewProvider {
     static var previews: some View {
-        PodcastElement()
+        PodcastElement(item: Feed.sample)
             .previewLayout(.sizeThatFits)
     }
 }

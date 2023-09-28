@@ -9,23 +9,25 @@ import SwiftUI
 import Models
 
 struct SearchContentView: View {
-    @StateObject private var store = SearchStore(
-        state: SearchDomain.State(),
-        reduser: SearchDomain.live.reduce(_:with:)
-    )
-    
-    let items: [Feed] = [Feed.sample]
-    
+    @StateObject private var store = SearchDomain.searchStoreLive
+
     var body: some View {
         NavigationView {
             switch store.state.searchScreenStatus {
             case .none:
-                SearchView(text: searchText())
+                SearchView(
+                    text: searchText(),
+                    topTtems: store.state.topGenres,
+                    allTtems: store.state.allGenres
+                )
             case .loading:
                 ProgressView()
             case .error(let error):
                 Text("Произошла ошибка: \(error.localizedDescription)")
             }
+        }
+        .onAppear {
+            store.send(.viewAppeared)
         }
     }
     
@@ -35,7 +37,6 @@ struct SearchContentView: View {
         } set: {
             store.send(.didTypeQuery($0))
         }
-        
     }
 }
 
