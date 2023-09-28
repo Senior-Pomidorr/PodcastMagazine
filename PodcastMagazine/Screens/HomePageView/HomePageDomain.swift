@@ -22,7 +22,7 @@ enum HomePageLoadingStatus: Equatable {
 }
 
 // MARK: - SelectedCategoryRequest
-enum SelectedCategoryRequest {
+enum SelectedCategoryRequest: String, CaseIterable {
     case popular
     case recent
     case audiobook
@@ -37,6 +37,7 @@ struct HomePageDomain {
         var categoryList: [Models.Category]
         var podcastsList: [Feed]
         var homePageLoadingStatus: HomePageLoadingStatus
+        var feedsCategoryList: SelectedCategoryRequest
         
         init(
             categoryList: [Models.Category] = .init(),
@@ -46,6 +47,7 @@ struct HomePageDomain {
             self.categoryList = categoryList
             self.podcastsList = podcastsList
             self.homePageLoadingStatus = homePageLoadingStatus
+            self.feedsCategoryList = .popular
         }
     }
     
