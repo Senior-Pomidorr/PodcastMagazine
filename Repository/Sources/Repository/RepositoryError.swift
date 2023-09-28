@@ -9,11 +9,13 @@ import Foundation
 import APIProvider
 
 public extension Repository {
-    enum RepositoryError: Error {
+    enum RepositoryError: Error, LocalizedError {
         case urlError(URLError)
         case decodingError(DecodingError)
         case unknown(Error)
         case invalidRequest(String)
+        
+        public var errorDescription: String { String(describing: self) }
         
         init(apiError: APIManager.APIError) {
             switch apiError {
