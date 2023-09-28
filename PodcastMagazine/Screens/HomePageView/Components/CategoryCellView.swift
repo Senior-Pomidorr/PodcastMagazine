@@ -10,29 +10,31 @@ import Models
 
 struct CategoryCellView: View {
     
-    var categoryCellData: Models.Category
+    var categoryCellInputData: Models.Category
     
     var body: some View {
         ZStack(alignment: .bottom) {
-
-            RoundedRectangle(cornerRadius: 12)
-                .fill(Color.random())
-                .frame(width: 150, height: 200)
             
             RoundedRectangle(cornerRadius: 12)
-                .fill(Color.random())
-                .frame(width: 150, height: 60)
-                .padding(.bottom, 0)
+                .fill(categoryCellInputData.id % 2 == 0 ? Color.color3 : Color.color1)
+                .frame(width: 144, height: 200)
             
-            Text("\(categoryCellData.name)")
-                .foregroundStyle(.white)
-                .padding(.bottom, 20)
+            RoundedRectangle(cornerRadius: 12)
+                .fill(categoryCellInputData.id % 2 == 0 ? Color.color4 : Color.color2)
+                .frame(width: 144, height: 64)
+                .overlay(
+                    Text("\(categoryCellInputData.name)")
+                        .font(.custom(.bold, size: 14))
+                        .foregroundStyle(.black)
+                        .frame(width: 144, height: 64, alignment: .center)
+                        .minimumScaleFactor(0.5)
+                )
         }
     }
 }
 
 #Preview {
-    CategoryCellView(categoryCellData: Category(id: 1, name: "Music"))
+    CategoryCellView(categoryCellInputData: Category(id: 3, name: "Music"))
 }
 
 extension Color {
