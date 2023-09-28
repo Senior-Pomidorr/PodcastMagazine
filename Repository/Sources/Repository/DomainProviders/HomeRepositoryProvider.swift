@@ -11,14 +11,16 @@ import Models
 import Combine
 
 public struct HomeRepositoryProvider {
-    public var getFeedRequest: (Endpoint) -> Repository.ResponsePublisher<FeedResponse>
+    public var getFeedRequest: (Endpoint) -> Repository.ResponsePublisher<FeedsResponse>
     public var getCategoryRequest: () -> Repository.ResponsePublisher<CategoryResponse>
+    public var getFeedDetail: (Int) -> Repository.ResponsePublisher<FeedDetail>
     
     public static var live: HomeRepositoryProvider {
         let repository = Repository.shared
         return .init(
             getFeedRequest: { repository.perform(request: .api($0)) },
-            getCategoryRequest: { repository.perform(request: .api(.categories)) }
+            getCategoryRequest: { repository.perform(request: .api(.categories)) }, 
+            getFeedDetail: { repository.perform(request: .api(.feeds(by: $0))) }
         )
     }
     
@@ -29,7 +31,8 @@ public struct HomeRepositoryProvider {
     ///   - categoryResult: Желаемый результат запроса категорий.
     ///   - delay: Задержка, в секундах, перед срабатываем паблишера ответа.
     public static func preview(
-        feedResult: Repository.Response<FeedResponse> = .success(.sample),
+        feedResult: Repository.Response<FeedsResponse> = .success(.sample),
+        feedDetailResult: Repository.Response<FeedDetail> = .success(.sample),
         categoryResult: Repository.Response<CategoryResponse> = .success(.sample),
         delay: DispatchQueue.SchedulerTimeType.Stride = 2
     ) -> Self {
@@ -41,6 +44,11 @@ public struct HomeRepositoryProvider {
             },
             getCategoryRequest: {
                 Just(categoryResult)
+                    .delay(for: delay, scheduler: DispatchQueue.main)
+                    .eraseToAnyPublisher()
+            }, 
+            getFeedDetail: { _ in
+                Just(feedDetailResult)
                     .delay(for: delay, scheduler: DispatchQueue.main)
                     .eraseToAnyPublisher()
             }
