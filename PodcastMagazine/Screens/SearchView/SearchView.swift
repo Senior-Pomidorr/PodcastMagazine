@@ -9,8 +9,8 @@ import SwiftUI
 
 struct SearchView: View {
     @Binding var text: String
-    var topTtems: [Feed]
-    var allTtems: [Feed]
+    var trendItems: [Feed]
+    var categories: [Models.Category]
     
     @State private var showingDetailView = false
 
@@ -35,11 +35,11 @@ struct SearchView: View {
                     .padding(.horizontal, 32)
                     
                     
-                    SearchHGridView(items: topTtems)
+                    SearchHGridView(items: trendItems)
                 }
                 .padding(.bottom, 24)
                 
-                SearchVGridView(items: allTtems)
+                SearchVGridView(items: categories)
             }
         }
         .navigationBarHidden(true)
@@ -52,12 +52,13 @@ struct SearchView: View {
 // MARK: - SearchView_Previews
 struct SearchView_Previews: PreviewProvider {
     static var item = Feed.sample
+    static var category = Models.Category.sample
     
     static var previews: some View {
         SearchView(
             text: .constant("Ppdlodca"),
-            topTtems: [item],
-            allTtems: [item]
+            trendItems: [item],
+            categories: [category]
         )
     }
 }

@@ -17,8 +17,8 @@ struct SearchContentView: View {
             case .none:
                 SearchView(
                     text: searchText(),
-                    topTtems: store.state.topGenres,
-                    allTtems: store.state.allGenres
+                    trendItems: store.state.trendPodcasts,
+                    categories: store.state.categories
                 )
             case .loading:
                 ProgressView()

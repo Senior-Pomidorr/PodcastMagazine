@@ -9,10 +9,10 @@ import SwiftUI
 
 // MARK: - SearchVGridView
 struct SearchVGridView: View {
-    var items: [Feed]
+    var items: [Models.Category]
     
     init(
-        items: [Feed]
+        items: [Models.Category]
     ) {
         self.items = items
     }
@@ -42,7 +42,7 @@ struct SearchVGridView: View {
                             NavigationLink(
                                 destination: Text("Destination. id: \(item.id), Category - all"),
                                 label: {
-                                    PodcastElement(item: item)
+                                    CategoryElement(item: item)
                                         .frame(height: 84)
                                 })
                         }
@@ -55,5 +55,5 @@ struct SearchVGridView: View {
 
 
 #Preview {
-    SearchVGridView(items: [Feed.sample])
+    SearchVGridView(items: [Models.Category.sample])
 }

@@ -30,19 +30,19 @@ struct SearchDomain {
     // MARK: - State
     struct State {
         var textQuery: String
-        var topGenres: [Feed]
-        var allGenres: [Feed]
+        var trendPodcasts: [Feed]
+        var categories: [Models.Category]
         var searchScreenStatus: ScreenStatus
         
         init(
             textQuery: String = .init(),
-            topGenres: [Feed] = .init(),
-            allGenres: [Feed] = .init(),
+            trendPodcasts: [Feed] = .init(),
+            categories: [Models.Category] = .init(),
             searchScreenStatus: ScreenStatus = .none
         ) {
             self.textQuery = textQuery
-            self.topGenres = topGenres
-            self.allGenres = allGenres
+            self.trendPodcasts = trendPodcasts
+            self.categories = categories
             self.searchScreenStatus = searchScreenStatus
         }
     }
@@ -51,15 +51,15 @@ struct SearchDomain {
     enum Action {
         case viewAppeared
         case didTypeQuery(String)
-        case _getTopRequest
-        case _getAllRequest
-        case _topGenresResponce(Repository.Response<FeedResponse>)
-        case _allGenresResponce(Repository.Response<FeedResponse>)
+        case _getTrendRequest
+        case _getCategoryRequest
+        case _trendResponce(Repository.Response<FeedsResponse>)
+        case _categoryResponce(Repository.Response<CategoryResponse>)
     }
     
     // MARK: - Dependencies
     let provider: HomeRepositoryProvider
-    let pr: SearchRepositoryProvider = .preview(.)
+//    let pr: SearchRepositoryProvider = .preview(.)
     // MARK: - reduce
     func reduce(
         _ state: inout State,
@@ -74,33 +74,33 @@ struct SearchDomain {
             }
             state.searchScreenStatus = .loading
             return Publishers.Merge(
-                Just(._getAllRequest),
-                Just(._getTopRequest)
+                Just(._getCategoryRequest),
+                Just(._getTrendRequest)
             )
             .eraseToAnyPublisher()
             
-        case ._getTopRequest:
-            return provider.getFeedRequest(.feeds(by: .audiobook, max: 30))
-                .map(Action._topGenresResponce)
+        case ._getTrendRequest:
+            return provider.getFeedRequest(.trendingFeeds(max: 10))
+                .map(Action._trendResponce)
                 .eraseToAnyPublisher()
             
-        case ._getAllRequest:
-            return provider.getFeedRequest(.feeds(by: .film, max: 20))
-                .map(Action._allGenresResponce)
+        case ._getCategoryRequest:
+            return provider.getCategoryRequest()
+                .map(Action._categoryResponce)
                 .eraseToAnyPublisher()
             
-        case let ._topGenresResponce(.success(result)):
+        case let ._trendResponce(.success(result)):
             state.searchScreenStatus = .none
-            state.topGenres = result.feeds
+            state.trendPodcasts = result.feeds
             
-        case let ._topGenresResponce(.failure(error)):
+        case let ._trendResponce(.failure(error)):
             state.searchScreenStatus = .error(error)
             
-        case let ._allGenresResponce(.success(result)):
+        case let ._categoryResponce(.success(result)):
             state.searchScreenStatus = .none
-            state.allGenres = result.feeds
+            state.categories = result.feeds
             
-        case let ._allGenresResponce(.failure(error)):
+        case let ._categoryResponce(.failure(error)):
             state.searchScreenStatus = .error(error)
             
         case let .didTypeQuery(result):
