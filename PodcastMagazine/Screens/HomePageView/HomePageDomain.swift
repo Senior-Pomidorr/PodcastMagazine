@@ -56,7 +56,7 @@ struct HomePageDomain {
         case _getCategoryRequest
         case _getPodcastRequest
         case _getCategoryResponse(Repository.Response<CategoryResponse>)
-        case _getPodcastsResponse(Repository.Response<FeedResponse>)
+        case _getPodcastsResponse(Repository.Response<FeedsResponse>)
         case getSelectedCategory(SelectedCategoryRequest)
     }
     

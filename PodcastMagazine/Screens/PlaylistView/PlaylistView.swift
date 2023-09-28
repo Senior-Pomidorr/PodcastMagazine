@@ -54,7 +54,6 @@ struct PlaylistView: View {
                             PlaylistCell(namePodcast: feed.title, partPodcast: feed.title)
                                 .listRowSeparator(.hidden)
                         }
-                      
                     }
                 }
                 .padding(.horizontal, 8)

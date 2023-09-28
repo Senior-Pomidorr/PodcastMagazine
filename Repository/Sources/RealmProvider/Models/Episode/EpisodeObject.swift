@@ -9,51 +9,51 @@ import Foundation
 import RealmSwift
 import Models
 
-final class EpisodeObject: Object, ObjectKeyIdentifiable {
-    @Persisted var id: Int
-    @Persisted var title: String
-    @Persisted var link: String
-    @Persisted var episodeDescription: String
-    @Persisted var guid: String
-    @Persisted var datePublished: Int
-    @Persisted var datePublishedPretty: String
-    @Persisted var dateCrawled: Int
-    @Persisted var enclosureUrl: String
-    @Persisted var explicit: Int
-    @Persisted var episode: Int?
-    @Persisted var episodeType: Episode.EpisodeType?
-    @Persisted var season: Int?
-    @Persisted var image: String
-    @Persisted var feedImage: String
-    @Persisted var feedId: Int
-    @Persisted var feedTitle: String
-    @Persisted var feedLanguage: String
-    @Persisted var chaptersUrl: String?
+public final class EpisodeObject: Object, ObjectKeyIdentifiable {
+    @Persisted public var id: Int
+    @Persisted public var title: String
+    @Persisted public var link: String
+    @Persisted public var episodeDescription: String
+    @Persisted public var guid: String
+    @Persisted public var datePublished: Int
+    @Persisted public var datePublishedPretty: String
+    @Persisted public var dateCrawled: Int
+    @Persisted public var enclosureUrl: String
+    @Persisted public var explicit: Int
+    @Persisted public var episode: Int?
+    @Persisted public var episodeType: Episode.EpisodeType?
+    @Persisted public var season: Int?
+    @Persisted public var image: String
+    @Persisted public var feedImage: String
+    @Persisted public var feedId: Int
+    @Persisted public var feedTitle: String
+    @Persisted public var feedLanguage: String
+    @Persisted public var chaptersUrl: String?
     
     init(episode: Episode) {
         super.init()
         self.id = episode.id
         self.title = episode.title
-        self.link = episode.link.absoluteString
+        self.link = episode.link
         self.episodeDescription = episode.description
         self.guid = episode.guid
         self.datePublished = episode.datePublished
         self.datePublishedPretty = episode.datePublishedPretty
         self.dateCrawled = episode.dateCrawled
-        self.enclosureUrl = episode.enclosureUrl.absoluteString
+        self.enclosureUrl = episode.enclosureUrl
         self.explicit = episode.explicit
         self.episode = episode.episode
         self.episodeType = episode.episodeType
         self.season = episode.season
-        self.image = episode.image.absoluteString
-        self.feedImage = episode.feedImage.absoluteString
+        self.image = episode.image
+        self.feedImage = episode.feedImage
         self.feedId = episode.feedId
         self.feedTitle = episode.feedTitle
         self.feedLanguage = episode.feedLanguage
-        self.chaptersUrl = episode.chaptersUrl?.absoluteString
+        self.chaptersUrl = episode.chaptersUrl
     }
     
-    override class func primaryKey() -> String? {
+    public override class func primaryKey() -> String? {
         "id"
     }
 }
