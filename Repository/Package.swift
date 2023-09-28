@@ -12,6 +12,7 @@ let package = Package(
     products: [
         .library(name: "Repository", targets: ["Repository"]),
         .library(name: "Models", targets: ["Models"]),
+        .library(name: "LoadableImage", targets: ["LoadableImage"])
     ],
     dependencies: Dependencies.allCases.map(\.package),
     targets: [
@@ -33,6 +34,7 @@ let package = Package(
             dependencies: [
                 Dependencies.FirebaseAuth.target,
             ]),
+        .target(name: "LoadableImage"),
         .target(
             name: "Repository",
             dependencies: [
