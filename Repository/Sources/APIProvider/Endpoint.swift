@@ -64,7 +64,7 @@ public struct Endpoint {
     /// - Parameters:
     ///   - category: `Category` model
     ///   - max: Maximum number of results to return.
-    /// - Returns: Call to this endpoint return `FeedResponse` model
+    /// - Returns: Call to this endpoint return `FeedsResponse` model
     public static func recentFeeds(
         by category: Models.Category,
         max: Int = 20
@@ -79,7 +79,7 @@ public struct Endpoint {
     
     /// This call returns the podcasts/feeds that in the index that are trending.
     /// - Parameter max: Maximum number of results to return.
-    /// - Returns: Call to this endpoint return `FeedResponse` model
+    /// - Returns: Call to this endpoint return `FeedsResponse` model
     public static func trendingFeeds(max: Int = 20) -> Self {
         .init(
             path: "podcasts/trending",
@@ -90,7 +90,7 @@ public struct Endpoint {
     
     /// This call returns the most recent max feeds, in reverse chronological order.
     /// - Parameter max: Maximum number of results to return.
-    /// - Returns: Call to this endpoint return `FeedResponse` model
+    /// - Returns: Call to this endpoint return `FeedsResponse` model
     public static func recentFeeds(max: Int = 20) -> Self {
         .init(
             path: "recent/feeds",
@@ -103,7 +103,7 @@ public struct Endpoint {
     /// - Parameters:
     ///   - medium: The medium value to search for.
     ///   - max: Maximum number of results to return.
-    /// - Returns: Call to this endpoint return `FeedResponse` model
+    /// - Returns: Call to this endpoint return `FeedsResponse` model
     public static func feeds(
         by medium: Medium,
         max: Int = 20
@@ -116,11 +116,26 @@ public struct Endpoint {
             ])
     }
     
+    
+    /// This call returns everything we know about the feed from the PodcastIndex ID
+    /// - Parameter feedId: The PodcastIndex Feed ID
+    /// - Returns: Call to this endpoint return `FeedsResponse` model
+    public static func feeds(
+        by feedId: Int
+    ) -> Self {
+        .init(
+            path: "podcasts/byfeedid",
+            queryItems: [
+                .init(name: "id", value: feedId.description)
+            ]
+        )
+    }
+    
     /// This call returns all of the feeds where the title of the feed matches the search term (ignores case).
     /// - Parameters:
     ///   - title: Terms to search for. Example "everything everywhere daily" will match the podcast Everything Everywhere Daily by "everything everywhere" will not.
     ///   - max: Maximum number of results to return.
-    /// - Returns: Call to this endpoint return `FeedResponse` model
+    /// - Returns: Call to this endpoint return `FeedsResponse` model
     public static func feeds(
         byTitle title: String,
         max: Int = 20
@@ -138,7 +153,7 @@ public struct Endpoint {
     /// - Parameters:
     ///   - term: Terms to search for. Example "everything everywhere daily" will match the podcast Everything Everywhere Daily by "everything everywhere" will not.
     ///   - max: Maximum number of results to return.
-    /// - Returns: Call to this endpoint return `FeedResponse` model
+    /// - Returns: Call to this endpoint return `FeedsResponse` model
     public static func feeds(
         byTerm term: String,
         max: Int = 20

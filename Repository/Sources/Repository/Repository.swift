@@ -19,8 +19,7 @@ public final class Repository {
     public typealias ResponsePublisher<T> = AnyPublisher<Response<T>, Never>
     
     /// Shared singleton Repository object
-    @available(*, deprecated, message: "Для работы с репозиторием используйте провайдеры.")
-    public static let shared = Repository()
+    static let shared = Repository()
     
     //MARK: - Private properties
     private let apiManager: APIManager
@@ -41,7 +40,7 @@ public final class Repository {
     /// Всегда публикует результат работы на главный поток.
     /// - Parameter request: `Request`перечисление, предоставляющее доступ к эндпоинтам для работы с сетью, базой данных или Firebase.
     /// - Returns: Возвращает паблишер с перечислением `Response`
-    public func perform<T: Decodable>(request: Repository.Request) -> ResponsePublisher<T> {
+    func perform<T: Decodable>(request: Repository.Request) -> ResponsePublisher<T> {
         switch request {
         case let .api(endpoint):
             apiManager.request(method: .GET, endpoint)

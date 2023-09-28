@@ -1,5 +1,5 @@
 //
-//  FeedResponse.swift
+//  FeedsResponse.swift
 //  
 //
 //  Created by Илья Шаповалов on 25.09.2023.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct FeedResponse: Decodable {
+public struct FeedsResponse: Decodable {
     public let status: String
     public let feeds: [Feed]
     
