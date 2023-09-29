@@ -19,33 +19,36 @@ struct SearchView: View {
             // Временный фоновый цвет
             Color.gray.opacity(0.2)
                 .ignoresSafeArea(edges: .all)
-            
-            
-            VStack(spacing: 0) {
-                VStack(spacing: 35) {
-                    VStack(spacing: 33) {
-                        Text("Search")
-                            .frame(maxWidth: .infinity)
-                        SearchBarView(searchText: $text)
-                            .frame(height: 48.0)
-                            .onSubmit {
-                                showingDetailView = true
-                            }
-                    }
-                    .padding(.horizontal, 32)
+  
+            VStack(spacing: 33) {
+                VStack(spacing: 33) {
+                    Text("Search")
+                        .foregroundStyle(Color.searchBarText)
+                        .font(.custom(.extraBold, size: 16))
+                        .frame(maxWidth: .infinity)
                     
-                    
-                    SearchHGridView(items: trendItems)
+                    SearchBarView(searchText: $text)
+                        .frame(height: 48.0)
+                        .onSubmit {
+                            showingDetailView = true
+                        }
                 }
-                .padding(.bottom, 24)
+                .padding(.horizontal, 33)
                 
-                SearchVGridView(items: categories)
+                VStack(spacing: 24) {
+                    SearchHGridView(items: trendItems)
+                    
+                    SearchVGridView(items: categories)
+                }
             }
+            .padding(.top, 58)
+            
+            // навигационный костыль, потому что инструменты из 16.0 недоступны
+            NavigationLink(isActive: $showingDetailView) {
+                ResultContentView(userQuery: text)
+            } label: { EmptyView() }
         }
         .navigationBarHidden(true)
-        .fullScreenCover(isPresented: $showingDetailView) {
-            Text("Destination DetailView. User text is \(text)")
-        }
     }
 }
 

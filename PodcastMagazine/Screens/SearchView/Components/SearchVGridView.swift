@@ -27,7 +27,8 @@ struct SearchVGridView: View {
         VStack(spacing: 21) {
             HStack {
                 Text("Categories")
-                    .font(.custom(.bold, size: 16))
+                    .foregroundStyle(Color.searchBarText)
+                    .font(.custom(.extraBold, size: 16))
                 Spacer()
             }
             .padding(.horizontal, 32)

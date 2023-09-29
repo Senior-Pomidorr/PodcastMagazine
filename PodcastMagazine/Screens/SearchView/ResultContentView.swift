@@ -8,12 +8,14 @@
 import SwiftUI
 
 struct ResultContentView: View {
+    
+    let userQuery: String
+    
     var rows: [GridItem] = [GridItem(.flexible())]
-    let userRequestStr = "User request"
     
     var body: some View {
         VStack {
-            HeaderResultView(title: userRequestStr)
+            HeaderResultView(title: userQuery)
                 .padding(.bottom, 24)
             
             VStack {
@@ -25,22 +27,54 @@ struct ResultContentView: View {
                               content: {
                         Section {
                             ForEach(0..<3) { index in
-                                Rectangle()
-                                    .fill(Color.gray)
+                                RoundedRectangle(cornerRadius: 16)
+                                    .fill(.regularMaterial)
                                     .frame(height: 72)
+                                    .overlay {
+                                        HStack {
+                                            VStack {
+                                                Text("Title")
+                                                    .font(.title2)
+                                                Text("body")
+                                            }
+                                            .padding()
+                                            Spacer()
+                                        }
+                                    }
                             }
                         } header: {
-                            Text("Header")
+                            HStack {
+                                Text("Search Result")
+                                    .foregroundStyle(Color.searchBarText)
+                                    .font(.custom(.extraBold, size: 14))
+                                Spacer()
+                            }
                         }
                         
                         Section {
                             ForEach(0..<20) { index in
-                                Rectangle()
-                                    .fill(Color.green)
+                                RoundedRectangle(cornerRadius: 16)
+                                    .fill(.regularMaterial)
                                     .frame(height: 72)
+                                    .overlay {
+                                        HStack {
+                                            VStack {
+                                                Text("Title")
+                                                    .font(.title2)
+                                                Text("body")
+                                            }
+                                            .padding()
+                                            Spacer()
+                                        }
+                                    }
                             }
                         } header: {
-                            Text("Header 2")
+                            HStack {
+                                Text("All Podcast")
+                                    .foregroundStyle(Color.secondaryText)
+                                    .font(.custom(.medium, size: 14))
+                                Spacer()
+                            }
                         }
                     })
                 }
@@ -48,10 +82,12 @@ struct ResultContentView: View {
             }
                 
         }
+        .navigationBarHidden(true)
+        .padding(.top, 49)
     }
 }
 
 #Preview {
-    ResultContentView()
+    ResultContentView(userQuery: "podlodca")
 }
 

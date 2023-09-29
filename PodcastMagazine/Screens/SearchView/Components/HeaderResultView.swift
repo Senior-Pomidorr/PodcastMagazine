@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct HeaderResultView: View {
+    @Environment(\.dismiss) var dismiss
+    
     let title: String
     
     init(
@@ -19,22 +21,35 @@ struct HeaderResultView: View {
     var body: some View {
         VStack(spacing: 18) {
             HStack {
-                Text("title")
+                Text(title)
+                    .foregroundStyle(Color.searchBarText)
+                    .font(.custom(.medium, size: 14))
+                
                 Spacer()
-                Image(systemName: "xmark.square")
-                    .font(.title2)
+                
+                Image("xmarkSquare", bundle: nil)
+                    .foregroundStyle(.secondaryText)
+                    .frame(width: 24, height: 24)
                     .offset(x: -24)
+                    .onTapGesture {
+                        print("did tap")
+                        dismiss()
+                    }
             }
             .padding(.horizontal, 33)
             
             Rectangle()
                 .frame(height: 1)
-                .foregroundColor(.black)
+                .foregroundColor(Color.divider)
                 .padding(.horizontal, 33)
         }
     }
 }
 
-#Preview {
-    HeaderResultView(title: "User request")
+struct HeaderResultView_Previews: PreviewProvider {
+    static var previews: some View {
+        HeaderResultView(title: "Podlodka")
+            .previewLayout(.sizeThatFits)
+            .preferredColorScheme(.light)
+    }
 }

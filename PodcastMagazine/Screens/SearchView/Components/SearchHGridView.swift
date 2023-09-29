@@ -21,8 +21,9 @@ struct SearchHGridView: View {
     var body: some View {
         VStack(spacing: 13) {
             HStack {
-                Text("Top Genres")
-                    .font(.custom(.bold, size: 16))
+                Text("Top Trend")
+                    .foregroundStyle(Color.searchBarText)
+                    .font(.custom(.extraBold, size: 16))
                 Spacer()
                 Text("See all")
                     .font(.custom(.regular, size: 16))
