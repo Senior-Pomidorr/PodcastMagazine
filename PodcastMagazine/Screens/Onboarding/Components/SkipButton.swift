@@ -12,7 +12,7 @@ struct SkipButton: View {
     
     var body: some View {
         Button {
-            skipScreen = 0
+            skipScreen = 2
         } label: {
             ZStack {
                 Rectangle()
@@ -22,7 +22,6 @@ struct SkipButton: View {
                 Text("Skip")
                     .foregroundStyle(.black)
                     .font(.system(size: 24))
-//                    .font(.weight(.semibold))
             }
         }
     }

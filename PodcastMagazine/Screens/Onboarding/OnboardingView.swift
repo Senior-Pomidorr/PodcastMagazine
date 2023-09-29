@@ -10,22 +10,23 @@ import SwiftUI
 
 struct OnboardingView: View {
     @State private var onboardingSteps = 0
+    var isModalVisible = false
     var body: some View {
-        TabView {
-            GeometryReader { geometry in
-                VStack {
-                    Image(OnboardingData.onboardingList[onboardingSteps].image)
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: geometry.size.width * 0.80, height: geometry.size.height * 0.42, alignment: .center)
-                        .padding(.vertical, 20)
-                    ZStack {
-                        Rectangle()
-                            .frame(width: geometry.size.width * 0.84, height: geometry.size.height * 0.51, alignment: .center)
-                            .foregroundColor(Color(red: 0.16, green: 0.51, blue: 0.95).opacity(0.37))
-                            .cornerRadius(30)
-                        
+        TabView(selection: $onboardingSteps) {
+            ForEach(0..<3, id: \.self) { step in
+                GeometryReader { geometry in
+                    VStack {
+                        Image(OnboardingData.onboardingList[onboardingSteps].image)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: geometry.size.width * 0.80, height: geometry.size.height * 0.42)
+                            .padding(.vertical, 20)
                         ZStack {
+                            Rectangle()
+                                .frame(width: geometry.size.width * 0.84, height: geometry.size.height * 0.51, alignment: .center)
+                                .foregroundColor(Color(red: 0.16, green: 0.51, blue: 0.95).opacity(0.37))
+                                .cornerRadius(30)
+                            
                             VStack(alignment: .leading, spacing: 16) {
                                 Text(OnboardingData.onboardingList[onboardingSteps].title)
                                     .font(.custom(.bold, size: 34))
@@ -34,27 +35,25 @@ struct OnboardingView: View {
                                 Text(OnboardingData.onboardingList[onboardingSteps].desciption)
                                     .font(.custom(.regular, size: 20))
                                     .padding(.horizontal, 16)
-                                    .padding(.bottom, 16)
+                                
+                                
                                 if onboardingSteps < 2 {
-                                    VStack {
-                                        HStack(alignment: .firstTextBaseline) {
-                                            SkipButton(skipScreen: $onboardingSteps)
-                                            Spacer()
-                                            NextButton(onboardingSteps: $onboardingSteps)
-                                        }
-                                        .padding(.trailing, 14)
+                                    HStack(alignment: .center) {
+                                        SkipButton(skipScreen: $onboardingSteps)
+                                        Spacer()
+                                        NextButton(onboardingSteps: $onboardingSteps)
                                     }
-                                    .padding(.bottom, 20)
+                                    .padding(.trailing, 14)
                                 } else {
-                                    VStack(alignment: .center) {
-                                        StartButton()
-                                    }
-                                    .padding(.horizontal, 16)
-                                    .offset(y: 16)
+                                    Spacer()
+                                        .frame(height: 10)
+                                    StartButton()
+                                        .padding(.horizontal, 16)
                                 }
+                                
                             }
+                            .padding(.horizontal, 48)
                         }
-                        .padding(.horizontal, 48)
                     }
                 }
             }

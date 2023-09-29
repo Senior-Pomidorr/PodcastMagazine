@@ -9,11 +9,20 @@ import SwiftUI
 
 @main
 struct PodcastMagazineApp: App {
+    @AppStorage("isOnboarding") var isOnboarding: Bool = true
+    @State var isModalVisible = false
+    
     var body: some Scene {
         WindowGroup {
-//            HomePageView()
-            OnboardingView()
-           // SearchContentView()
+            if isOnboarding {
+                OnboardingView()
+                    .sheet(isPresented: $isModalVisible) {
+                        OnboardingView()
+                    }
+            } else {
+                HomePageView()
+                // SearchContentView()
+            }
         }
     }
 }

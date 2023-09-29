@@ -8,10 +8,11 @@
 import SwiftUI
 
 struct StartButton: View {
+    @AppStorage("isOnboarding") var isOnboarding: Bool?
     var body: some View {
         GeometryReader { geometry in
             Button {
-                
+                isOnboarding = false
             } label: {
                 ZStack {
                     Rectangle()
@@ -26,12 +27,12 @@ struct StartButton: View {
                                 endPoint: UnitPoint(x: 0.5, y: 1)
                             )
                         )
-                        .cornerRadius(16)
                     Text("Get Started")
                         .foregroundStyle(.white)
                         .font(.custom(.semiBold, size: 20))
                 }
             }
+            .cornerRadius(16)
         }
     }
 }
