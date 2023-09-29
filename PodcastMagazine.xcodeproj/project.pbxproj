@@ -10,8 +10,8 @@
 		0D0C9B022AC5EFCA000A4C29 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D0C9B012AC5EFCA000A4C29 /* OnboardingView.swift */; };
 		0D0C9B052AC60BE3000A4C29 /* OnboardingData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D0C9B042AC60BE3000A4C29 /* OnboardingData.swift */; };
 		0D3C1C5E2AC7060C00AD84DF /* NextButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D3C1C5D2AC7060C00AD84DF /* NextButton.swift */; };
-		0D3C1C612AC70C3A00AD84DF /* OnboardingTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D3C1C602AC70C3A00AD84DF /* OnboardingTabView.swift */; };
 		0D3C1C632AC7169400AD84DF /* SkipButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D3C1C622AC7169400AD84DF /* SkipButton.swift */; };
+		0D3C1C652AC7357300AD84DF /* StartButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D3C1C642AC7357200AD84DF /* StartButton.swift */; };
 		0D6F8C192AC30DDC00FB963B /* PlaylistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D6F8C182AC30DDC00FB963B /* PlaylistView.swift */; };
 		0D6F8C1D2AC3136F00FB963B /* FavoritesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D6F8C1C2AC3136E00FB963B /* FavoritesCell.swift */; };
 		0D6F8C212AC3688D00FB963B /* PlaylistCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D6F8C202AC3688D00FB963B /* PlaylistCell.swift */; };
@@ -63,8 +63,8 @@
 		0D0C9B012AC5EFCA000A4C29 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		0D0C9B042AC60BE3000A4C29 /* OnboardingData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingData.swift; sourceTree = "<group>"; };
 		0D3C1C5D2AC7060C00AD84DF /* NextButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextButton.swift; sourceTree = "<group>"; };
-		0D3C1C602AC70C3A00AD84DF /* OnboardingTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingTabView.swift; sourceTree = "<group>"; };
 		0D3C1C622AC7169400AD84DF /* SkipButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkipButton.swift; sourceTree = "<group>"; };
+		0D3C1C642AC7357200AD84DF /* StartButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartButton.swift; sourceTree = "<group>"; };
 		0D6F8C182AC30DDC00FB963B /* PlaylistView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistView.swift; sourceTree = "<group>"; };
 		0D6F8C1C2AC3136E00FB963B /* FavoritesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesCell.swift; sourceTree = "<group>"; };
 		0D6F8C202AC3688D00FB963B /* PlaylistCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistCell.swift; sourceTree = "<group>"; };
@@ -159,7 +159,7 @@
 			children = (
 				0D3C1C5D2AC7060C00AD84DF /* NextButton.swift */,
 				0D3C1C622AC7169400AD84DF /* SkipButton.swift */,
-				0D3C1C602AC70C3A00AD84DF /* OnboardingTabView.swift */,
+				0D3C1C642AC7357200AD84DF /* StartButton.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -442,6 +442,7 @@
 				10B8F97A2AC4A9A1008DE769 /* PodcastElement.swift in Sources */,
 				10B8F9792AC4A9A1008DE769 /* SearchBarView.swift in Sources */,
 				3C7D49C72AC2F29C0084CD25 /* ProfileDomain.swift in Sources */,
+				0D3C1C652AC7357300AD84DF /* StartButton.swift in Sources */,
 				10B8F97D2AC4A9A1008DE769 /* SearchDomain.swift in Sources */,
 				0DF51CA02AC4B7FB00413A8A /* CreatePlaylistCells.swift in Sources */,
 				0D3C1C5E2AC7060C00AD84DF /* NextButton.swift in Sources */,
@@ -458,7 +459,6 @@
 				0D0C9B052AC60BE3000A4C29 /* OnboardingData.swift in Sources */,
 				A17F6E922AC36D9600819964 /* HomePageHeaderView.swift in Sources */,
 				A1A44D342AC18D6A00F2FED9 /* HomePageView.swift in Sources */,
-				0D3C1C612AC70C3A00AD84DF /* OnboardingTabView.swift in Sources */,
 				3C7D49D52AC31AA20084CD25 /* AccountHeaderView.swift in Sources */,
 				3C7D49CB2AC2F2D10084CD25 /* ProfileSettingsView.swift in Sources */,
 				10B8F97C2AC4A9A1008DE769 /* ResultStore.swift in Sources */,

@@ -12,37 +12,49 @@ struct OnboardingView: View {
     @State private var onboardingSteps = 0
     var body: some View {
         TabView {
-            VStack {
-                Image(OnboardingData.onboardingList[onboardingSteps].image)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 309, height: 309, alignment: .center)
-                    .padding(.bottom, 20)
-                ZStack {
-                    Rectangle()
-                        .frame(width: 309, height: 400, alignment: .center)
-                        .foregroundColor(Color(red: 0.16, green: 0.51, blue: 0.95).opacity(0.37))
-                        .cornerRadius(30)
-                    VStack(alignment: .leading) {
-                        Text(OnboardingData.onboardingList[onboardingSteps].title)
-                            .font(.system(size: 34))
-                            .padding(.bottom, 16)
-                        Text(OnboardingData.onboardingList[onboardingSteps].desciption)
-                            .font(.system(size: 22))
-                        VStack {
-                            HStack(alignment: .center) {
-                                SkipButton(skipScreen: $onboardingSteps)
-                                Spacer()
-                                NextButton(onboardingSteps: $onboardingSteps)
+            GeometryReader { geometry in
+                VStack {
+                    Image(OnboardingData.onboardingList[onboardingSteps].image)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: geometry.size.width * 0.80, height: geometry.size.height * 0.42, alignment: .center)
+                        .padding(.vertical, 20)
+                    ZStack {
+                        Rectangle()
+                            .frame(width: geometry.size.width * 0.84, height: geometry.size.height * 0.51, alignment: .center)
+                            .foregroundColor(Color(red: 0.16, green: 0.51, blue: 0.95).opacity(0.37))
+                            .cornerRadius(30)
+                        
+                        ZStack {
+                            VStack(alignment: .leading, spacing: 16) {
+                                Text(OnboardingData.onboardingList[onboardingSteps].title)
+                                    .font(.custom(.bold, size: 34))
+                                    .padding(.horizontal, 16)
+                                    .padding(.top, 16)
+                                Text(OnboardingData.onboardingList[onboardingSteps].desciption)
+                                    .font(.custom(.regular, size: 20))
+                                    .padding(.horizontal, 16)
+                                    .padding(.bottom, 16)
+                                if onboardingSteps < 2 {
+                                    VStack {
+                                        HStack(alignment: .firstTextBaseline) {
+                                            SkipButton(skipScreen: $onboardingSteps)
+                                            Spacer()
+                                            NextButton(onboardingSteps: $onboardingSteps)
+                                        }
+                                        .padding(.trailing, 14)
+                                    }
+                                    .padding(.bottom, 20)
+                                } else {
+                                    VStack(alignment: .center) {
+                                        StartButton()
+                                    }
+                                    .padding(.horizontal, 16)
+                                    .offset(y: 16)
+                                }
                             }
                         }
-                
-                    }
-                    .multilineTextAlignment(.leading)
-                    .padding(.horizontal, 60)
-                    
-                    VStack {
-                        
+                        .padding(.horizontal, 48)
                     }
                 }
             }
