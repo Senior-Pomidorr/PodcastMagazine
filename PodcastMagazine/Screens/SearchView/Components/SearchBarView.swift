@@ -12,21 +12,34 @@ struct SearchBarView: View {
     
     var body: some View {
         HStack {
-            TextField("Podcast, channel, or artists", text: $searchText)
+            TextField("", text: $searchText)
+                .placeHolder(
+                    Text("Podcast, channel, or artists")
+                        .foregroundStyle(Color.secondaryText)
+                    ,
+                    show: searchText.isEmpty
+                )
+                .font(.custom(.medium, size: 14))
+                .foregroundStyle(.searchBarText)
                 .autocorrectionDisabled(true)
                 .keyboardType(.webSearch)
-                .foregroundColor(Color.searchBarText)
+                .submitLabel(.done)
+                .frame(height: 21)
+                .padding(.vertical, 14)
+                .padding(.leading, 24)
             
-            Image(systemName: searchText.isEmpty ? "magnifyingglass" : "xmark.square")
-                .foregroundColor(Color.secondaryText)
-                .font(.title2)
-                .onTapGesture {
-                    searchText = ""
-                }
-            
+            Image(
+                searchText.isEmpty ? "magnifyingglass" : "xmarkSquare",
+                bundle: nil
+            )
+            .foregroundStyle(.secondaryText)
+            .frame(width: 24, height: 24)
+            .padding(.vertical, 12)
+            .padding(.trailing, 24)
+            .onTapGesture {
+                searchText = ""
+            }
         }
-        .font(.body)
-        .padding()
         .background {
             RoundedRectangle(cornerRadius: 12)
                 .fill(Color.white)
@@ -45,3 +58,19 @@ struct SearchBarView_Previews: PreviewProvider {
     }
 }
 
+struct PlaceHolder<T: View>: ViewModifier {
+    var placeHolder: T
+    var show: Bool
+    func body(content: Content) -> some View {
+        ZStack(alignment: .leading) {
+            if show { placeHolder }
+            content
+        }
+    }
+}
+
+extension View {
+    func placeHolder<T:View>(_ holder: T, show: Bool) -> some View {
+        self.modifier(PlaceHolder(placeHolder:holder, show: show))
+    }
+}

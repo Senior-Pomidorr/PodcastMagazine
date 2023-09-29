@@ -5,6 +5,7 @@
 //  Created by Павел Грицков on 27.09.23.
 //
 
+import LoadableImage
 import SwiftUI
 import Models
 
@@ -19,18 +20,45 @@ struct PodcastElement: View {
     }
     
     var body: some View {
-        RoundedRectangle(cornerRadius: 12)
-            .fill(Color.orange)
-            .overlay {
-                VStack(alignment: .leading) {
-                    Text(item.title)
-                        .font(.body)
-//                    Text(mocItem.categories.first!.name)
-//                    Text(mocItem.medium.rawValue)
-                }
-                .font(.caption)
-                .padding(.horizontal, 4)
+        LoadableImage(item.image ?? "") { image in
+            image
+                .resizable()
+                .scaledToFit()
+                .clipShape(RoundedRectangle(cornerRadius: 12))
+        }
+        .overlay {
+            VStack(alignment: .leading) {
+                Text(item.title)
+                    .font(.custom(.medium, size: 14))
+                    .foregroundStyle(.white)
             }
+            .font(.caption)
+            .padding(.horizontal, 4)
+        }
+        .background {
+            RoundedRectangle(cornerRadius: 12)
+                .stroke(Color.black, lineWidth: 5)
+        }
+        
+        
+//        RoundedRectangle(cornerRadius: 12)
+//            .fill(Color.orange)
+//            .overlay {
+//                LoadableImage(item.image ?? "") { image in
+//                    image
+//                        .resizable()
+//                        .scaledToFill()
+//                }
+//            }
+//            .overlay {
+//                VStack(alignment: .leading) {
+//                    Text(item.title)
+//                        .font(.custom(.medium, size: 14))
+//                        .foregroundStyle(.white)
+//                }
+//                .font(.caption)
+//                .padding(.horizontal, 4)
+//            }
     }
 }
 

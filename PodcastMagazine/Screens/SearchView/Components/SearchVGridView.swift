@@ -26,7 +26,8 @@ struct SearchVGridView: View {
     var body: some View {
         VStack(spacing: 21) {
             HStack {
-                Text("Browse all")
+                Text("Categories")
+                    .font(.custom(.bold, size: 16))
                 Spacer()
             }
             .padding(.horizontal, 32)

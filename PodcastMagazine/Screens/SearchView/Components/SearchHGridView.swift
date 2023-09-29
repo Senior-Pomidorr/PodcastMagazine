@@ -4,6 +4,7 @@
 //
 //  Created by Павел Грицков on 28.09.23.
 //
+import LoadableImage
 import Models
 import SwiftUI
 
@@ -17,35 +18,38 @@ struct SearchHGridView: View {
         self.items = items
     }
     
-    private let mocItems: [Feed] = Array(repeating: Feed.sample, count: 20)
-    private var rows = [
-        GridItem(.flexible(minimum: 84, maximum: 84))
-    ]
-    
     var body: some View {
         VStack(spacing: 13) {
             HStack {
                 Text("Top Genres")
+                    .font(.custom(.bold, size: 16))
                 Spacer()
                 Text("See all")
+                    .font(.custom(.regular, size: 16))
+                    .foregroundStyle(.secondaryText)
             }
             .padding(.horizontal, 32)
             
             ScrollView(.horizontal, showsIndicators: false) {
-                LazyHGrid(rows: rows,
-                          alignment: .center,
-                          spacing: 17,
-                          pinnedViews: [],
-                          content: {
+                HStack(spacing: 17) {
                     ForEach(items, id: \.id) { item in
-                        NavigationLink(
-                            destination: Text("Destination. id: \(item.id), Category - top"),
-                            label: {
-                                PodcastElement(item: item)
-                                    .frame(width: calculateItemWidth())
-                            })
+                        NavigationLink {
+                            Text("Destination. id: \(item.id), Category - top")
+                        } label: {
+                            HStack {
+                                LoadableImage(item.image ?? "") { image in
+                                    image
+                                        .resizable()
+                                }
+                                .scaledToFill()
+                                .frame(width: calculateItemWidth(), height: 84)
+                                .clipShape(RoundedRectangle(cornerRadius: 12))
+                            }
+                        }
+                        
                     }
-                })
+                }
+                
                 .padding(.horizontal, 33)
             }
         }
