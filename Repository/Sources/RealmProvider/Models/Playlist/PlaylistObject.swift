@@ -15,11 +15,15 @@ public final class PlaylistObject: Object, ObjectKeyIdentifiable {
     @Persisted public var name: String
     @Persisted public var episodes: List<EpisodeObject>
     
-    init(playlist: Playlist) {
-        super.init()
+    convenience init(playlist: Playlist) {
+        self.init()
         self.id = playlist.id
         self.image = playlist.image
         self.name = playlist.name
         self.episodes.append(objectsIn: playlist.episodes.map(EpisodeObject.init))
+    }
+    
+    public override class func primaryKey() -> String? {
+        "id"
     }
 }

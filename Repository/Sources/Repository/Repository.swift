@@ -9,9 +9,6 @@ import OSLog
 
 /// Псевдоним, описывающий взаимодействие с репозиторием.
 /// Для корректного использование, нужно явно указать тип возвращаемого значения.
-///
-///     let trendingFeedRequest: RepositoryRequest<[Feed]> = Repository.shared.perform(request:)
-///
 public typealias RepositoryRequest<T> = (Repository.Request) -> Repository.ResponsePublisher<T>
 
 /// Main facade for interaction with dependencies of API cals, Realm and Firebase.

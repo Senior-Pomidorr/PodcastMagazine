@@ -34,7 +34,7 @@ extension Feed: Persistable {
             case let .title(title):             return ("title", title)
             case let .language(language):       return ("language", language)
             case let .medium(medium):           return ("medium", medium)
-            case let .categories(categories):   return ("categories", categories.map(CategoryObject.init))
+            case let .categories(categories):   return ("categories", categories.map(CategoryObject.init(id:name:)))
             case let .description(description): return ("description", description)
             case let .image(url):               return ("image", url)
             case let .author(author):           return ("author", author)

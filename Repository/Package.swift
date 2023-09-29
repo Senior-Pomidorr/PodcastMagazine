@@ -7,7 +7,7 @@ let package = Package(
     name: "Repository",
     platforms: [
         .iOS(.v15),
-        .macOS(.v10_15),
+        .macOS(.v11),
     ],
     products: [
         .library(name: "Repository", targets: ["Repository"]),
@@ -48,6 +48,7 @@ let package = Package(
                 "Repository",
                 "APIProvider",
                 "Models",
+                "RealmProvider",
             ]),
     ]
 )
