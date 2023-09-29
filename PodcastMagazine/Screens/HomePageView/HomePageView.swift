@@ -15,9 +15,10 @@ struct HomePageView: View {
     
     var body: some View {
         GeometryReader { geometry in
-            VStack(spacing: 16) {
+            VStack(spacing: 8) {
                 HomePageHeaderView()
                 CategoryHeaderView()
+                    .padding(.top)
                 
                 switch store.state.homePageLoadingStatus {
                 case .none:
@@ -48,6 +49,16 @@ struct HomePageView: View {
                         .padding(.horizontal, 8)
                     }
                 }
+                
+                ScrollView(.vertical, showsIndicators: false) {
+                    VStack(spacing: 16) {
+                        ForEach(store.state.podcastsList) { podcast in
+                            PodcastCellView(podcast: podcast)
+                                .padding(.horizontal, 8)
+                        }
+                    }
+                }
+                
                 
             }
             .padding()

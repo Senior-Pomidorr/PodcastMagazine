@@ -47,6 +47,7 @@
 		A17F6EA42AC4B23C00819964 /* Manrope-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A17F6E9D2AC4B23C00819964 /* Manrope-Medium.ttf */; };
 		A17F6EA82AC4B55F00819964 /* CustomFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = A17F6EA72AC4B55F00819964 /* CustomFont.swift */; };
 		A17F6EAA2AC4B68500819964 /* Font+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A17F6EA92AC4B68500819964 /* Font+Extension.swift */; };
+		A17F6EB02AC5FC1C00819964 /* PodcastCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A17F6EAF2AC5FC1C00819964 /* PodcastCellView.swift */; };
 		A1A44D232AC18C9700F2FED9 /* PodcastMagazineApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A44D222AC18C9700F2FED9 /* PodcastMagazineApp.swift */; };
 		A1A44D272AC18C9800F2FED9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A1A44D262AC18C9800F2FED9 /* Assets.xcassets */; };
 		A1A44D2A2AC18C9800F2FED9 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A1A44D292AC18C9800F2FED9 /* Preview Assets.xcassets */; };
@@ -93,6 +94,7 @@
 		A17F6EA52AC4B2A100819964 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		A17F6EA72AC4B55F00819964 /* CustomFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomFont.swift; sourceTree = "<group>"; };
 		A17F6EA92AC4B68500819964 /* Font+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font+Extension.swift"; sourceTree = "<group>"; };
+		A17F6EAF2AC5FC1C00819964 /* PodcastCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastCellView.swift; sourceTree = "<group>"; };
 		A1A44D1F2AC18C9700F2FED9 /* PodcastMagazine.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PodcastMagazine.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1A44D222AC18C9700F2FED9 /* PodcastMagazineApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastMagazineApp.swift; sourceTree = "<group>"; };
 		A1A44D262AC18C9800F2FED9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -218,6 +220,7 @@
 			children = (
 				A17F6E912AC36D9600819964 /* HomePageHeaderView.swift */,
 				A17F6E942AC36E2000819964 /* CategoryCellView.swift */,
+				A17F6EAF2AC5FC1C00819964 /* PodcastCellView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -434,6 +437,7 @@
 				10B8F97B2AC4A9A1008DE769 /* SearchStore.swift in Sources */,
 				A17F6E8F2AC217D800819964 /* HomePageDomain.swift in Sources */,
 				0D6F8C212AC3688D00FB963B /* PlaylistCell.swift in Sources */,
+				A17F6EB02AC5FC1C00819964 /* PodcastCellView.swift in Sources */,
 				0D6F8C192AC30DDC00FB963B /* PlaylistView.swift in Sources */,
 				0DF51C9A2AC497AE00413A8A /* CreatePlaylistView.swift in Sources */,
 				0D6F8C232AC3784700FB963B /* CreatePlaylistButton.swift in Sources */,
