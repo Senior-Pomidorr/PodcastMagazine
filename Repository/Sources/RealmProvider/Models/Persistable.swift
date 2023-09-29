@@ -8,10 +8,10 @@
 import Foundation
 import RealmSwift
 
-protocol Persistable {
+public protocol Persistable {
     associatedtype ManagedObject: RealmSwift.Object
+    associatedtype PropertyValue: PropertyValueType
     
-    init(_ managedObject: ManagedObject)
-    
+    init(_ managedObject: ManagedObject) throws
     func managedObject() -> ManagedObject
 }
