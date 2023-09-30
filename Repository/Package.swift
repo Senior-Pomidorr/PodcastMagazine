@@ -33,6 +33,7 @@ let package = Package(
             name: "FirebaseAuthProvider",
             dependencies: [
                 Dependencies.FirebaseAuth.target,
+                Dependencies.FirebaseAuth.firebaseAuthCombine
             ]),
         .target(name: "LoadableImage"),
         .target(
@@ -76,5 +77,9 @@ fileprivate enum Dependencies: CaseIterable {
         case .SwiftFP: return .product(name: "SwiftFP", package: "SwiftFP")
         case .Realm: return .product(name: "RealmSwift", package: "realm-swift")
         }
+    }
+    
+    var firebaseAuthCombine: Target.Dependency {
+        .product(name: "FirebaseAuthCombine-Community", package: "firebase-ios-sdk")
     }
 }

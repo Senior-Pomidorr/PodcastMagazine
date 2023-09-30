@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Repository
 
 @main
 struct PodcastMagazineApp: App {
@@ -14,5 +15,9 @@ struct PodcastMagazineApp: App {
             HomePageView()
            // SearchContentView()
         }
+    }
+    
+    init() {
+        Repository.configure()
     }
 }

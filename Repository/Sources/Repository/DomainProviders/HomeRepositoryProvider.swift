@@ -14,13 +14,16 @@ public struct HomeRepositoryProvider {
     public var getFeedRequest: (Endpoint) -> Repository.ResponsePublisher<FeedsResponse>
     public var getCategoryRequest: () -> Repository.ResponsePublisher<CategoryResponse>
     public var getFeedDetail: (Int) -> Repository.ResponsePublisher<FeedDetail>
+    public var getPersistedFeeds: () -> AnyPublisher<[Feed], Never>
+    
     
     public static var live: HomeRepositoryProvider {
         let repository = Repository.shared
         return .init(
-            getFeedRequest: { repository.perform(request: .api($0)) },
-            getCategoryRequest: { repository.perform(request: .api(.categories)) }, 
-            getFeedDetail: { repository.perform(request: .api(.feeds(by: $0))) }
+            getFeedRequest: repository.request,
+            getCategoryRequest: { repository.request(.categories) },
+            getFeedDetail: { repository.request(.feeds(by: $0)) }, 
+            getPersistedFeeds: repository.loadPersisted().eraseToAnyPublisher
         )
     }
     
@@ -34,6 +37,7 @@ public struct HomeRepositoryProvider {
         feedResult: Repository.Response<FeedsResponse> = .success(.sample),
         feedDetailResult: Repository.Response<FeedDetail> = .success(.sample),
         categoryResult: Repository.Response<CategoryResponse> = .success(.sample),
+        persistedFeeds: [Feed] = [.sample],
         delay: DispatchQueue.SchedulerTimeType.Stride = 2
     ) -> Self {
         .init(
@@ -49,6 +53,10 @@ public struct HomeRepositoryProvider {
             }, 
             getFeedDetail: { _ in
                 Just(feedDetailResult)
+                    .delay(for: delay, scheduler: DispatchQueue.main)
+                    .eraseToAnyPublisher()
+            }, getPersistedFeeds: {
+                Just(persistedFeeds)
                     .delay(for: delay, scheduler: DispatchQueue.main)
                     .eraseToAnyPublisher()
             }
