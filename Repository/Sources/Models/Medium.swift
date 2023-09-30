@@ -12,4 +12,7 @@ public enum Medium: String, Codable {
     case film
     case music
     case video
+    case blog
+    case newsletter
+    case podcast
 }
