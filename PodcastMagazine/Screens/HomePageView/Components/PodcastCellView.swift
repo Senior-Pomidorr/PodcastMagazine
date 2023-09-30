@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Models
+import LoadableImage
 
 struct PodcastCellView: View {
     
@@ -16,23 +17,9 @@ struct PodcastCellView: View {
     var body: some View {
         HStack(spacing: 8) {
             
-            AsyncImage(
-                url: URL(string: podcast.image ?? "")
-            ) { phase in
-                switch phase {
-                case .empty:
-                    ProgressView()
-                case .success(let image):
-                    image
-                        .resizable()
-                case .failure:
-                    Image(systemName: "wifi.slash")
-                        .resizable()
-                        .scaledToFit()
-                        .scaleEffect(0.5)
-                @unknown default:
-                    EmptyView()
-                }
+            LoadableImage(podcast.image ?? "") { image in
+                image
+                    .resizable()
             }
             .frame(width: 56, height: 56)
             .background(Color.gray.opacity(0.2))
