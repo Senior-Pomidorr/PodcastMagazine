@@ -21,7 +21,7 @@ struct SkipButton: View {
                     .cornerRadius(20)
                 Text("Skip")
                     .foregroundStyle(.black)
-                    .font(.system(size: 24))
+                    .font(.custom(.semiBold, size: 18))
             }
         }
     }

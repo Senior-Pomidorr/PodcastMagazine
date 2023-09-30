@@ -16,11 +16,11 @@ struct NextButton: View {
             ZStack {
                 Rectangle()
                     .frame(width: 85, height: 58)
-                    .background(
+                    .foregroundStyle(
                         LinearGradient(
                             stops: [
                                 Gradient.Stop(color: .white.opacity(0.9), location: 0.00),
-                                Gradient.Stop(color: .white.opacity(0.6), location: 1.00),
+                                Gradient.Stop(color: .grey.opacity(0.6), location: 1.00),
                             ],
                             startPoint: UnitPoint(x: 0.5, y: 0),
                             endPoint: UnitPoint(x: 0.5, y: 1)
@@ -29,8 +29,8 @@ struct NextButton: View {
                     .cornerRadius(20)
                 Text("Next")
                     .foregroundStyle(.black)
-                    .font(.system(size: 24))
-//                    .font(.weight(.semibold))
+                    .font(.custom(.semiBold, size: 18))
+                
             }
         }
     }

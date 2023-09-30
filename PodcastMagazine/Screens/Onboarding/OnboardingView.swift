@@ -19,11 +19,11 @@ struct OnboardingView: View {
                         Image(OnboardingData.onboardingList[onboardingSteps].image)
                             .resizable()
                             .scaledToFit()
-                            .frame(width: geometry.size.width * 0.80, height: geometry.size.height * 0.42)
+                            .frame(width: geometry.size.width * 0.80, height: geometry.size.height * 0.41)
                             .padding(.vertical, 20)
                         ZStack {
                             Rectangle()
-                                .frame(width: geometry.size.width * 0.84, height: geometry.size.height * 0.51, alignment: .center)
+                                .frame(width: geometry.size.width * 0.86, height: geometry.size.height * 0.51, alignment: .center)
                                 .foregroundColor(Color(red: 0.16, green: 0.51, blue: 0.95).opacity(0.37))
                                 .cornerRadius(30)
                             
@@ -31,10 +31,12 @@ struct OnboardingView: View {
                                 Text(OnboardingData.onboardingList[onboardingSteps].title)
                                     .font(.custom(.bold, size: 34))
                                     .padding(.horizontal, 16)
-                                    .padding(.top, 16)
+                                
                                 Text(OnboardingData.onboardingList[onboardingSteps].desciption)
                                     .font(.custom(.regular, size: 20))
                                     .padding(.horizontal, 16)
+                                    .padding(.bottom, 10)
+                                
                                 
                                 
                                 if onboardingSteps < 2 {
@@ -45,14 +47,14 @@ struct OnboardingView: View {
                                     }
                                     .padding(.trailing, 14)
                                 } else {
-                                    Spacer()
-                                        .frame(height: 10)
+                                    
                                     StartButton()
-                                        .padding(.horizontal, 16)
+                                        .padding(.horizontal, 14)
                                 }
                                 
                             }
                             .padding(.horizontal, 48)
+                            .padding(.bottom, 16)
                         }
                     }
                 }
