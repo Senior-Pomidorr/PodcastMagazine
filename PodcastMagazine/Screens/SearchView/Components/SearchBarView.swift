@@ -8,16 +8,16 @@
 import SwiftUI
 
 struct SearchBarView: View {
-    @Binding var searchText: String
+    @Binding var queryText: String
     
     var body: some View {
         HStack {
-            TextField("", text: $searchText)
+            TextField("", text: $queryText)
                 .placeHolder(
                     Text("Podcast, channel, or artists")
                         .foregroundStyle(Color.secondaryText)
                     ,
-                    show: searchText.isEmpty
+                    show: queryText.isEmpty
                 )
                 .font(.custom(.medium, size: 14))
                 .foregroundStyle(.searchBarText)
@@ -29,7 +29,7 @@ struct SearchBarView: View {
                 .padding(.leading, 24)
             
             Image(
-                searchText.isEmpty ? "magnifyingglass" : "xmarkSquare",
+                queryText.isEmpty ? "magnifyingglass" : "xmarkSquare",
                 bundle: nil
             )
             .foregroundStyle(.secondaryText)
@@ -37,7 +37,7 @@ struct SearchBarView: View {
             .padding(.vertical, 12)
             .padding(.trailing, 24)
             .onTapGesture {
-                searchText = ""
+                queryText = ""
             }
         }
         .background {
@@ -49,10 +49,10 @@ struct SearchBarView: View {
 
 struct SearchBarView_Previews: PreviewProvider {
     static var previews: some View {
-        SearchBarView(searchText: .constant("Podlodka"))
+        SearchBarView(queryText: .constant(""))
             .previewLayout(.sizeThatFits)
             .preferredColorScheme(.light)
-        SearchBarView(searchText: .constant(""))
+        SearchBarView(queryText: .constant(""))
             .previewLayout(.sizeThatFits)
             .preferredColorScheme(.dark)
     }

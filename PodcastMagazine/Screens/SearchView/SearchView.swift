@@ -8,10 +8,10 @@ import Models
 import SwiftUI
 
 struct SearchView: View {
-    @Binding var text: String
     var trendItems: [Feed]
     var categories: [Models.Category]
     
+    @State private var queryText: String = ""
     @State private var showingDetailView = false
 
     var body: some View {
@@ -27,7 +27,7 @@ struct SearchView: View {
                         .font(.custom(.extraBold, size: 16))
                         .frame(maxWidth: .infinity)
                     
-                    SearchBarView(searchText: $text)
+                    SearchBarView(queryText: $queryText)
                         .frame(height: 48.0)
                         .onSubmit {
                             showingDetailView = true
@@ -45,7 +45,7 @@ struct SearchView: View {
             
             // навигационный костыль, потому что инструменты из 16.0 недоступны
             NavigationLink(isActive: $showingDetailView) {
-                ResultContentView(userQuery: text)
+                ResultContentView(userQuery: queryText)
             } label: { EmptyView() }
         }
         .navigationBarHidden(true)
@@ -59,7 +59,6 @@ struct SearchView_Previews: PreviewProvider {
     
     static var previews: some View {
         SearchView(
-            text: .constant("Ppdlodca"),
             trendItems: [item],
             categories: [category]
         )

@@ -16,7 +16,6 @@ struct SearchContentView: View {
             switch store.state.searchScreenStatus {
             case .none:
                 SearchView(
-                    text: searchText(),
                     trendItems: store.state.trendPodcasts,
                     categories: store.state.categories
                 )
@@ -31,13 +30,13 @@ struct SearchContentView: View {
         }
     }
     
-    func searchText() -> Binding<String> {
-        .init {
-            store.state.textQuery
-        } set: {
-            store.send(.didTypeQuery($0))
-        }
-    }
+//    func searchText() -> Binding<String> {
+//        .init {
+//            store.state.textQuery
+//        } set: {
+//            store.send(.didTypeQuery($0))
+//        }
+//    }
 }
 
 

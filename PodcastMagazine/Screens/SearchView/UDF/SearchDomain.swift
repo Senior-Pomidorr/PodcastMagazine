@@ -50,7 +50,7 @@ struct SearchDomain {
     // MARK: - Action
     enum Action {
         case viewAppeared
-        case didTypeQuery(String)
+//        case didTypeQuery(String)
         case _getTrendRequest
         case _getCategoryRequest
         case _trendResponce(Repository.Response<FeedsResponse>)
@@ -103,8 +103,8 @@ struct SearchDomain {
         case let ._categoryResponce(.failure(error)):
             state.searchScreenStatus = .error(error)
             
-        case let .didTypeQuery(result):
-            state.textQuery = changeString(result)
+//        case let .didTypeQuery(result):
+//            state.textQuery = changeString(result)
         }
         
         return Empty().eraseToAnyPublisher()

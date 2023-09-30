@@ -8,14 +8,45 @@
 import SwiftUI
 
 struct ResultContentView: View {
-    
-    let userQuery: String
-    
+    @StateObject(wrappedValue: ResultDomain.liveStore) private var store: ResultStore
+    var userQuery: String
+
     var rows: [GridItem] = [GridItem(.flexible())]
     
     var body: some View {
+        switch store.state.searchScreenStatus {
+        case .none:
+            ResultView(query: userQuery)
+                .onAppear {
+                    store.send(.setQuery(userQuery))
+                    store.send(.viewAppeared)
+                }
+        case .loading:
+            ProgressView()
+        case .error(let error):
+            Text("Произошла ошибка: \(error.localizedDescription)")
+        }
+    }
+}
+
+#Preview {
+    ResultContentView(userQuery: "Query text")
+}
+
+struct ResultView: View {
+    var query: String
+    
+    init(
+        query: String
+    ) {
+        self.query = query
+    }
+    
+    private var rows: [GridItem] = [GridItem(.flexible())]
+    
+    var body: some View {
         VStack {
-            HeaderResultView(title: userQuery)
+            HeaderResultView(title: query)
                 .padding(.bottom, 24)
             
             VStack {
@@ -86,8 +117,3 @@ struct ResultContentView: View {
         .padding(.top, 49)
     }
 }
-
-#Preview {
-    ResultContentView(userQuery: "podlodca")
-}
-
