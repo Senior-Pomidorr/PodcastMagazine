@@ -71,6 +71,9 @@ struct HomePageDomain {
         case getEpisodes(Int)
         case _getEpisodesResponse(Repository.Response<EpisodesResponse>)
         case getPersistedFeeds
+        case _getPersistedFeedsResponse([Feed])
+        case addFeedToFavorites(Feed)
+        case removeFeedFromFavorites(Feed)
     }
     
     // MARK: - Dependencies
@@ -148,10 +151,18 @@ struct HomePageDomain {
             state.detailsPageLoadingStatus = .none
 
         case .getPersistedFeeds:
-            break
+            return provider.getPersistedFeeds()
+                .map(Action._getPersistedFeedsResponse)
+                .eraseToAnyPublisher()
             
-                
+        case let ._getPersistedFeedsResponse(feeds):
+            state.persistedFeeds = feeds
             
+        case let .addFeedToFavorites(feed):
+            try? provider.addToFavorites(feed)
+            
+        case let .removeFeedFromFavorites(feed):
+            try? provider.removeFromFavorites(feed)
         }
         return Empty().eraseToAnyPublisher()
     }

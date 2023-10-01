@@ -65,6 +65,7 @@ struct HomePageView: View {
             .background(Color.white)
             .onAppear {
                 store.send(.viewAppeared)
+                store.send(.getPersistedFeeds)
             }
         }
     }
