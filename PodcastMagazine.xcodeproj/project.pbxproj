@@ -16,6 +16,7 @@
 		0DF51CA02AC4B7FB00413A8A /* CreatePlaylistCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DF51C9F2AC4B7FB00413A8A /* CreatePlaylistCells.swift */; };
 		1014E80E2AC608A1008EE3FD /* CategoryElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1014E80D2AC608A1008EE3FD /* CategoryElement.swift */; };
 		107B45D32AC97253003A9C65 /* BackgroundGradient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 107B45D22AC97253003A9C65 /* BackgroundGradient.swift */; };
+		107B45D52AC97692003A9C65 /* Color + ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 107B45D42AC97692003A9C65 /* Color + ext.swift */; };
 		10AA8E462AC57812001FF853 /* HeaderResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10AA8E452AC57812001FF853 /* HeaderResultView.swift */; };
 		10AA8E482AC5A9EF001FF853 /* SearchHGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10AA8E472AC5A9EF001FF853 /* SearchHGridView.swift */; };
 		10AA8E4A2AC5AA3C001FF853 /* SearchVGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10AA8E492AC5AA3C001FF853 /* SearchVGridView.swift */; };
@@ -70,6 +71,7 @@
 		0DF51C9F2AC4B7FB00413A8A /* CreatePlaylistCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePlaylistCells.swift; sourceTree = "<group>"; };
 		1014E80D2AC608A1008EE3FD /* CategoryElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryElement.swift; sourceTree = "<group>"; };
 		107B45D22AC97253003A9C65 /* BackgroundGradient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundGradient.swift; sourceTree = "<group>"; };
+		107B45D42AC97692003A9C65 /* Color + ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color + ext.swift"; sourceTree = "<group>"; };
 		10AA8E452AC57812001FF853 /* HeaderResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderResultView.swift; sourceTree = "<group>"; };
 		10AA8E472AC5A9EF001FF853 /* SearchHGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHGridView.swift; sourceTree = "<group>"; };
 		10AA8E492AC5AA3C001FF853 /* SearchVGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVGridView.swift; sourceTree = "<group>"; };
@@ -261,6 +263,7 @@
 			children = (
 				A17F6EA72AC4B55F00819964 /* CustomFont.swift */,
 				A17F6EA92AC4B68500819964 /* Font+Extension.swift */,
+				107B45D42AC97692003A9C65 /* Color + ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -436,6 +439,7 @@
 				3C7D49DB2AC31AF00084CD25 /* GenderSectionView.swift in Sources */,
 				10B8F97E2AC4A9A1008DE769 /* ResultDomain.swift in Sources */,
 				A17F6E952AC36E2000819964 /* CategoryCellView.swift in Sources */,
+				107B45D52AC97692003A9C65 /* Color + ext.swift in Sources */,
 				A17F6EAA2AC4B68500819964 /* Font+Extension.swift in Sources */,
 				1014E80E2AC608A1008EE3FD /* CategoryElement.swift in Sources */,
 				10EB28F82AC8619E0084203B /* ContentCellView.swift in Sources */,

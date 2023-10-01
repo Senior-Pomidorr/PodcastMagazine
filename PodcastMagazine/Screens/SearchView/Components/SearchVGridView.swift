@@ -42,6 +42,7 @@ struct SearchVGridView: View {
                     pinnedViews: []) {
                         ForEach(items, id: \.id) { item in
                             NavigationLink(
+                                // TODO: NavigationLink Category
                                 destination: Text("Destination. id: \(item.id), Category - all"),
                                 label: {
                                     CategoryElement(item: item)

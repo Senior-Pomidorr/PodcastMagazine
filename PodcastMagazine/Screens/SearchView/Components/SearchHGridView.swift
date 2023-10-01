@@ -25,9 +25,14 @@ struct SearchHGridView: View {
                     .foregroundStyle(Color.searchBarText)
                     .font(.custom(.extraBold, size: 16))
                 Spacer()
-                Text("See all")
-                    .font(.custom(.regular, size: 16))
-                    .foregroundStyle(.secondaryText)
+                NavigationLink {
+                    // TODO: NavigationLink See all
+                    Text("Tab \"See all\"")
+                } label: {
+                    Text("See all")
+                        .font(.custom(.regular, size: 16))
+                        .foregroundStyle(.secondaryText)
+                }
             }
             .padding(.horizontal, 32)
             
@@ -35,17 +40,22 @@ struct SearchHGridView: View {
                 HStack(spacing: 17) {
                     ForEach(items, id: \.id) { item in
                         NavigationLink {
+                            // TODO: NavigationLink Top Trend
                             Text("Destination. id: \(item.id), Category - top")
                         } label: {
                             HStack {
-                                LoadableImage(item.image ?? "") { image in
-                                    image
-                                        .resizable()
-                                }
-                                .scaledToFill()
-                                .frame(width: calculateItemWidth(), height: 84)
-                                .clipShape(RoundedRectangle(cornerRadius: 12))
+                                RoundedRectangle(cornerRadius: 12)
+                                    .fill(Color.azure2)
+                                    .overlay {
+                                        VStack {
+                                            Text(item.title)
+                                                .font(.custom(.medium, size: 14))
+                                                .foregroundStyle(.white)
+                                        }
+                                        .padding(.horizontal, 4)
+                                    }
                             }
+                            .frame(width: calculateItemWidth(), height: 84)
                         }
                         
                     }
