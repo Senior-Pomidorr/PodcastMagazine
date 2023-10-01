@@ -10,9 +10,10 @@ import Models
 import LoadableImage
 
 struct PodcastCellView: View {
-    
-    var podcast: Feed = Feed.sample
+    var store: HomePageStore
+    var podcast: Feed
     var podcastInFavorite: Bool = false
+    @State private var navigateToPodcastDescription = false
     
     var body: some View {
         HStack(spacing: 8) {
@@ -44,8 +45,10 @@ struct PodcastCellView: View {
                     
                     HStack(alignment: .top) {
                         Text(podcast.categories?.first?.value ?? "No category")
-                        Text("•")
-                        Text("\(podcast.episodeCount ?? 10)" + "+ Eps")
+                        if podcast.episodeCount ?? 0 > 0 {
+                            Text("•")
+                            Text("\(podcast.episodeCount ?? 0)" + " Eps")
+                        }
                     }
                     .font(.custom(.light, size: 12))
                     .foregroundStyle(Color.gray)
@@ -74,10 +77,20 @@ struct PodcastCellView: View {
         .shadow(color: .black.opacity(0.1), radius: 3, x: 0, y: 5)
         .onTapGesture {
             print("press podcast cell")
+            navigateToPodcastDescription = true
         }
+        .background(
+            NavigationLink(
+                destination: PodcastDiscriptionView(podcastID: podcast.id, store: store),
+                isActive: $navigateToPodcastDescription,
+                label: {
+                    EmptyView()
+                }
+            )
+        )
     }
 }
 
-#Preview {
-    PodcastCellView(podcast: Feed.sample)
-}
+//#Preview {
+//    PodcastCellView()
+//}

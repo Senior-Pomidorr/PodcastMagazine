@@ -58,6 +58,9 @@
 		A1A44D272AC18C9800F2FED9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A1A44D262AC18C9800F2FED9 /* Assets.xcassets */; };
 		A1A44D2A2AC18C9800F2FED9 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A1A44D292AC18C9800F2FED9 /* Preview Assets.xcassets */; };
 		A1A44D342AC18D6A00F2FED9 /* HomePageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A44D332AC18D6A00F2FED9 /* HomePageView.swift */; };
+		A1DDCEA72AC95C1000829B6E /* PodcastDescriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DDCEA62AC95C1000829B6E /* PodcastDescriptionView.swift */; };
+		A1DDCEA92AC9629D00829B6E /* CustomBackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DDCEA82AC9629D00829B6E /* CustomBackButton.swift */; };
+		A1DDCEAB2AC97A0200829B6E /* EpisodeCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DDCEAA2AC97A0100829B6E /* EpisodeCellView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -111,6 +114,9 @@
 		A1A44D262AC18C9800F2FED9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A1A44D292AC18C9800F2FED9 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		A1A44D332AC18D6A00F2FED9 /* HomePageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageView.swift; sourceTree = "<group>"; };
+		A1DDCEA62AC95C1000829B6E /* PodcastDescriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastDescriptionView.swift; sourceTree = "<group>"; };
+		A1DDCEA82AC9629D00829B6E /* CustomBackButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBackButton.swift; sourceTree = "<group>"; };
+		A1DDCEAA2AC97A0100829B6E /* EpisodeCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeCellView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -253,6 +259,9 @@
 				A17F6E912AC36D9600819964 /* HomePageHeaderView.swift */,
 				A17F6E942AC36E2000819964 /* CategoryCellView.swift */,
 				A17F6EAF2AC5FC1C00819964 /* PodcastCellView.swift */,
+				A1DDCEA62AC95C1000829B6E /* PodcastDescriptionView.swift */,
+				A1DDCEA82AC9629D00829B6E /* CustomBackButton.swift */,
+				A1DDCEAA2AC97A0100829B6E /* EpisodeCellView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -443,7 +452,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				10B8F97A2AC4A9A1008DE769 /* PodcastElement.swift in Sources */,
+				A1DDCEA92AC9629D00829B6E /* CustomBackButton.swift in Sources */,
 				10B8F9792AC4A9A1008DE769 /* SearchBarView.swift in Sources */,
+				A1DDCEA72AC95C1000829B6E /* PodcastDescriptionView.swift in Sources */,
 				3C7D49C72AC2F29C0084CD25 /* ProfileDomain.swift in Sources */,
 				0D3C1C652AC7357300AD84DF /* StartButton.swift in Sources */,
 				10B8F97D2AC4A9A1008DE769 /* SearchDomain.swift in Sources */,
@@ -463,6 +474,7 @@
 				A17F6E922AC36D9600819964 /* HomePageHeaderView.swift in Sources */,
 				A1A44D342AC18D6A00F2FED9 /* HomePageView.swift in Sources */,
 				3C7D49D52AC31AA20084CD25 /* AccountHeaderView.swift in Sources */,
+				A1DDCEAB2AC97A0200829B6E /* EpisodeCellView.swift in Sources */,
 				3C7D49CB2AC2F2D10084CD25 /* ProfileSettingsView.swift in Sources */,
 				10B8F97C2AC4A9A1008DE769 /* ResultStore.swift in Sources */,
 				10B8F9772AC4A9A1008DE769 /* SearchView.swift in Sources */,

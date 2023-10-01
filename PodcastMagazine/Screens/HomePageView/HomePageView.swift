@@ -14,60 +14,59 @@ struct HomePageView: View {
     private var maxCategories = 20
     
     var body: some View {
-        GeometryReader { geometry in
-            VStack(spacing: 8) {
-                HomePageHeaderView()
-                CategoryHeaderView()
-                    .padding(.top)
-                
-                switch store.state.homePageLoadingStatus {
-                case .none:
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        HStack(spacing: 16) {
-                            ForEach(store.state.categoryList.prefix(maxCategories)) { item in
-                                CategoryCellView(categoryCellInputData: item)
-                            }
-                        }
-                    }
+        NavigationView {
+            GeometryReader { geometry in
+                VStack(spacing: 8) {
+                    HomePageHeaderView()
+                    CategoryHeaderView()
+                        .padding(.top)
                     
-                    VStack {
+                    switch store.state.homePageLoadingStatus {
+                    case .none:
                         ScrollView(.horizontal, showsIndicators: false) {
-                            HStack(spacing: 12){
-                                ForEach(SelectedCategoryRequest.allCases.indices, id: \.self) { index in
-                                    CategoriesTitleView(categoryIndex: index, selectedIndex: $selectedIndex)
+                            HStack(spacing: 16) {
+                                ForEach(store.state.categoryList.prefix(maxCategories)) { item in
+                                    CategoryCellView(categoryCellInputData: item)
                                 }
                             }
-                            .padding(.horizontal, 8)
+                        }
+                        
+                        VStack {
+                            ScrollView(.horizontal, showsIndicators: false) {
+                                HStack(spacing: 12){
+                                    ForEach(SelectedCategoryRequest.allCases.indices, id: \.self) { index in
+                                        CategoriesTitleView(store: store, categoryIndex: index, selectedIndex: $selectedIndex)
+                                    }
+                                }
+                                .padding(.horizontal, 8)
+                            }
+                        }
+                        
+                        ScrollView(.vertical, showsIndicators: false) {
+                            VStack(spacing: 16) {
+                                ForEach(store.state.podcastsList) { podcast in
+                                    PodcastCellView(store: store, podcast: podcast)
+                                        .padding(.horizontal, 8)
+                                }
+                            }
+                        }
+                    case .loading:
+                        ProgressView()
+                    case let .error(error):
+                        VStack {
+                            Text(error.localizedDescription)
+                            Image(systemName: "wifi.slash")
+                                .frame(width: 100, height: 100, alignment: .center)
                         }
                     }
                     
-                    ScrollView(.vertical, showsIndicators: false) {
-                        VStack(spacing: 16) {
-                            ForEach(store.state.podcastsList) { podcast in
-                                PodcastCellView(podcast: podcast)
-                                    .padding(.horizontal, 8)
-                            }
-                        }
-                    }
-                case .loading:
-                    ProgressView()
-                case let .error(error):
-                    VStack {
-                        Text(error.localizedDescription)
-                        Image(systemName: "wifi.slash")
-                            .frame(width: 100, height: 100, alignment: .center)
-                    }
                 }
-                
-
-                
-                
+                .padding()
             }
-            .padding()
-        }
-        .background(Color.white)
-        .onAppear {
-            store.send(.viewAppeared)
+            .background(Color.white)
+            .onAppear {
+                store.send(.viewAppeared)
+            }
         }
     }
 }
@@ -91,6 +90,7 @@ struct CategoryHeaderView: View {
 }
 
 struct CategoriesTitleView: View {
+    var store: HomePageStore
     var categoryIndex: Int
     @Binding var selectedIndex: Int
     
@@ -111,11 +111,10 @@ struct CategoriesTitleView: View {
         .padding(.vertical, 5)
         .onTapGesture {
             print("selected category index =", categoryIndex)
-            
+            store.send(.getSelectedCategory(SelectedCategoryRequest.allCases[categoryIndex]))
             withAnimation {
                 selectedIndex = categoryIndex
             }
-            // go to internet
         }
     }
 }
