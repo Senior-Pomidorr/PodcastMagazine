@@ -6,26 +6,39 @@
 //
 
 import SwiftUI
+import Models
 
 struct ResultContentView: View {
-    @StateObject(wrappedValue: ResultDomain.liveStore) private var store: ResultStore
-    var userQuery: String
+    @StateObject private var store: ResultStore
 
     var rows: [GridItem] = [GridItem(.flexible())]
     
     var body: some View {
-        switch store.state.searchScreenStatus {
-        case .none:
-            ResultView(query: userQuery)
-                .onAppear {
-                    store.send(.setQuery(userQuery))
-                    store.send(.viewAppeared)
-                }
-        case .loading:
-            ProgressView()
-        case .error(let error):
-            Text("Произошла ошибка: \(error.localizedDescription)")
+        VStack(spacing: 0) {
+            switch store.state.searchScreenStatus {
+            case .none:
+                ResultView(
+                    query: store.state.userQuery,
+                    items: store.state.genres,
+                    podcastItems: store.state.podcasts
+                )
+            case .loading:
+                ProgressView()
+            case .error(let error):
+                Text("Произошла ошибка: \(error.localizedDescription)")
+            }
         }
+        .onAppear {
+            store.send(.viewAppeared)
+        }
+    }
+    
+    init(userQuery: String) {
+        let store = ResultStore(
+            state: ResultDomain.State(query: userQuery),
+            reduser: ResultDomain(provider: .live).reduce(_:with:)
+        )
+        _store = .init(wrappedValue: store)
     }
 }
 
@@ -35,16 +48,23 @@ struct ResultContentView: View {
 
 struct ResultView: View {
     var query: String
+    let items: [Feed]
+    let podcastItems: [Feed]
     
     init(
-        query: String
+        query: String,
+        items: [Feed],
+        podcastItems: [Feed]
     ) {
         self.query = query
+        self.items = items
+        self.podcastItems = podcastItems
     }
     
     private var rows: [GridItem] = [GridItem(.flexible())]
     
     var body: some View {
+        
         VStack {
             HeaderResultView(title: query)
                 .padding(.bottom, 24)
@@ -57,21 +77,9 @@ struct ResultView: View {
                               pinnedViews: [],
                               content: {
                         Section {
-                            ForEach(0..<3) { index in
-                                RoundedRectangle(cornerRadius: 16)
-                                    .fill(.regularMaterial)
+                            ForEach(items, id: \.id) { item in
+                                ContentCellView(item: item)
                                     .frame(height: 72)
-                                    .overlay {
-                                        HStack {
-                                            VStack {
-                                                Text("Title")
-                                                    .font(.title2)
-                                                Text("body")
-                                            }
-                                            .padding()
-                                            Spacer()
-                                        }
-                                    }
                             }
                         } header: {
                             HStack {
@@ -83,21 +91,9 @@ struct ResultView: View {
                         }
                         
                         Section {
-                            ForEach(0..<20) { index in
-                                RoundedRectangle(cornerRadius: 16)
-                                    .fill(.regularMaterial)
+                            ForEach(podcastItems, id: \.id) { item in
+                                ContentCellView(item: item)
                                     .frame(height: 72)
-                                    .overlay {
-                                        HStack {
-                                            VStack {
-                                                Text("Title")
-                                                    .font(.title2)
-                                                Text("body")
-                                            }
-                                            .padding()
-                                            Spacer()
-                                        }
-                                    }
                             }
                         } header: {
                             HStack {

@@ -19,18 +19,22 @@ struct ResultDomain {
     
     // MARK: - State
     struct State {
-        var textQuery: String
+        var userQuery: String
         var genres: [Feed]
         var podcasts: [Feed]
         var searchScreenStatus: ScreenStatus
         
+        var trimmingUserQuery: String {
+            userQuery.trimmingCharacters(in: .whitespacesAndNewlines)
+        }
+        
         init(
-            textQuery: String = .init(),
+            query: String = .init(),
             genres: [Feed] = .init(),
             podcasts: [Feed] = .init(),
             searchScreenStatus: ScreenStatus = .none
         ) {
-            self.textQuery = textQuery
+            self.userQuery = query
             self.genres = genres
             self.podcasts = podcasts
             self.searchScreenStatus = searchScreenStatus
@@ -39,7 +43,6 @@ struct ResultDomain {
     
     // MARK: - Action
     enum Action {
-        case setQuery(String)
         case viewAppeared
         case _getQueryRequest
         case _getPodcastRequest
@@ -68,12 +71,9 @@ struct ResultDomain {
                 Just(._getPodcastRequest)
             )
             .eraseToAnyPublisher()
-
-        case let .setQuery(query):
-            state.textQuery = query.trimmingCharacters(in: .whitespacesAndNewlines)
             
         case ._getQueryRequest:
-            return provider.getFeedRequest(.feeds(byTerm: state.textQuery))
+            return provider.getFeedRequest(.feeds(byTitle: state.trimmingUserQuery))
                 .map(Action._queryResponce)
                 .eraseToAnyPublisher()
             
@@ -84,10 +84,15 @@ struct ResultDomain {
             
         case let ._queryResponce(.success(result)):
             state.searchScreenStatus = .none
-            state.genres = result.feeds
+            if result.feeds.isEmpty {
+                state.genres = fakeFeed()
+            } else {
+                state.genres = result.feeds
+            }
             
         case let ._queryResponce(.failure(error)):
             state.searchScreenStatus = .error(error)
+
             
         case let ._podcastResponce(.success(result)):
             state.searchScreenStatus = .none
@@ -95,8 +100,13 @@ struct ResultDomain {
             
         case let ._podcastResponce(.failure(error)):
             state.searchScreenStatus = .error(error)
+            state.genres = fakeFeed()
         }
         
         return Empty().eraseToAnyPublisher()
+    }
+    
+    func fakeFeed() -> [Feed] {
+        return [Feed(id: 0, url: "", title: "No result", description: "", image: nil, author: nil, ownerName: nil, artwork: nil, language: "", medium: nil, episodeCount: nil, categories: nil)]
     }
 }
