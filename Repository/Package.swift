@@ -7,7 +7,7 @@ let package = Package(
     name: "Repository",
     platforms: [
         .iOS(.v15),
-        .macOS(.v10_15),
+        .macOS(.v11),
     ],
     products: [
         .library(name: "Repository", targets: ["Repository"]),
@@ -33,11 +33,14 @@ let package = Package(
             name: "FirebaseAuthProvider",
             dependencies: [
                 Dependencies.FirebaseAuth.target,
+                Dependencies.FirebaseAuth.firebaseAuthCombine
             ]),
         .target(name: "LoadableImage"),
         .target(
             name: "Repository",
             dependencies: [
+                Dependencies.FirebaseAuth.target,
+                Dependencies.GoogleSignIn.target,
                 "APIProvider",
                 "RealmProvider",
                 "FirebaseAuthProvider",
@@ -48,6 +51,7 @@ let package = Package(
                 "Repository",
                 "APIProvider",
                 "Models",
+                "RealmProvider",
             ]),
     ]
 )
@@ -57,15 +61,17 @@ fileprivate enum Dependencies: CaseIterable {
     case SwiftFP
     case Realm
     case FirebaseAuth
+    case GoogleSignIn
     
     var package: Package.Dependency {
         switch self {
         case .SwiftFP: return .package(url: "https://github.com/ShapovalovIlya/SwiftFP.git", branch: "main")
-        case .Realm: return .package(url: "https://github.com/realm/realm-swift.git", from: "10.42.3")
+        case .Realm: return .package(url: "https://github.com/realm/realm-swift.git", from: "10.43.0")
         case .FirebaseAuth:
             return .package(
                 url: "https://github.com/firebase/firebase-ios-sdk",
                 .upToNextMajor(from: "10.15.0"))
+        case .GoogleSignIn: return .package(url: "https://github.com/google/GoogleSignIn-iOS", from: "7.0.0")
         }
     }
     
@@ -74,6 +80,11 @@ fileprivate enum Dependencies: CaseIterable {
         case .FirebaseAuth: return .product(name: "FirebaseAuth", package: "firebase-ios-sdk")
         case .SwiftFP: return .product(name: "SwiftFP", package: "SwiftFP")
         case .Realm: return .product(name: "RealmSwift", package: "realm-swift")
+        case .GoogleSignIn: return .product(name: "GoogleSignInSwift", package: "GoogleSignIn-iOS")
         }
+    }
+    
+    var firebaseAuthCombine: Target.Dependency {
+        .product(name: "FirebaseAuthCombine-Community", package: "firebase-ios-sdk")
     }
 }

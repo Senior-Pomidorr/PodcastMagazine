@@ -20,7 +20,8 @@ public struct FavoritesAndPlaylistsRepositoryProvider {
         return .init(
             getFavoritesFeeds: Empty().eraseToAnyPublisher,
             getPlaylists: Empty().eraseToAnyPublisher,
-            getEpisodes: { repository.perform(request: .api($0)) })
+            getEpisodes: repository.request
+            )
     }
     
     /// Создает экземпляр провайдера, публикующий передаваемые модели с заданной задержкой по времени.

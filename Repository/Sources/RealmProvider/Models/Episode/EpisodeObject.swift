@@ -30,8 +30,8 @@ public final class EpisodeObject: Object, ObjectKeyIdentifiable {
     @Persisted public var feedLanguage: String
     @Persisted public var chaptersUrl: String?
     
-    init(episode: Episode) {
-        super.init()
+    convenience init(episode: Episode) {
+        self.init()
         self.id = episode.id
         self.title = episode.title
         self.link = episode.link

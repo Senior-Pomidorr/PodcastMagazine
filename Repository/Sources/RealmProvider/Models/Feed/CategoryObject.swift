@@ -12,8 +12,8 @@ public final class CategoryObject: Object, ObjectKeyIdentifiable {
     @Persisted public var id: String
     @Persisted var name: String
     
-    init(id: String, name: String) {
-        super.init()
+    convenience init(id: String, name: String) {
+        self.init()
         self.id = id
         self.name = name
     }
