@@ -21,7 +21,7 @@ struct SearchView: View {
             VStack(spacing: 33) {
                 VStack(spacing: 33) {
                     Text("Search")
-                        .foregroundStyle(Color.searchBarText)
+                        .foregroundStyle(Color.mainText)
                         .font(.custom(.extraBold, size: 16))
                         .frame(maxWidth: .infinity)
                     

@@ -22,13 +22,13 @@ struct HeaderResultView: View {
         VStack(spacing: 18) {
             HStack {
                 Text(title)
-                    .foregroundStyle(Color.searchBarText)
+                    .foregroundStyle(Color.mainText)
                     .font(.custom(.medium, size: 14))
                 
                 Spacer()
                 
                 Image("xmarkSquare", bundle: nil)
-                    .foregroundStyle(.secondaryText)
+                    .foregroundStyle(.tintGrey3)
                     .frame(width: 24, height: 24)
                     .offset(x: -24)
                     .onTapGesture {

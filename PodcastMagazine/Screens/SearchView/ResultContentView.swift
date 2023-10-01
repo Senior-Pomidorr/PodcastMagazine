@@ -43,7 +43,7 @@ struct ResultContentView: View {
 }
 
 #Preview {
-    ResultContentView(userQuery: "Query text")
+    ResultContentView(userQuery: "Podlodka")
 }
 
 struct ResultView: View {
@@ -67,7 +67,6 @@ struct ResultView: View {
         
         VStack {
             HeaderResultView(title: query)
-                .padding(.bottom, 24)
             
             VStack {
                 ScrollView(showsIndicators: false) {
@@ -78,13 +77,16 @@ struct ResultView: View {
                               content: {
                         Section {
                             ForEach(items, id: \.id) { item in
-                                ContentCellView(item: item)
+                                ResultCellView(
+                                    isResultCell: true, 
+                                    item: item
+                                )
                                     .frame(height: 72)
                             }
                         } header: {
                             HStack {
                                 Text("Search Result")
-                                    .foregroundStyle(Color.searchBarText)
+                                    .foregroundStyle(Color.mainText)
                                     .font(.custom(.extraBold, size: 14))
                                 Spacer()
                             }
@@ -92,22 +94,25 @@ struct ResultView: View {
                         
                         Section {
                             ForEach(podcastItems, id: \.id) { item in
-                                ContentCellView(item: item)
+                                ResultCellView(
+                                    isResultCell: false,
+                                    item: item
+                                )
                                     .frame(height: 72)
                             }
                         } header: {
                             HStack {
                                 Text("All Podcast")
-                                    .foregroundStyle(Color.secondaryText)
+                                    .foregroundStyle(Color.mainText)
                                     .font(.custom(.medium, size: 14))
                                 Spacer()
                             }
                         }
                     })
+                    .padding(.top, 24)
                 }
                 .padding(.horizontal, 33)
             }
-                
         }
         .navigationBarHidden(true)
         .padding(.top, 49)

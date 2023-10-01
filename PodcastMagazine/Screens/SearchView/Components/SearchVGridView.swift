@@ -27,7 +27,7 @@ struct SearchVGridView: View {
         VStack(spacing: 21) {
             HStack {
                 Text("Categories")
-                    .foregroundStyle(Color.searchBarText)
+                    .foregroundStyle(Color.mainText)
                     .font(.custom(.extraBold, size: 16))
                 Spacer()
             }
@@ -45,7 +45,7 @@ struct SearchVGridView: View {
                                 // TODO: NavigationLink Category
                                 destination: Text("Destination. id: \(item.id), Category - all"),
                                 label: {
-                                    CategoryElement(item: item)
+                                    CategoryItemView(item: item)
                                         .frame(height: 84)
                                 })
                         }

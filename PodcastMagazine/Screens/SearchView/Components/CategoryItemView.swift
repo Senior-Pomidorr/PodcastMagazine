@@ -7,7 +7,7 @@
 import Models
 import SwiftUI
 
-struct CategoryElement: View {
+struct CategoryItemView: View {
 
     var item: Models.Category
     
@@ -33,5 +33,5 @@ struct CategoryElement: View {
 }
 
 #Preview {
-    CategoryElement(item: Models.Category.sample)
+    CategoryItemView(item: Models.Category.sample)
 }

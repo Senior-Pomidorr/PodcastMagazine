@@ -15,12 +15,12 @@ struct SearchBarView: View {
             TextField("", text: $queryText)
                 .placeHolder(
                     Text("Podcast, channel, or artists")
-                        .foregroundStyle(Color.secondaryText)
+                        .foregroundStyle(Color.tintGrey3)
                     ,
                     show: queryText.isEmpty
                 )
                 .font(.custom(.medium, size: 14))
-                .foregroundStyle(.searchBarText)
+                .foregroundStyle(.mainText)
                 .autocorrectionDisabled(true)
                 .keyboardType(.webSearch)
                 .submitLabel(.done)
@@ -32,7 +32,7 @@ struct SearchBarView: View {
                 queryText.isEmpty ? "magnifyingglass" : "xmarkSquare",
                 bundle: nil
             )
-            .foregroundStyle(.secondaryText)
+            .foregroundStyle(.tintGrey3)
             .frame(width: 24, height: 24)
             .padding(.vertical, 12)
             .padding(.trailing, 24)

@@ -22,7 +22,7 @@ struct SearchHGridView: View {
         VStack(spacing: 13) {
             HStack {
                 Text("Top Trend")
-                    .foregroundStyle(Color.searchBarText)
+                    .foregroundStyle(Color.mainText)
                     .font(.custom(.extraBold, size: 16))
                 Spacer()
                 NavigationLink {
@@ -31,7 +31,7 @@ struct SearchHGridView: View {
                 } label: {
                     Text("See all")
                         .font(.custom(.regular, size: 16))
-                        .foregroundStyle(.secondaryText)
+                        .foregroundStyle(.tintGrey3)
                 }
             }
             .padding(.horizontal, 32)
