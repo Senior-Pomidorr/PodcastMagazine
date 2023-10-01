@@ -39,7 +39,9 @@ struct HomePageDomain {
         var homePageLoadingStatus: HomePageLoadingStatus
         var detailsPageLoadingStatus: HomePageLoadingStatus
         var feedsCategoryList: SelectedCategoryRequest
-        var feedDetails: FeedDetail
+        var feedDetails: FeedDetail?
+        var episodesList: [Episode]?
+        var persistedFeeds: [Feed]?
         
         init(
             categoryList: [Models.Category] = .init(),
@@ -51,7 +53,6 @@ struct HomePageDomain {
             self.podcastsList = podcastsList
             self.homePageLoadingStatus = homePageLoadingStatus
             self.feedsCategoryList = .popular
-            self.feedDetails = .sample
             self.detailsPageLoadingStatus = detailsPageLoadingStatus
         }
     }
@@ -67,6 +68,9 @@ struct HomePageDomain {
         case getSelectedCategory(SelectedCategoryRequest)
         case getFeedDetails(Int)
         case _getFeedDetailsResponse(Repository.Response<FeedDetail>)
+        case getEpisodes(Int)
+        case _getEpisodesResponse(Repository.Response<EpisodesResponse>)
+        case getPersistedFeeds
     }
     
     // MARK: - Dependencies
@@ -129,9 +133,25 @@ struct HomePageDomain {
             
         case let ._getFeedDetailsResponse(.success(feedDetail)):
             state.feedDetails = feedDetail
+            state.detailsPageLoadingStatus = .none
             
-        case let ._getFeedDetailsResponse(.failure(error)):
+        case let ._getFeedDetailsResponse(.failure(error)), let ._getEpisodesResponse(.failure(error)):
             state.detailsPageLoadingStatus = .error(error)
+            
+        case let .getEpisodes(feedId):
+            return provider.getEpisodes(feedId)
+                .map(Action._getEpisodesResponse)
+                .eraseToAnyPublisher()
+            
+        case let ._getEpisodesResponse(.success(episodes)):
+            state.episodesList = episodes.items
+            state.detailsPageLoadingStatus = .none
+
+        case .getPersistedFeeds:
+            break
+            
+                
+            
         }
         return Empty().eraseToAnyPublisher()
     }

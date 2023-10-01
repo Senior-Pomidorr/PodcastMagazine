@@ -77,6 +77,7 @@ struct PodcastCellView: View {
         .shadow(color: .black.opacity(0.1), radius: 3, x: 0, y: 5)
         .onTapGesture {
             print("press podcast cell")
+            print("PODCAST ID =", podcast.id)
             navigateToPodcastDescription = true
         }
         .background(

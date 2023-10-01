@@ -261,7 +261,6 @@
 				A17F6E912AC36D9600819964 /* HomePageHeaderView.swift */,
 				A17F6E942AC36E2000819964 /* CategoryCellView.swift */,
 				A17F6EAF2AC5FC1C00819964 /* PodcastCellView.swift */,
-				A1DDCEA62AC95C1000829B6E /* PodcastDescriptionView.swift */,
 				A1DDCEA82AC9629D00829B6E /* CustomBackButton.swift */,
 				A1DDCEAA2AC97A0100829B6E /* EpisodeCellView.swift */,
 			);
@@ -358,6 +357,7 @@
 				A17F6E902AC36D6B00819964 /* Components */,
 				A1A44D332AC18D6A00F2FED9 /* HomePageView.swift */,
 				A17F6E8E2AC217D800819964 /* HomePageDomain.swift */,
+				A1DDCEA62AC95C1000829B6E /* PodcastDescriptionView.swift */,
 			);
 			path = HomePageView;
 			sourceTree = "<group>";
