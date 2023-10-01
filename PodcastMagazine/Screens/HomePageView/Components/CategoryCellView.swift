@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Models
+import LoadableImage
 
 struct CategoryCellView: View {
     
@@ -18,6 +19,17 @@ struct CategoryCellView: View {
             RoundedRectangle(cornerRadius: 12)
                 .fill(categoryCellInputData.id % 2 == 0 ? Color.color3 : Color.color1)
                 .frame(width: 144, height: 200)
+                .overlay {
+                    LoadableImage("https://random.imagecdn.app/150/200") { image in
+                        image
+                            .resizable()
+                            .scaledToFill()
+                    }
+                }
+                .clipShape(
+                    RoundedRectangle(cornerRadius: 12)
+                )
+            
             
             RoundedRectangle(cornerRadius: 12)
                 .fill(categoryCellInputData.id % 2 == 0 ? Color.color4 : Color.color2)
@@ -29,6 +41,9 @@ struct CategoryCellView: View {
                         .frame(width: 144, height: 64, alignment: .center)
                         .minimumScaleFactor(0.5)
                 )
+        }
+        .onTapGesture {
+            print("press category cell")
         }
     }
 }

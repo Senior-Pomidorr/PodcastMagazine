@@ -14,26 +14,51 @@ public struct HomeRepositoryProvider {
     public var getFeedRequest: (Endpoint) -> Repository.ResponsePublisher<FeedsResponse>
     public var getCategoryRequest: () -> Repository.ResponsePublisher<CategoryResponse>
     public var getFeedDetail: (Int) -> Repository.ResponsePublisher<FeedDetail>
+    public var getEpisodes: (Int) -> Repository.ResponsePublisher<EpisodesResponse>
+    public var getPersistedFeeds: () -> AnyPublisher<[Feed], Never>
+    public var addToFavorites: (Feed) throws -> Void
+    public var removeFromFavorites: (Feed) throws -> Void
     
+    //MARK: - Live provider
     public static var live: HomeRepositoryProvider {
         let repository = Repository.shared
         return .init(
-            getFeedRequest: { repository.perform(request: .api($0)) },
-            getCategoryRequest: { repository.perform(request: .api(.categories)) }, 
-            getFeedDetail: { repository.perform(request: .api(.feeds(by: $0))) }
+            getFeedRequest: repository.request,
+            getCategoryRequest: { repository.request(.categories) },
+            getFeedDetail: { repository.request(.feeds(by: $0)) }, 
+            getEpisodes: { repository.request(.episodes(by: $0)) },
+            getPersistedFeeds: repository.loadPersisted,
+            addToFavorites: { feed in
+                try repository.writeToDatabase { transaction in
+                    transaction.add(feed)
+                }
+            }, 
+            removeFromFavorites: { feed in
+                try repository.writeToDatabase { transaction in
+                    transaction.delete(feed)
+                }
+            }
         )
     }
     
+    //MARK: - Preview provider
     /// Создает экземпляр провайдера, публикующий передаваемые модели с заданной задержкой по времени.
     /// Подходит для эмуляции работы репозитория, например, во время верстки и работы с канвасом.
     /// - Parameters:
     ///   - feedResult: Желаемый результат запроса подкастов.
     ///   - categoryResult: Желаемый результат запроса категорий.
     ///   - delay: Задержка, в секундах, перед срабатываем паблишера ответа.
+    ///   - feedDetailResult: Желаемый результат запросе детализации подкаста.
+    ///   - episodesResult: Желаемый результат запроса эпизодов.
+    ///   - persistedFeeds: Желаемый результат запроса подскастов в базу данных.
+    ///   - favoritesResponse: Желаемый результат запроса на добавление/удаления в базу данных подкаста.
     public static func preview(
         feedResult: Repository.Response<FeedsResponse> = .success(.sample),
         feedDetailResult: Repository.Response<FeedDetail> = .success(.sample),
         categoryResult: Repository.Response<CategoryResponse> = .success(.sample),
+        episodesResult: Repository.Response<EpisodesResponse> = .success(.sample),
+        persistedFeeds: [Feed] = [.sample],
+        favoritesResponse: @escaping (Feed) throws -> Void,
         delay: DispatchQueue.SchedulerTimeType.Stride = 2
     ) -> Self {
         .init(
@@ -51,7 +76,19 @@ public struct HomeRepositoryProvider {
                 Just(feedDetailResult)
                     .delay(for: delay, scheduler: DispatchQueue.main)
                     .eraseToAnyPublisher()
-            }
+            }, 
+            getEpisodes: { _ in
+                Just(episodesResult)
+                    .delay(for: delay, scheduler: DispatchQueue.main)
+                    .eraseToAnyPublisher()
+            },
+            getPersistedFeeds: {
+                Just(persistedFeeds)
+                    .delay(for: delay, scheduler: DispatchQueue.main)
+                    .eraseToAnyPublisher()
+            }, 
+            addToFavorites: favoritesResponse,
+            removeFromFavorites: favoritesResponse
         )
     }
 }

@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct FeedDetail: Decodable {
+public struct FeedDetail: Decodable, Equatable {
     public let status: String
     public let feed: Feed
     public let description: String
