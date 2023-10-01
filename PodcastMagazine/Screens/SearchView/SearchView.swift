@@ -16,9 +16,7 @@ struct SearchView: View {
 
     var body: some View {
         ZStack {
-            // Временный фоновый цвет
-            Color.gray.opacity(0.2)
-                .ignoresSafeArea(edges: .all)
+            BackgroundGradient()
   
             VStack(spacing: 33) {
                 VStack(spacing: 33) {
