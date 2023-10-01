@@ -32,12 +32,11 @@ struct ResultView: View {
             
             VStack {
                 HeaderResultView(title: query)
-                
                 VStack {
                     ScrollView(showsIndicators: false) {
                         LazyVGrid(columns: rows,
                                   alignment: .center,
-                                  spacing: nil,
+                                  spacing: 16,
                                   pinnedViews: [],
                                   content: {
                             Section {
