@@ -10,9 +10,8 @@ import FirebaseAuth
 import FirebaseAuthCombineSwift
 import Combine
 import Models
-import FirebaseCore
 
-public struct FirebaseProvider {
+public struct FirebaseManager {
     private let auth: Auth
     
     //MARK: - init(_:)
@@ -47,12 +46,9 @@ public struct FirebaseProvider {
         .eraseToAnyPublisher()
     }
     
-    public static func configure() {
-        FirebaseApp.configure()
-    }
 }
 
-private extension FirebaseProvider {
+private extension FirebaseManager {
     func signItWith(email: String, password: String) -> AnyPublisher<UserAccount, FirebaseError> {
         auth.signIn(withEmail: email, password: password)
             .map(\.user)

@@ -6,6 +6,7 @@ import APIProvider
 import RealmProvider
 import FirebaseAuthProvider
 import OSLog
+import Models
 
 /// Main facade for interaction with dependencies of API cals, Realm and Firebase.
 public final class Repository {
@@ -17,6 +18,7 @@ public final class Repository {
     //MARK: - Private properties
     private let apiManager: APIManager
     private let realmManager: RealmManager
+    private let firebaseManager: FirebaseManager
     private let mainQueue: DispatchQueue = .main
     private let logger = Logger(
         subsystem: Bundle.main.bundleIdentifier!,
@@ -27,6 +29,7 @@ public final class Repository {
     private init() {
         apiManager = .init(logger: logger)
         realmManager = try! .init(logger: .shared)
+        firebaseManager = .init()
     }
     
     //MARK: - Public methods
@@ -44,18 +47,32 @@ public final class Repository {
             .eraseToAnyPublisher()
     }
     
+    func firebase(_ action: FirebaseManager.Action) -> ResponsePublisher<UserAccount> {
+        firebaseManager.perform(action)
+            .map(Response.success)
+            .mapError(RepositoryError.init)
+            .catch(Response.catchError)
+            .eraseToAnyPublisher()
+    }
     
-    func loadPersisted<T: Persistable>() -> Just<[T]> {
+    func firebaseLogout() -> ResponsePublisher<Void> {
+        firebaseManager.logOut()
+            .map(Response.success)
+            .mapError(RepositoryError.init)
+            .catch(Response.catchError)
+            .eraseToAnyPublisher()
+    }
+    
+    
+    func loadPersisted<T: Persistable>() -> AnyPublisher<[T], Never> {
         Just(realmManager.values(T.self))
+            .receive(on: mainQueue)
+            .eraseToAnyPublisher()
     }
     
     
     func writeToDatabase<T: Persistable>(_ block: @escaping (WriteTransaction) -> T) throws {
         try realmManager.write(block)
-    }
-    
-    public static func configure() {
-        FirebaseProvider.configure()
     }
     
 }
@@ -74,3 +91,4 @@ public extension Repository {
     }
     
 }
+

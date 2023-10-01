@@ -7,7 +7,7 @@
 
 import Foundation
 
-public extension FirebaseProvider {
+public extension FirebaseManager {
     enum Action {
         case logIn(email: String, password: String)
         case register(email: String, password: String)

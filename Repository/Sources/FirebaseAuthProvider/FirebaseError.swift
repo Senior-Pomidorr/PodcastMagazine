@@ -7,7 +7,7 @@
 
 import Foundation
 
-public extension FirebaseProvider {
+public extension FirebaseManager {
     enum FirebaseError: Error, LocalizedError {
         case logInFail(Error)
         case logOutFail(Error)

@@ -10,6 +10,8 @@ import Repository
 
 @main
 struct PodcastMagazineApp: App {
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate 
+    
     var body: some Scene {
         WindowGroup {
             HomePageView()
@@ -17,7 +19,4 @@ struct PodcastMagazineApp: App {
         }
     }
     
-    init() {
-        Repository.configure()
-    }
 }
