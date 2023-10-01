@@ -28,7 +28,10 @@ public final class Repository {
     //MARK: - init(_:)
     private init() {
         apiManager = .init(logger: logger)
-        realmManager = try! .init(logger: .shared)
+        realmManager = try! .init(
+            config: .init(deleteRealmIfMigrationNeeded: true),
+            logger: .shared
+        )
         firebaseManager = .init()
     }
     
