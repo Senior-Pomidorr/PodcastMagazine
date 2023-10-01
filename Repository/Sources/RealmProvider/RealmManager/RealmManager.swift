@@ -13,57 +13,36 @@ public struct RealmManager {
     private let realm: Realm
     
     //MARK: - init(_:)
-    public init() throws {
-        try self.init(realm: Realm())
-    }
-    
-    internal init(realm: Realm) {
-        self.realm = realm
+    public init(
+        config: Realm.Configuration = .defaultConfiguration,
+        logger: Logger? = nil
+    ) throws {
+        self.realm = try Realm(configuration: config)
+        guard let logger = logger else { return }
+        Logger.shared = logger
     }
     
     //MARK: - Public methods
-    public func write(_ block: (WriteTransaction) throws -> Void) throws {
-        let transaction = WriteTransaction(realm: realm)
+    public func write<T: Persistable>(_ block: @escaping (WriteTransaction) -> T) throws {
+        Logger.shared.logLevel(.debug, message: #function)
         try realm.write {
-            try block(transaction)
+            block(WriteTransaction(realm: realm))
         }
-        
     }
     
-    public func update<T: Persistable>(values: T.PropertyValue...) -> AnyPublisher<T, RealmError> {
-        Deferred {
-            Future { promise in
-                let result = realm.create(
-                    T.ManagedObject.self,
-                    value: values.map(\.propertyValuePair).reduce(into: [String: Any](), { $0[$1.name] = $1.value }),
-                    update: .modified
-                )
-                do {
-                    let model = try T.init(result)
-                    promise(.success(model))
-                } catch {
-                    promise(.failure(error))
-                }
-            }
-        }
-        .mapError(RealmError.map(_:))
-        .eraseToAnyPublisher()
+    public func values<T: Persistable>(_ type: T.Type) -> [T] {
+        Logger.shared.logLevel(.debug, message: #function)
+        return realm.objects(type.ManagedObject.self)
+            .map(T.init)
     }
     
-    func values<T: Persistable>(_ type: T.Type, isIncluded: @escaping (Query<T.ManagedObject>) -> Query<Bool>) -> AnyPublisher<[T], RealmError> {
-        Deferred { [isIncluded] in
-            Future { promise in
-                do {
-                    let results = try realm.objects(type.ManagedObject.self)
-                        .where(isIncluded)
-                        .map(T.init(_:))
-                    promise(.success(results))
-                } catch {
-                    promise(.failure(error))
-                }
-            }
-        }
-        .mapError(RealmError.map(_:))
-        .eraseToAnyPublisher()
+    public func values<T: Persistable>(
+        _ type: T.Type,
+        isIncluded: @escaping (Query<T.ManagedObject>) -> Query<Bool>
+    ) -> [T] {
+        Logger.shared.logLevel(.debug, message: #function)
+        return realm.objects(type.ManagedObject.self)
+            .where(isIncluded)
+            .map(T.init)
     }
 }

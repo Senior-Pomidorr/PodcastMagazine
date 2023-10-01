@@ -17,8 +17,8 @@ public struct SearchRepositoryProvider {
     public static var live: SearchRepositoryProvider {
         let repository = Repository.shared
         return .init(
-            getFeedRequest: { repository.perform(request: .api($0)) },
-            getFeedDetail: { repository.perform(request: .api(.feeds(by: $0))) }
+            getFeedRequest: repository.request,
+            getFeedDetail: { repository.request(.feeds(by: $0)) }
         )
     }
     

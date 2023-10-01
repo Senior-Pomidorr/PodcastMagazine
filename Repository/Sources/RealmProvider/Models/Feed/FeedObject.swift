@@ -17,19 +17,25 @@ public final class FeedObject: Object, ObjectKeyIdentifiable {
     @Persisted public var image: String?
     @Persisted public var author: String?
     @Persisted public var ownerName: String?
-    @Persisted public var artwork: String
+    @Persisted public var artwork: String?
     @Persisted public var language: String
     @Persisted public var medium: Medium?
     @Persisted public var categories: List<CategoryObject>
     @Persisted public var episodeCount: Int?
     
-    init(feed: Feed) {
-        super.init()
+    convenience init(feed: Feed) {
+        self.init()
         self.id = feed.id
         self.url = feed.url
         self.title = feed.title
+        self.feedDescription = feed.description
+        self.image = feed.image
+        self.author = feed.author
+        self.ownerName = feed.ownerName
+        self.artwork = feed.artwork
         self.language = feed.language
         self.medium = feed.medium
+        self.episodeCount = feed.episodeCount
         guard let categories = feed.categories else {
             return
         }

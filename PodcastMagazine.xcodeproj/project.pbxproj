@@ -37,6 +37,7 @@
 		3C7D49D72AC31ABB0084CD25 /* SaveButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7D49D62AC31ABB0084CD25 /* SaveButtonView.swift */; };
 		3C7D49D92AC31AD40084CD25 /* ProfileImageSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7D49D82AC31AD40084CD25 /* ProfileImageSectionView.swift */; };
 		3C7D49DB2AC31AF00084CD25 /* GenderSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7D49DA2AC31AF00084CD25 /* GenderSectionView.swift */; };
+		8658CCE62AC873C7005B454C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8658CCE52AC873C7005B454C /* GoogleService-Info.plist */; };
 		86F3420E2AC19B870007213C /* Repository in Frameworks */ = {isa = PBXBuildFile; productRef = 86F3420D2AC19B870007213C /* Repository */; };
 		86F342102AC19B8D0007213C /* Models in Frameworks */ = {isa = PBXBuildFile; productRef = 86F3420F2AC19B8D0007213C /* Models */; };
 		86F342122AC19DBD0007213C /* Repository in Resources */ = {isa = PBXBuildFile; fileRef = 86F342112AC19DBD0007213C /* Repository */; };
@@ -90,6 +91,7 @@
 		3C7D49D62AC31ABB0084CD25 /* SaveButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveButtonView.swift; sourceTree = "<group>"; };
 		3C7D49D82AC31AD40084CD25 /* ProfileImageSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageSectionView.swift; sourceTree = "<group>"; };
 		3C7D49DA2AC31AF00084CD25 /* GenderSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenderSectionView.swift; sourceTree = "<group>"; };
+		8658CCE52AC873C7005B454C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		86F342112AC19DBD0007213C /* Repository */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Repository; sourceTree = "<group>"; };
 		A17F6E8E2AC217D800819964 /* HomePageDomain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageDomain.swift; sourceTree = "<group>"; };
 		A17F6E912AC36D9600819964 /* HomePageHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageHeaderView.swift; sourceTree = "<group>"; };
@@ -298,6 +300,7 @@
 		A1A44D212AC18C9700F2FED9 /* PodcastMagazine */ = {
 			isa = PBXGroup;
 			children = (
+				8658CCE52AC873C7005B454C /* GoogleService-Info.plist */,
 				A17F6EA52AC4B2A100819964 /* Info.plist */,
 				A1A44D302AC18D1C00F2FED9 /* Application */,
 				A1A44D312AC18D3300F2FED9 /* Screens */,
@@ -427,6 +430,7 @@
 				86F342122AC19DBD0007213C /* Repository in Resources */,
 				A17F6EA02AC4B23C00819964 /* Manrope-Bold.ttf in Resources */,
 				A17F6EA12AC4B23C00819964 /* Manrope-ExtraLight.ttf in Resources */,
+				8658CCE62AC873C7005B454C /* GoogleService-Info.plist in Resources */,
 				A17F6EA22AC4B23C00819964 /* Manrope-SemiBold.ttf in Resources */,
 				A17F6E9F2AC4B23C00819964 /* Manrope-Light.ttf in Resources */,
 			);
