@@ -12,60 +12,52 @@ import SwiftUI
 struct SearchHGridView: View {
     var items: [Feed]
     
-    init(
-        items: [Feed]
-    ) {
-        self.items = items
-    }
-    
     var body: some View {
         VStack(spacing: 13) {
-            HStack {
-                Text("Top Trend")
-                    .foregroundStyle(Color.mainText)
-                    .font(.custom(.extraBold, size: 16))
-                Spacer()
-                NavigationLink {
-                    // TODO: NavigationLink See all
-                    Text("Tab \"See all\"")
-                } label: {
-                    Text("See all")
-                        .font(.custom(.regular, size: 16))
-                        .foregroundStyle(.tintGrey3)
-                }
-            }
+            HeaderScrollView(
+                isTrend: true,
+                textLeading: "Top Trend",
+                textTrailing: "See all"
+            )
             .padding(.horizontal, 32)
             
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 17) {
                     ForEach(items, id: \.id) { item in
+                        
                         NavigationLink {
                             // TODO: NavigationLink Top Trend
-                            Text("Destination. id: \(item.id), Category - top")
+                            Text("Destination. id: \(item.id), Top Trend")
+                            
                         } label: {
+                            
                             HStack {
                                 RoundedRectangle(cornerRadius: 12)
                                     .fill(Color.azure2)
                                     .overlay {
                                         VStack {
-                                            Text(item.title)
-                                                .font(.custom(.medium, size: 14))
-                                                .foregroundStyle(.white)
+                                            TextView(
+                                                text: item.title,
+                                                color: .white
+                                            )
                                         }
                                         .padding(.horizontal, 4)
-                                    }
+                                }
+                                .frame(width: calculateItemWidth(), height: 84)
                             }
                             .frame(width: calculateItemWidth(), height: 84)
                         }
-                        
                     }
                 }
-                
                 .padding(.horizontal, 33)
             }
         }
     }
     
+    
+    /// Считае ширину элемента в зависимости от размера экрана устройства
+    /// учитывает отступы
+    /// - Returns: ширина элемента CGFloat
     private func calculateItemWidth() -> CGFloat {
         let screenWidth = UIScreen.main.bounds.width
         let spacing: CGFloat = 17

@@ -25,14 +25,11 @@ struct SearchVGridView: View {
     
     var body: some View {
         VStack(spacing: 21) {
-            HStack {
-                Text("Categories")
-                    .foregroundStyle(Color.mainText)
-                    .font(.custom(.extraBold, size: 16))
-                Spacer()
-            }
+            HeaderScrollView(
+                isTrend: false,
+                textLeading: "Categories"
+            )
             .padding(.horizontal, 32)
-            
             
             ScrollView(.vertical, showsIndicators: false) {
                 LazyVGrid(
@@ -41,13 +38,15 @@ struct SearchVGridView: View {
                     spacing: 17,
                     pinnedViews: []) {
                         ForEach(items, id: \.id) { item in
-                            NavigationLink(
+                            
+                            NavigationLink {
                                 // TODO: NavigationLink Category
-                                destination: Text("Destination. id: \(item.id), Category - all"),
-                                label: {
-                                    CategoryItemView(item: item)
-                                        .frame(height: 84)
-                                })
+                                Text("Destination. id: \(item.id), Category - all")
+                                
+                            } label: {
+                                CategoryItemView(item: item)
+                                    .frame(height: 84)
+                            }
                         }
                     }
             }

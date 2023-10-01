@@ -11,28 +11,20 @@ struct HeaderResultView: View {
     @Environment(\.dismiss) var dismiss
     
     let title: String
-    
-    init(
-        title: String
-    ) {
-        self.title = title
-    }
-    
+
     var body: some View {
         VStack(spacing: 18) {
             HStack {
-                Text(title)
-                    .foregroundStyle(Color.mainText)
-                    .font(.custom(.medium, size: 14))
+                TextView(text: title)
                 
                 Spacer()
                 
+                // элемент с крестиком вместо кнопки back в NavigationBar
                 Image("xmarkSquare", bundle: nil)
                     .foregroundStyle(.tintGrey3)
                     .frame(width: 24, height: 24)
                     .offset(x: -24)
                     .onTapGesture {
-                        print("did tap")
                         dismiss()
                     }
             }

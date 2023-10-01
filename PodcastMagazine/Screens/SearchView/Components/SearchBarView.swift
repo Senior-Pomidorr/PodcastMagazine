@@ -58,6 +58,9 @@ struct SearchBarView_Previews: PreviewProvider {
     }
 }
 
+// MARK: - PlaceHolder
+/// struct Для расширения View.
+/// По сути рисует  view поверх другова view
 struct PlaceHolder<T: View>: ViewModifier {
     var placeHolder: T
     var show: Bool

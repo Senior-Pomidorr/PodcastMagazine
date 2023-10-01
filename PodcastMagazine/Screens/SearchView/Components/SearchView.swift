@@ -20,10 +20,12 @@ struct SearchView: View {
   
             VStack(spacing: 33) {
                 VStack(spacing: 33) {
-                    Text("Search")
-                        .foregroundStyle(Color.mainText)
-                        .font(.custom(.extraBold, size: 16))
-                        .frame(maxWidth: .infinity)
+                    TextView(
+                        text: "Search",
+                        size: 16,
+                        style: .extraBold
+                    )
+                    .frame(maxWidth: .infinity)
                     
                     SearchBarView(queryText: $queryText)
                         .frame(height: 48.0)

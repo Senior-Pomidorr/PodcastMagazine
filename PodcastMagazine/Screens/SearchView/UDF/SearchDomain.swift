@@ -34,6 +34,7 @@ struct SearchDomain {
         var categories: [Models.Category]
         var searchScreenStatus: ScreenStatus
         
+        // MARK: - init(:)
         init(
             textQuery: String = .init(),
             trendPodcasts: [Feed] = .init(),
@@ -50,7 +51,6 @@ struct SearchDomain {
     // MARK: - Action
     enum Action {
         case viewAppeared
-//        case didTypeQuery(String)
         case _getTrendRequest
         case _getCategoryRequest
         case _trendResponce(Repository.Response<FeedsResponse>)
@@ -59,8 +59,8 @@ struct SearchDomain {
     
     // MARK: - Dependencies
     let provider: HomeRepositoryProvider
-//    let pr: SearchRepositoryProvider = .preview(.)
-    // MARK: - reduce
+
+    // MARK: - func reduce
     func reduce(
         _ state: inout State,
         with action: Action
@@ -102,18 +102,8 @@ struct SearchDomain {
             
         case let ._categoryResponce(.failure(error)):
             state.searchScreenStatus = .error(error)
-            
-//        case let .didTypeQuery(result):
-//            state.textQuery = changeString(result)
         }
         
         return Empty().eraseToAnyPublisher()
-    }
-    
-    /// Изменения строки введеннкой в SearchBar
-    /// - Parameter query: Строка введенная пользователем
-    /// - Returns: String.trimmingCharacters(in: .whitespacesAndNewlines)
-    func changeString(_ query: String) -> String {
-        return query.trimmingCharacters(in: .whitespacesAndNewlines)
     }
 }

@@ -28,6 +28,7 @@ struct ResultDomain {
             userQuery.trimmingCharacters(in: .whitespacesAndNewlines)
         }
         
+        // MARK: - init(:)
         init(
             query: String = .init(),
             genres: [Feed] = .init(),
@@ -53,6 +54,7 @@ struct ResultDomain {
     // MARK: - Dependencies
     let provider: SearchRepositoryProvider
     
+    // MARK: - func reduce
     func reduce(
         _ state: inout State,
         with action: Action

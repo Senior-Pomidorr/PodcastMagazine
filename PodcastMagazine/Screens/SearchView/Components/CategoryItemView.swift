@@ -8,14 +8,7 @@ import Models
 import SwiftUI
 
 struct CategoryItemView: View {
-
     var item: Models.Category
-    
-    init(
-        item: Models.Category
-    ) {
-        self.item = item
-    }
     
     var body: some View {
         RoundedRectangle(cornerRadius: 12)

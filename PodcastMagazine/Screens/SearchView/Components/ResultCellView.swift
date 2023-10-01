@@ -42,13 +42,13 @@ struct ResultCellView: View {
                     
                     VStack(alignment: .leading) {
                         TextView(
-                            item.title,
+                            text: item.title,
                             size: isResultCell ? 16 : 14,
                             style: CustomFont.bold
                         )
                         HStack {
                             TextView(
-                                item.medium?.rawValue,
+                                text: item.medium?.rawValue,
                                 default: "20.02",
                                 size: isResultCell ? 14 : 12,
                                 style: CustomFont.light,
@@ -67,7 +67,7 @@ struct ResultCellView: View {
                             )
                             
                             TextView(
-                                item.author,
+                                text: item.author,
                                 default: "Uknow author",
                                 size: isResultCell ? 14 : 12,
                                 style: CustomFont.light,
@@ -89,37 +89,4 @@ struct ResultCellView: View {
         isResultCell: true,
         item: Feed.sample
     )
-}
-
-
-/// - Parameters:
-///   - size: default = 14
-///   - style: default value - CustomFont = .medium
-///   - color: default value - .mainText
-struct TextView: View {
-    var text: String?
-    var defaultText: String
-    let size: CGFloat
-    let style: CustomFont
-    let color: Color
-
-    init(
-        _ text: String?,
-        default defaultText: String = .init(),
-        size: CGFloat = 14,
-        style: CustomFont = .medium,
-        color: Color = .mainText
-    ) {
-        self.text = text
-        self.defaultText = defaultText
-        self.size = size
-        self.style = style
-        self.color = color
-    }
-    
-    var body: some View {
-        Text(text ?? defaultText)
-            .foregroundStyle(color)
-            .font(.custom(style, size: size))
-    }
 }
