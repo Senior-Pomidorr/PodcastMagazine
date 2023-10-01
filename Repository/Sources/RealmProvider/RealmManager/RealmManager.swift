@@ -14,7 +14,7 @@ public struct RealmManager {
     
     //MARK: - init(_:)
     public init(
-        config: Realm.Configuration = .defaultConfiguration,
+        config: Realm.Configuration = .init(schemaVersion: 2),
         logger: Logger? = nil
     ) throws {
         self.realm = try Realm(configuration: config)
