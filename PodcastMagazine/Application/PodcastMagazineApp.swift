@@ -18,10 +18,10 @@ struct PodcastMagazineApp: App {
         WindowGroup {
             if isOnboarding {
                 OnboardingView()
-                    .sheet(isPresented: $isModalVisible) {
-                        OnboardingView()
-                    }
-            } else {
+//                    .sheet(isPresented: $isModalVisible) {
+//                        OnboardingView()
+//                    }
+                } else {
                 HomePageView()
                 // SearchContentView()
             }

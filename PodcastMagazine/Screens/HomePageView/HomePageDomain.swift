@@ -37,17 +37,22 @@ struct HomePageDomain {
         var categoryList: [Models.Category]
         var podcastsList: [Feed]
         var homePageLoadingStatus: HomePageLoadingStatus
+        var detailsPageLoadingStatus: HomePageLoadingStatus
         var feedsCategoryList: SelectedCategoryRequest
+        var feedDetails: FeedDetail
         
         init(
             categoryList: [Models.Category] = .init(),
             podcastsList: [Feed] = .init(),
-            homePageLoadingStatus: HomePageLoadingStatus = .none
+            homePageLoadingStatus: HomePageLoadingStatus = .none,
+            detailsPageLoadingStatus: HomePageLoadingStatus = .none
         ) {
             self.categoryList = categoryList
             self.podcastsList = podcastsList
             self.homePageLoadingStatus = homePageLoadingStatus
             self.feedsCategoryList = .popular
+            self.feedDetails = .sample
+            self.detailsPageLoadingStatus = detailsPageLoadingStatus
         }
     }
     
@@ -60,6 +65,8 @@ struct HomePageDomain {
         case _getCategoryResponse(Repository.Response<CategoryResponse>)
         case _getPodcastsResponse(Repository.Response<FeedsResponse>)
         case getSelectedCategory(SelectedCategoryRequest)
+        case getFeedDetails(Int)
+        case _getFeedDetailsResponse(Repository.Response<FeedDetail>)
     }
     
     // MARK: - Dependencies
@@ -79,10 +86,12 @@ struct HomePageDomain {
             
             return Publishers.Merge(
                 Just(._getCategoryRequest),
-                //Empty()
                 Just(._getPodcastRequest)
             )
             .eraseToAnyPublisher()
+            
+            //   provider.getFeedRequest(.feeds(byTerm: "music"))
+            //  provider.getFeedDetail(34534)
             
         case ._getCategoryRequest:
             return provider.getCategoryRequest()
@@ -93,7 +102,7 @@ struct HomePageDomain {
             return provider.getFeedRequest(.trendingFeeds())
                 .map(Action._getPodcastsResponse)
                 .eraseToAnyPublisher()
-                  
+            
         case let ._getCategoryResponse(.success(response)):
             state.homePageLoadingStatus = .none
             state.categoryList = response.feeds
@@ -113,8 +122,17 @@ struct HomePageDomain {
         case let .getSelectedCategory(selectedCategory):
             return fetchCategoryRequest(selected: selectedCategory)
             
+        case let .getFeedDetails(feedId):
+            return provider.getFeedDetail(feedId)
+                .map(Action._getFeedDetailsResponse)
+                .eraseToAnyPublisher()
+            
+        case let ._getFeedDetailsResponse(.success(feedDetail)):
+            state.feedDetails = feedDetail
+            
+        case let ._getFeedDetailsResponse(.failure(error)):
+            state.detailsPageLoadingStatus = .error(error)
         }
-        
         return Empty().eraseToAnyPublisher()
     }
     
@@ -132,10 +150,6 @@ struct HomePageDomain {
             return provider.getFeedRequest(.feeds(by: .audiobook))
                 .map(Action._getPodcastsResponse)
                 .eraseToAnyPublisher()
-//        case .blog:
-//            return provider.getFeedRequest(.feeds(by: .blog))
-//                .map(Action._getPodcastsResponse)
-//                .eraseToAnyPublisher()
         case .film:
             return provider.getFeedRequest(.feeds(by: .film))
                 .map(Action._getPodcastsResponse)
@@ -144,40 +158,12 @@ struct HomePageDomain {
             return provider.getFeedRequest(.feeds(by: .music))
                 .map(Action._getPodcastsResponse)
                 .eraseToAnyPublisher()
-//        case .newsletter:
-//            return provider.getFeedRequest(.feeds(by: .newsletter))
-//                .map(Action._getPodcastsResponse)
-//                .eraseToAnyPublisher()
-//        case .podcast:
-//            return provider.getFeedRequest(.feeds(by: .podcast))
-//                .map(Action._getPodcastsResponse)
-//                .eraseToAnyPublisher()
         case .video:
             return provider.getFeedRequest(.feeds(by: .video))
                 .map(Action._getPodcastsResponse)
                 .eraseToAnyPublisher()
         }
     }
-    
-//    // MARK: - SuccessActionCategory
-//    func toSuccessCategory(_ apiCategories: [Models.Category]) -> Action {
-//        ._getCategoryResponse(.success(apiCategories))
-//    }
-//    
-//    // MARK: - FailActionCategory
-//    func toFailCategory(_ error: Error) -> Just<Action> {
-//        Just(._getCategoryResponse(.failure(error)))
-//    }
-//    
-//    // MARK: - SuccessActionFeed
-//    func toSuccessFeed(_ feeds: [Feed]) -> Action {
-//        ._getPodcastsResponse(.success(feeds))
-//    }
-//    
-//    // MARK: - FailActionFeed
-//    func toFailFeed(_ error: Error) -> Just<Action> {
-//        Just(._getPodcastsResponse(.failure(error)))
-//    }
     
     static let liveStore = HomePageStore(
         state: Self.State(),
