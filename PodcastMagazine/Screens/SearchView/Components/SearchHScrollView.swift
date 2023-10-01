@@ -9,7 +9,7 @@ import Models
 import SwiftUI
 
 // MARK: - SearchHGridView
-struct SearchHGridView: View {
+struct SearchHScrollView: View {
     var items: [Feed]
     
     var body: some View {
@@ -69,5 +69,5 @@ struct SearchHGridView: View {
 }
 
 #Preview {
-    SearchHGridView(items: [Feed.sample])
+    SearchHScrollView(items: [Feed.sample])
 }

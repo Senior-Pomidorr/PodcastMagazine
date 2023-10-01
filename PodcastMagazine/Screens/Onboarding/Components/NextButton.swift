@@ -20,7 +20,7 @@ struct NextButton: View {
                         LinearGradient(
                             stops: [
                                 Gradient.Stop(color: .white.opacity(0.9), location: 0.00),
-                                Gradient.Stop(color: .grey.opacity(0.6), location: 1.00),
+                                Gradient.Stop(color: .gray.opacity(0.6), location: 1.00),
                             ],
                             startPoint: UnitPoint(x: 0.5, y: 0),
                             endPoint: UnitPoint(x: 0.5, y: 1)

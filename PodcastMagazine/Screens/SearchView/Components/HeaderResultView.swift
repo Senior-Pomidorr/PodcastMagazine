@@ -21,7 +21,7 @@ struct HeaderResultView: View {
                 
                 // элемент с крестиком вместо кнопки back в NavigationBar
                 Image("xmarkSquare", bundle: nil)
-                    .foregroundStyle(.tintGrey3)
+                    .foregroundStyle(.tintGray3)
                     .frame(width: 24, height: 24)
                     .offset(x: -24)
                     .onTapGesture {

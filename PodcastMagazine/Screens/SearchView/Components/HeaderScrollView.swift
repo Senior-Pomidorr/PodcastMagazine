@@ -44,7 +44,7 @@ struct HeaderScrollView: View {
                         text: textTrailing,
                         size: 16,
                         style: .regular,
-                        color: .tintGrey3
+                        color: .tintGray3
                     )
                 }
             }

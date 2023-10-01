@@ -15,7 +15,7 @@ struct SearchBarView: View {
             TextField("", text: $queryText)
                 .placeHolder(
                     Text("Podcast, channel, or artists")
-                        .foregroundStyle(Color.tintGrey3)
+                        .foregroundStyle(Color.tintGray3)
                     ,
                     show: queryText.isEmpty
                 )
@@ -32,7 +32,7 @@ struct SearchBarView: View {
                 queryText.isEmpty ? "magnifyingglass" : "xmarkSquare",
                 bundle: nil
             )
-            .foregroundStyle(.tintGrey3)
+            .foregroundStyle(.tintGray3)
             .frame(width: 24, height: 24)
             .padding(.vertical, 12)
             .padding(.trailing, 24)

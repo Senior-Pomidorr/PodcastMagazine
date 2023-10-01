@@ -26,7 +26,7 @@
 		107B45D92AC9BF8C003A9C65 /* ResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 107B45D82AC9BF8C003A9C65 /* ResultView.swift */; };
 		107B45DB2AC9CC76003A9C65 /* HeaderScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 107B45DA2AC9CC76003A9C65 /* HeaderScrollView.swift */; };
 		10AA8E462AC57812001FF853 /* HeaderResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10AA8E452AC57812001FF853 /* HeaderResultView.swift */; };
-		10AA8E482AC5A9EF001FF853 /* SearchHGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10AA8E472AC5A9EF001FF853 /* SearchHGridView.swift */; };
+		10AA8E482AC5A9EF001FF853 /* SearchHScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10AA8E472AC5A9EF001FF853 /* SearchHScrollView.swift */; };
 		10AA8E4A2AC5AA3C001FF853 /* SearchVGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10AA8E492AC5AA3C001FF853 /* SearchVGridView.swift */; };
 		10B8F9772AC4A9A1008DE769 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10B8F96D2AC4A9A1008DE769 /* SearchView.swift */; };
 		10B8F9782AC4A9A1008DE769 /* SearchContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10B8F96E2AC4A9A1008DE769 /* SearchContentView.swift */; };
@@ -94,7 +94,7 @@
 		107B45D82AC9BF8C003A9C65 /* ResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultView.swift; sourceTree = "<group>"; };
 		107B45DA2AC9CC76003A9C65 /* HeaderScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderScrollView.swift; sourceTree = "<group>"; };
 		10AA8E452AC57812001FF853 /* HeaderResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderResultView.swift; sourceTree = "<group>"; };
-		10AA8E472AC5A9EF001FF853 /* SearchHGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHGridView.swift; sourceTree = "<group>"; };
+		10AA8E472AC5A9EF001FF853 /* SearchHScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHScrollView.swift; sourceTree = "<group>"; };
 		10AA8E492AC5AA3C001FF853 /* SearchVGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVGridView.swift; sourceTree = "<group>"; };
 		10B8F96D2AC4A9A1008DE769 /* SearchView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
 		10B8F96E2AC4A9A1008DE769 /* SearchContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchContentView.swift; sourceTree = "<group>"; };
@@ -230,7 +230,7 @@
 				107B45D82AC9BF8C003A9C65 /* ResultView.swift */,
 				10B8F9702AC4A9A1008DE769 /* SearchBarView.swift */,
 				10AA8E452AC57812001FF853 /* HeaderResultView.swift */,
-				10AA8E472AC5A9EF001FF853 /* SearchHGridView.swift */,
+				10AA8E472AC5A9EF001FF853 /* SearchHScrollView.swift */,
 				10AA8E492AC5AA3C001FF853 /* SearchVGridView.swift */,
 				1014E80D2AC608A1008EE3FD /* CategoryItemView.swift */,
 				10EB28F72AC8619E0084203B /* ResultCellView.swift */,
@@ -486,7 +486,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				10AA8E462AC57812001FF853 /* HeaderResultView.swift in Sources */,
-				10B8F97A2AC4A9A1008DE769 /* PodcastElement.swift in Sources */,
 				A1DDCEA92AC9629D00829B6E /* CustomBackButton.swift in Sources */,
 				10B8F9792AC4A9A1008DE769 /* SearchBarView.swift in Sources */,
 				A1DDCEA72AC95C1000829B6E /* PodcastDescriptionView.swift in Sources */,
@@ -509,7 +508,7 @@
 				3C7D49D92AC31AD40084CD25 /* ProfileImageSectionView.swift in Sources */,
 				3C7D49D72AC31ABB0084CD25 /* SaveButtonView.swift in Sources */,
 				3C7D49D02AC2FAF30084CD25 /* ProfileSettingsRowView.swift in Sources */,
-				10AA8E482AC5A9EF001FF853 /* SearchHGridView.swift in Sources */,
+				10AA8E482AC5A9EF001FF853 /* SearchHScrollView.swift in Sources */,
 				0D0C9B052AC60BE3000A4C29 /* OnboardingData.swift in Sources */,
 				A17F6E922AC36D9600819964 /* HomePageHeaderView.swift in Sources */,
 				A1A44D342AC18D6A00F2FED9 /* HomePageView.swift in Sources */,

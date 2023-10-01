@@ -36,7 +36,7 @@ struct SearchView: View {
                 .padding(.horizontal, 33)
                 
                 VStack(spacing: 24) {
-                    SearchHGridView(items: trendItems)
+                    SearchHScrollView(items: trendItems)
                     
                     SearchVGridView(items: categories)
                 }

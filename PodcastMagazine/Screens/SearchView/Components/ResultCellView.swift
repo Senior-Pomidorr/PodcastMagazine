@@ -52,7 +52,7 @@ struct ResultCellView: View {
                                 default: "20.02",
                                 size: isResultCell ? 14 : 12,
                                 style: CustomFont.light,
-                                color: .tintGrey3
+                                color: .tintGray3
                             )
                             
                             Text(
@@ -62,8 +62,8 @@ struct ResultCellView: View {
                             )
                             .foregroundStyle(
                                 isResultCell
-                                ? .tintGrey0
-                                : .tintGrey2
+                                ? .tintGray0
+                                : .tintGray2
                             )
                             
                             TextView(
@@ -71,7 +71,7 @@ struct ResultCellView: View {
                                 default: "Uknow author",
                                 size: isResultCell ? 14 : 12,
                                 style: CustomFont.light,
-                                color: .tintGrey5
+                                color: .tintGray5
                             )
                         }
                     }
