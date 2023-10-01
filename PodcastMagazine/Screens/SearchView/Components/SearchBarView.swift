@@ -8,25 +8,38 @@
 import SwiftUI
 
 struct SearchBarView: View {
-    @Binding var searchText: String
+    @Binding var queryText: String
     
     var body: some View {
         HStack {
-            TextField("Podcast, channel, or artists", text: $searchText)
+            TextField("", text: $queryText)
+                .placeHolder(
+                    Text("Podcast, channel, or artists")
+                        .foregroundStyle(Color.tintGray3)
+                    ,
+                    show: queryText.isEmpty
+                )
+                .font(.custom(.medium, size: 14))
+                .foregroundStyle(.mainText)
                 .autocorrectionDisabled(true)
                 .keyboardType(.webSearch)
-                .foregroundColor(Color.searchBarText)
+                .submitLabel(.done)
+                .frame(height: 21)
+                .padding(.vertical, 14)
+                .padding(.leading, 24)
             
-            Image(systemName: searchText.isEmpty ? "magnifyingglass" : "xmark.square")
-                .foregroundColor(Color.secondaryText)
-                .font(.title2)
-                .onTapGesture {
-                    searchText = ""
-                }
-            
+            Image(
+                queryText.isEmpty ? "magnifyingglass" : "xmarkSquare",
+                bundle: nil
+            )
+            .foregroundStyle(.tintGray3)
+            .frame(width: 24, height: 24)
+            .padding(.vertical, 12)
+            .padding(.trailing, 24)
+            .onTapGesture {
+                queryText = ""
+            }
         }
-        .font(.body)
-        .padding()
         .background {
             RoundedRectangle(cornerRadius: 12)
                 .fill(Color.white)
@@ -36,12 +49,31 @@ struct SearchBarView: View {
 
 struct SearchBarView_Previews: PreviewProvider {
     static var previews: some View {
-        SearchBarView(searchText: .constant("Podlodka"))
+        SearchBarView(queryText: .constant(""))
             .previewLayout(.sizeThatFits)
             .preferredColorScheme(.light)
-        SearchBarView(searchText: .constant(""))
+        SearchBarView(queryText: .constant(""))
             .previewLayout(.sizeThatFits)
             .preferredColorScheme(.dark)
     }
 }
 
+// MARK: - PlaceHolder
+/// struct Для расширения View.
+/// По сути рисует  view поверх другова view
+struct PlaceHolder<T: View>: ViewModifier {
+    var placeHolder: T
+    var show: Bool
+    func body(content: Content) -> some View {
+        ZStack(alignment: .leading) {
+            if show { placeHolder }
+            content
+        }
+    }
+}
+
+extension View {
+    func placeHolder<T:View>(_ holder: T, show: Bool) -> some View {
+        self.modifier(PlaceHolder(placeHolder:holder, show: show))
+    }
+}
