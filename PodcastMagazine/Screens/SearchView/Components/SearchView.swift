@@ -17,6 +17,7 @@ struct SearchView: View {
     var body: some View {
         ZStack {
             BackgroundGradient()
+                .ignoresSafeArea(edges: .all)
   
             VStack(spacing: 33) {
                 VStack(spacing: 33) {

@@ -14,7 +14,7 @@ struct SearchBarView: View {
         HStack {
             TextField("", text: $queryText)
                 .placeHolder(
-                    Text("Podcast, channel, or artists")
+                    Text("podcast, channel, or artists")
                         .foregroundStyle(Color.tintGray3)
                     ,
                     show: queryText.isEmpty
@@ -22,6 +22,7 @@ struct SearchBarView: View {
                 .font(.custom(.medium, size: 14))
                 .foregroundStyle(.mainText)
                 .autocorrectionDisabled(true)
+                .autocapitalization(.none)
                 .keyboardType(.webSearch)
                 .submitLabel(.done)
                 .frame(height: 21)
