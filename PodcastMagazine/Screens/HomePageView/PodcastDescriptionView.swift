@@ -12,7 +12,7 @@ import LoadableImage
 struct PodcastDiscriptionView: View {
     
     var podcastID: Int
-    var store: HomePageStore
+    @ObservedObject var store: HomePageStore
     
     var body: some View {
         GeometryReader { geometry in
@@ -27,7 +27,7 @@ struct PodcastDiscriptionView: View {
                                 .fill(Color.color3)
                                 .frame(width: 84, height: 84)
                                 .overlay {
-                                    LoadableImage(store.state.feedDetails.feed.image ?? "https://random.imagecdn.app/100/100") { image in
+                                    LoadableImage(store.state.feedDetails?.feed.image ?? "") { image in
                                         image
                                             .resizable()
                                             .scaledToFill()
@@ -38,22 +38,40 @@ struct PodcastDiscriptionView: View {
                                 )
                                 .shadow(color: .black.opacity(0.2), radius: 5, x: 0, y: 5)
                             
-                            Text(store.state.feedDetails.feed.title)
+                            Text(store.state.feedDetails?.feed.title ?? "")
                                 .font(.custom(.bold, size: 16))
                                 .foregroundStyle(Color.black)
                             
                             HStack(alignment: .top) {
                                 
-                                if store.state.feedDetails.feed.episodeCount ?? 0 > 0 {
-                                    Text("\(store.state.feedDetails.feed.episodeCount ?? 0)" + " Eps")
+                                if store.state.feedDetails?.feed.episodeCount ?? 0 > 0 {
+                                    Text("\(store.state.feedDetails?.feed.episodeCount ?? 0)" + " Eps")
                                 } else {
                                     Text("No eps. count")
                                 }
                                 Text("⎮")
-                                Text(store.state.feedDetails.feed.author ?? "No author")
+                                Text(store.state.feedDetails?.feed.author ?? "No author")
                             }
                             .font(.custom(.light, size: 14))
                             .foregroundStyle(Color.gray)
+                            
+                            HStack {
+                                Text("All Episode")
+                                    .font(.custom(.bold, size: 16))
+                                    .foregroundStyle(Color.black)
+                                Spacer()
+                            }
+                            .padding(.top)
+                            
+                            ScrollView(.vertical, showsIndicators: false) {
+                                VStack(spacing: 16) {
+                                    ForEach(store.state.episodesList ?? []) { episode in
+                                        EpisodeCellView(episode: episode)
+                                            .padding(.horizontal, 8)
+                                    }
+                                }
+                            }
+                            
                         }
                     case .loading:
                         ProgressView()
@@ -64,26 +82,15 @@ struct PodcastDiscriptionView: View {
                                 .frame(width: 100, height: 100, alignment: .center)
                         }
                     }
-                    
-                    
-                    
-                    
+
                     Spacer()
                 }
-                
-                HStack {
-                    Text("All Episode")
-                        .font(.custom(.bold, size: 16))
-                        .foregroundStyle(Color.black)
-                    Spacer()
-                }
-                .padding(.top)
-                
             }
             .padding()
         }
         .onAppear {
-            store.send(.getFeedDetails(podcastID))
+           // store.send(.getFeedDetails(podcastID))
+            store.send(.getEpisodes(podcastID))
         }
         .background(Color.white)
         .navigationTitle("Podcast")
