@@ -48,8 +48,7 @@ struct ResultCellView: View {
                         )
                         HStack {
                             TextView(
-                                text: item.medium?.rawValue,
-                                default: "20.02",
+                                text: getEpisodCount(item.episodeCount),
                                 size: isResultCell ? 14 : 12,
                                 style: CustomFont.light,
                                 color: .tintGray3
@@ -81,6 +80,13 @@ struct ResultCellView: View {
                 }
                 .padding(.horizontal, 8)
             }
+    }
+    
+    func getEpisodCount(_ count: Int?) -> String? {
+        if let count {
+            return String(count) 
+        }
+        return nil
     }
 }
 

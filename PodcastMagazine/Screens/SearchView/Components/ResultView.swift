@@ -26,60 +26,64 @@ struct ResultView: View {
     private var rows: [GridItem] = [GridItem(.flexible())]
     
     var body: some View {
-        
-        VStack {
-            HeaderResultView(title: query)
+        ZStack {
+            Color.white
+                .ignoresSafeArea(edges: .all)
             
             VStack {
-                ScrollView(showsIndicators: false) {
-                    LazyVGrid(columns: rows,
-                              alignment: .center,
-                              spacing: nil,
-                              pinnedViews: [],
-                              content: {
-                        Section {
-                            ForEach(items, id: \.id) { item in
-                                ResultCellView(
-                                    isResultCell: true,
-                                    item: item
-                                )
+                HeaderResultView(title: query)
+                
+                VStack {
+                    ScrollView(showsIndicators: false) {
+                        LazyVGrid(columns: rows,
+                                  alignment: .center,
+                                  spacing: nil,
+                                  pinnedViews: [],
+                                  content: {
+                            Section {
+                                ForEach(items, id: \.id) { item in
+                                    ResultCellView(
+                                        isResultCell: true,
+                                        item: item
+                                    )
                                     .frame(height: 72)
+                                }
+                            } header: {
+                                HStack {
+                                    TextView(
+                                        text: "Search Result",
+                                        style: .extraBold
+                                    )
+                                    Spacer()
+                                }
                             }
-                        } header: {
-                            HStack {
-                                TextView(
-                                    text: "Search Result",
-                                    style: .extraBold
-                                )
-                                Spacer()
-                            }
-                        }
-                        
-                        Section {
-                            ForEach(podcastItems, id: \.id) { item in
-                                ResultCellView(
-                                    isResultCell: false,
-                                    item: item
-                                )
+                            
+                            Section {
+                                ForEach(podcastItems, id: \.id) { item in
+                                    ResultCellView(
+                                        isResultCell: false,
+                                        item: item
+                                    )
                                     .frame(height: 72)
+                                }
+                            } header: {
+                                HStack {
+                                    TextView(
+                                        text: "All Podcast",
+                                        style: .medium
+                                    )
+                                    Spacer()
+                                }
                             }
-                        } header: {
-                            HStack {
-                                TextView(
-                                    text: "All Podcast",
-                                    style: .medium
-                                )
-                                Spacer()
-                            }
-                        }
-                    })
-                    .padding(.top, 24)
+                        })
+                        .padding(.top, 24)
+                    }
+                    .padding(.horizontal, 33)
                 }
-                .padding(.horizontal, 33)
             }
+            .navigationBarHidden(true)
+            .padding(.top, 49)
         }
-        .navigationBarHidden(true)
-        .padding(.top, 49)
     }
 }
 
