@@ -63,13 +63,11 @@ public final class Repository {
             .eraseToAnyPublisher()
     }
     
-    
     func loadPersisted<T: Persistable>() -> AnyPublisher<[T], Never> {
         Just(realmManager.values(T.self))
             .receive(on: mainQueue)
             .eraseToAnyPublisher()
     }
-    
     
     func writeToDatabase<T: Persistable>(_ block: @escaping (WriteTransaction) -> T) throws {
         try realmManager.write(block)
