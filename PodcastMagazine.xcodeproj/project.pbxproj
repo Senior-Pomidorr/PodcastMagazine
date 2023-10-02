@@ -212,11 +212,39 @@
 			path = Components;
 			sourceTree = "<group>";
 		};
+		107B45DC2AC9FD84003A9C65 /* ResultView */ = {
+			isa = PBXGroup;
+			children = (
+				10B8F97F2AC4CC4B008DE769 /* ResultContentView.swift */,
+				107B45DD2AC9FD93003A9C65 /* Components */,
+				107B45DE2AC9FDA5003A9C65 /* UDF */,
+			);
+			path = ResultView;
+			sourceTree = "<group>";
+		};
+		107B45DD2AC9FD93003A9C65 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				107B45D82AC9BF8C003A9C65 /* ResultView.swift */,
+				10AA8E452AC57812001FF853 /* HeaderResultView.swift */,
+				10EB28F72AC8619E0084203B /* ResultCellView.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		107B45DE2AC9FDA5003A9C65 /* UDF */ = {
+			isa = PBXGroup;
+			children = (
+				10B8F9762AC4A9A1008DE769 /* ResultDomain.swift */,
+				10B8F9742AC4A9A1008DE769 /* ResultStore.swift */,
+			);
+			path = UDF;
+			sourceTree = "<group>";
+		};
 		10B8F96C2AC4A9A1008DE769 /* SearchView */ = {
 			isa = PBXGroup;
 			children = (
 				10B8F96E2AC4A9A1008DE769 /* SearchContentView.swift */,
-				10B8F97F2AC4CC4B008DE769 /* ResultContentView.swift */,
 				10B8F96F2AC4A9A1008DE769 /* Components */,
 				10B8F9722AC4A9A1008DE769 /* UDF */,
 			);
@@ -227,13 +255,10 @@
 			isa = PBXGroup;
 			children = (
 				10B8F96D2AC4A9A1008DE769 /* SearchView.swift */,
-				107B45D82AC9BF8C003A9C65 /* ResultView.swift */,
 				10B8F9702AC4A9A1008DE769 /* SearchBarView.swift */,
-				10AA8E452AC57812001FF853 /* HeaderResultView.swift */,
 				10AA8E472AC5A9EF001FF853 /* SearchHScrollView.swift */,
 				10AA8E492AC5AA3C001FF853 /* SearchVGridView.swift */,
 				1014E80D2AC608A1008EE3FD /* CategoryItemView.swift */,
-				10EB28F72AC8619E0084203B /* ResultCellView.swift */,
 				107B45D22AC97253003A9C65 /* BackgroundGradient.swift */,
 				107B45D62AC9BE18003A9C65 /* TextView.swift */,
 				107B45DA2AC9CC76003A9C65 /* HeaderScrollView.swift */,
@@ -245,9 +270,7 @@
 			isa = PBXGroup;
 			children = (
 				10B8F9732AC4A9A1008DE769 /* SearchStore.swift */,
-				10B8F9742AC4A9A1008DE769 /* ResultStore.swift */,
 				10B8F9752AC4A9A1008DE769 /* SearchDomain.swift */,
-				10B8F9762AC4A9A1008DE769 /* ResultDomain.swift */,
 			);
 			path = UDF;
 			sourceTree = "<group>";
@@ -373,6 +396,7 @@
 			children = (
 				0D0C9B032AC5EFD4000A4C29 /* Onboarding */,
 				10B8F96C2AC4A9A1008DE769 /* SearchView */,
+				107B45DC2AC9FD84003A9C65 /* ResultView */,
 				3C7D49C52AC2F2870084CD25 /* ProfileScreen */,
 				A1A44D322AC18D4A00F2FED9 /* HomePageView */,
 				0D0E87AE2AC48BD00036FE52 /* PlaylistView */,

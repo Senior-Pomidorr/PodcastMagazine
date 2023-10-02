@@ -19,6 +19,7 @@ struct BackgroundGradient: View {
     
     var body: some View {
         ZStack {
+            Color.white
             Group {
                 Circle()
                     .fill(Color.beigeTintOpacityBack)
