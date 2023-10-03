@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Category: Identifiable, Decodable, Equatable {
+public struct Category: Identifiable, Decodable, Equatable, Hashable {
     public let id: Int
     public let name: String
     

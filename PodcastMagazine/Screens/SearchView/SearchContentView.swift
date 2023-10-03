@@ -9,34 +9,34 @@ import SwiftUI
 import Models
 
 struct SearchContentView: View {
-    @StateObject private var store = SearchStore(
-        state: SearchDomain.State(),
-        reduser: SearchDomain.live.reduce(_:with:)
-    )
-    
-    let items: [Feed] = [Feed.sample]
-    
+    @StateObject private var store = SearchDomain.searchStoreLive
+
     var body: some View {
         NavigationView {
             switch store.state.searchScreenStatus {
             case .none:
-                SearchView(text: searchText())
+                SearchView(
+                    trendItems: store.state.trendPodcasts,
+                    categories: store.state.categories
+                )
             case .loading:
                 ProgressView()
             case .error(let error):
                 Text("Произошла ошибка: \(error.localizedDescription)")
             }
         }
+        .onAppear {
+            store.send(.viewAppeared)
+        }
     }
     
-    func searchText() -> Binding<String> {
-        .init {
-            store.state.textQuery
-        } set: {
-            store.send(.didTypeQuery($0))
-        }
-        
-    }
+//    func searchText() -> Binding<String> {
+//        .init {
+//            store.state.textQuery
+//        } set: {
+//            store.send(.didTypeQuery($0))
+//        }
+//    }
 }
 
 

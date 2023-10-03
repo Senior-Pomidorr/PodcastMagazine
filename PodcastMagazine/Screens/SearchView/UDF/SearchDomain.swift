@@ -8,6 +8,7 @@
 import Combine
 import Foundation
 import Models
+import Repository
 
 enum ScreenStatus: Equatable {
     case none
@@ -20,22 +21,29 @@ enum ScreenStatus: Equatable {
 }
 
 struct SearchDomain {
+    // MARK: - StoreLive
+    static let searchStoreLive = SearchStore(
+        state: Self.State(),
+        reduser: Self.reduce(Self.init(provider: HomeRepositoryProvider.live))
+    )
+    
     // MARK: - State
     struct State {
         var textQuery: String
-        var topGenres: [Feed]
-        var allGenres: [Feed]
+        var trendPodcasts: [Feed]
+        var categories: [Models.Category]
         var searchScreenStatus: ScreenStatus
         
+        // MARK: - init(:)
         init(
             textQuery: String = .init(),
-            topGenres: [Feed] = .init(),
-            allGenres: [Feed] = .init(),
+            trendPodcasts: [Feed] = .init(),
+            categories: [Models.Category] = .init(),
             searchScreenStatus: ScreenStatus = .none
         ) {
             self.textQuery = textQuery
-            self.topGenres = topGenres
-            self.allGenres = allGenres
+            self.trendPodcasts = trendPodcasts
+            self.categories = categories
             self.searchScreenStatus = searchScreenStatus
         }
     }
@@ -43,18 +51,16 @@ struct SearchDomain {
     // MARK: - Action
     enum Action {
         case viewAppeared
-        case didTypeQuery(String)
-        case _getTopRequest
-        case _getAllRequest
-        case _topGenresResponce(Result<[Feed], Error>)
-        case _allGenresResponce(Result<[Feed], Error>)
+        case _getTrendRequest
+        case _getCategoryRequest
+        case _trendResponce(Repository.Response<FeedsResponse>)
+        case _categoryResponce(Repository.Response<CategoryResponse>)
     }
     
     // MARK: - Dependencies
-    let getTopGenres: (String) -> AnyPublisher<[Feed], Error>
-    let getAllGenres: (String) -> AnyPublisher<[Feed], Error>
-    
-    // MARK: - reduce
+    let provider: HomeRepositoryProvider
+
+    // MARK: - func reduce
     func reduce(
         _ state: inout State,
         with action: Action
@@ -68,70 +74,36 @@ struct SearchDomain {
             }
             state.searchScreenStatus = .loading
             return Publishers.Merge(
-                Just(._getAllRequest),
-                Just(._getTopRequest)
+                Just(._getCategoryRequest),
+                Just(._getTrendRequest)
             )
             .eraseToAnyPublisher()
             
-        case ._getTopRequest:
-            return getTopGenres("url")
-                .map(toSuccessTopGenres(_:))
-                .catch(toFailTopGenres(_:))
+        case ._getTrendRequest:
+            return provider.getFeedRequest(.trendingFeeds(max: 10))
+                .map(Action._trendResponce)
                 .eraseToAnyPublisher()
             
-        case ._getAllRequest:
-            return getAllGenres("url")
-                .map(toSuccessAllGenres(_:))
-                .catch(toFailAllGenres(_:))
+        case ._getCategoryRequest:
+            return provider.getCategoryRequest()
+                .map(Action._categoryResponce)
                 .eraseToAnyPublisher()
             
-        case let ._topGenresResponce(.success(result)):
+        case let ._trendResponce(.success(result)):
             state.searchScreenStatus = .none
-            state.topGenres = result
+            state.trendPodcasts = result.feeds
             
-        case let ._topGenresResponce(.failure(error)):
+        case let ._trendResponce(.failure(error)):
             state.searchScreenStatus = .error(error)
             
-        case let ._allGenresResponce(.success(result)):
+        case let ._categoryResponce(.success(result)):
             state.searchScreenStatus = .none
-            state.allGenres = result
+            state.categories = result.feeds
             
-        case let ._allGenresResponce(.failure(error)):
+        case let ._categoryResponce(.failure(error)):
             state.searchScreenStatus = .error(error)
-            
-        case let .didTypeQuery(result):
-            state.textQuery = changeString(result)
         }
         
         return Empty().eraseToAnyPublisher()
     }
-    
-    
-    func toSuccessTopGenres(_ genres: [Feed]) -> Action {
-        ._topGenresResponce(.success(genres))
-    }
-    
-
-    func toFailTopGenres(_ error: Error) -> Just<Action> {
-        Just(._topGenresResponce(.failure(error)))
-    }
-    
-    func toSuccessAllGenres(_ genres: [Feed]) -> Action {
-        ._allGenresResponce(.success(genres))
-    }
-    
-    func toFailAllGenres(_ error: Error) -> Just<Action> {
-        Just(._allGenresResponce(.failure(error)))
-    }
-    
-    /// Изменения строки введеннкой в SearchBar
-    /// - Parameter query: Строка введенная пользователем
-    /// - Returns: String.trimmingCharacters(in: .whitespacesAndNewlines)
-    func changeString(_ query: String) -> String {
-        return query.trimmingCharacters(in: .whitespacesAndNewlines)
-    }
-    
-    static var live = Self(
-        getTopGenres: {_ in Empty().eraseToAnyPublisher() },
-        getAllGenres: {_ in Empty().eraseToAnyPublisher() })
 }

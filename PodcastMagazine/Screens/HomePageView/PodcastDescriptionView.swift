@@ -64,7 +64,7 @@ struct PodcastDiscriptionView: View {
                             .padding(.top)
                             
                             ScrollView(.vertical, showsIndicators: false) {
-                                VStack(spacing: 16) {
+                                VStack(alignment: .leading, spacing: 16) {
                                     ForEach(store.state.episodesList ?? []) { episode in
                                         EpisodeCellView(episode: episode)
                                             .padding(.horizontal, 8)
@@ -89,7 +89,7 @@ struct PodcastDiscriptionView: View {
             .padding()
         }
         .onAppear {
-           // store.send(.getFeedDetails(podcastID))
+            store.send(.getFeedDetails(podcastID))
             store.send(.getEpisodes(podcastID))
         }
         .background(Color.white)
