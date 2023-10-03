@@ -69,5 +69,3 @@ struct ProfileSettingsView: View {
         ProfileSettingsView()
     }
 }
-
-
