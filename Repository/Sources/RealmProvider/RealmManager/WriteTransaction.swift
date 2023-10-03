@@ -8,28 +8,25 @@
 import Foundation
 import RealmSwift
 
-public struct WriteTransaction {
+public struct WriteTransaction<T: Persistable> {
     private let realm: Realm
     
     internal init(realm: Realm) {
         self.realm = realm
     }
     
-    @discardableResult
-    public func add<T: Persistable>(_ value: T) -> T {
+    public func add(_ value: T) {
         realm.add(value.managedObject(), update: .all)
-        return value
     }
     
-    @discardableResult
-    public func delete<T: Persistable>(_ value: T) -> T {
-        let results = realm.objects(T.ManagedObject.self)
+    public func delete(_ value: T) {
+        let objectId = value.managedObject().id
+        let results = realm.objects(T.ManagedObject.self).where({ $0.id == objectId })
         realm.delete(results)
-        return value
     }
     
     @discardableResult
-    public func update<T: Persistable>(_ value: T, properties: T.PropertyValue...) -> T {
+    public func update(_ value: T, properties: T.PropertyValue...) -> T {
         Logger.shared.logLevel(.debug, message: #function)
         let result = realm.create(
             T.ManagedObject.self,
