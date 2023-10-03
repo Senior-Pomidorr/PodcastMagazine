@@ -76,7 +76,6 @@ public final class Repository {
             .eraseToAnyPublisher()
     }
     
-    
     func writeToDatabase<T: Persistable>(_ block: @escaping (WriteTransaction) -> T) throws {
         try realmManager?.write(block)
     }

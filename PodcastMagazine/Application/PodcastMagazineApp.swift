@@ -30,7 +30,7 @@ struct PodcastMagazineApp: App {
                         .tabBarItem(tab: TabBarItem.home, selection: $tabSelection)
                     SearchContentView()
                         .tabBarItem(tab: TabBarItem.search, selection: $tabSelection)
-                    FavoritesView()
+                    PlaylistView()
                         .tabBarItem(tab: TabBarItem.favorites, selection: $tabSelection)
                     ProfileSettingsView()
                         .tabBarItem(tab: TabBarItem.settings, selection: $tabSelection)

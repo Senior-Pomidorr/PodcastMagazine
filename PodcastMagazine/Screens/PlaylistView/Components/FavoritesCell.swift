@@ -14,12 +14,12 @@ struct FavoritesCell: View {
         VStack(alignment: .center) {
             ZStack {
                 Rectangle()
-                    .foregroundColor(Color("Blue"))
+                    .foregroundColor(Color("tintBlue2"))
                     .frame(width: 120, height: 160)
                     .cornerRadius(16)
                 VStack {
                     Rectangle()
-                        .foregroundColor(Color("Grey"))
+                        .foregroundColor(Color("tintBlue2"))
                         .frame(width: 60, height: 60)
                         .cornerRadius(8)
 //
