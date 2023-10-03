@@ -33,7 +33,7 @@ struct CustomTextField: View {
                 .background(
                     RoundedRectangle(cornerRadius: 24)
                         .stroke(lineWidth: 1)
-                        .foregroundColor(.blue)
+                        .foregroundColor(.accentColor)
                 )
         }
         .frame(maxWidth: .infinity, alignment: .leading)

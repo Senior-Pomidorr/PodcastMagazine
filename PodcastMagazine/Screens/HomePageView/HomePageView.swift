@@ -61,6 +61,7 @@ struct HomePageView: View {
                             }
                             .padding(.bottom, 15)
                         }
+                        .fadeOutTop(fadeLength: 10)
                         
                     case .loading:
                         ProgressView()
