@@ -30,7 +30,6 @@ struct CategoryCellView: View {
                     RoundedRectangle(cornerRadius: 12)
                 )
             
-            
             RoundedRectangle(cornerRadius: 12)
                 .fill(categoryCellInputData.id % 2 == 0 ? Color.color4 : Color.color2)
                 .frame(width: 144, height: 64)
@@ -42,9 +41,6 @@ struct CategoryCellView: View {
                         .minimumScaleFactor(0.5)
                 )
         }
-        .onTapGesture {
-            print("press category cell")
-        }
     }
 }
 
@@ -52,12 +48,4 @@ struct CategoryCellView: View {
     CategoryCellView(categoryCellInputData: Category(id: 3, name: "Music"))
 }
 
-extension Color {
-    static func random() -> Color {
-        return Color(
-            red: Double.random(in: 0..<1),
-            green: Double.random(in: 0..<1),
-            blue: Double.random(in: 0..<1)
-        )
-    }
-}
+

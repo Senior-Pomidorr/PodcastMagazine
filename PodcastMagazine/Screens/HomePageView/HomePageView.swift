@@ -6,19 +6,21 @@
 //
 
 import SwiftUI
+import Models
 
 struct HomePageView: View {
     
     @StateObject var store: HomePageStore = HomePageDomain.liveStore
     @State private var selectedIndex: Int = 0
     private var maxCategories = 20
+    @State var cellIdTap: Models.Category? = nil
     
     var body: some View {
         NavigationView {
             GeometryReader { geometry in
                 VStack(spacing: 8) {
                     HomePageHeaderView()
-                    CategoryHeaderView()
+                    CategoryHeaderView(store: store)
                         .padding(.top)
                     
                     switch store.state.homePageLoadingStatus {
@@ -26,10 +28,18 @@ struct HomePageView: View {
                         ScrollView(.horizontal, showsIndicators: false) {
                             HStack(spacing: 16) {
                                 ForEach(store.state.categoryList.prefix(maxCategories)) { item in
-                                    CategoryCellView(categoryCellInputData: item)
+                                    NavigationLink(
+                                        destination: PodcastListView(category: item, store: store),
+                                        label: {
+                                            CategoryCellView(
+                                                categoryCellInputData: item
+                                            )
+                                        }
+                                    )
                                 }
                             }
                         }
+
                         
                         VStack {
                             ScrollView(.horizontal, showsIndicators: false) {
@@ -72,19 +82,21 @@ struct HomePageView: View {
 }
 
 struct CategoryHeaderView: View {
+    @ObservedObject var store: HomePageStore
+    
     var body: some View {
         HStack {
             Text("Category")
                 .font(.custom(.bold, size: 16))
                 .foregroundStyle(Color.black)
             Spacer()
-            Button(action: {
-                print("Tap See all button")
-            }, label: {
+            NavigationLink {
+                AllCategoryView(store: store, categories: store.state.categoryList)
+            } label: {
                 Text("See all")
                     .font(.custom(.light, size: 16))
                     .foregroundStyle(Color.gray)
-            })
+            }
         }
     }
 }

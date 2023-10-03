@@ -38,6 +38,7 @@ struct EpisodeCellView: View {
                     .font(.custom(.light, size: 12))
                     .foregroundStyle(Color.gray)
                 }
+                Spacer()
             }
         }
         .frame(height: 72)
@@ -51,7 +52,7 @@ struct EpisodeCellView: View {
         }
         .background(
             NavigationLink(
-                destination: EmptyView(),
+                destination: Text("Player Screen"),
                 isActive: $navigateToEpisodePlayer,
                 label: {
                     EmptyView()

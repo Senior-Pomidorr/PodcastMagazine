@@ -36,8 +36,10 @@ struct HomePageDomain {
     struct State: Equatable {
         var categoryList: [Models.Category]
         var podcastsList: [Feed]
+        var podcastsListByCategory: [Feed]
         var homePageLoadingStatus: HomePageLoadingStatus
         var detailsPageLoadingStatus: HomePageLoadingStatus
+        var podcastsListLoadingStatus: HomePageLoadingStatus
         var feedsCategoryList: SelectedCategoryRequest
         var feedDetails: FeedDetail?
         var episodesList: [Episode]?
@@ -47,13 +49,17 @@ struct HomePageDomain {
             categoryList: [Models.Category] = .init(),
             podcastsList: [Feed] = .init(),
             homePageLoadingStatus: HomePageLoadingStatus = .none,
-            detailsPageLoadingStatus: HomePageLoadingStatus = .none
+            detailsPageLoadingStatus: HomePageLoadingStatus = .none,
+            podcastsListLoadingStatus: HomePageLoadingStatus = .none,
+            podcastsListByCategory: [Feed] = .init()
         ) {
             self.categoryList = categoryList
             self.podcastsList = podcastsList
             self.homePageLoadingStatus = homePageLoadingStatus
             self.feedsCategoryList = .popular
             self.detailsPageLoadingStatus = detailsPageLoadingStatus
+            self.podcastsListLoadingStatus = homePageLoadingStatus
+            self.podcastsListByCategory = podcastsListByCategory
         }
     }
     
@@ -74,6 +80,8 @@ struct HomePageDomain {
         case _getPersistedFeedsResponse([Feed])
         case addFeedToFavorites(Feed)
         case removeFeedFromFavorites(Feed)
+        case getPodcastListByCategory(Models.Category)
+        case getPodcastListByCategoryResponse(Repository.Response<FeedsResponse>)
     }
     
     // MARK: - Dependencies
@@ -130,6 +138,7 @@ struct HomePageDomain {
             return fetchCategoryRequest(selected: selectedCategory)
             
         case let .getFeedDetails(feedId):
+            state.detailsPageLoadingStatus = .loading
             return provider.getFeedDetail(feedId)
                 .map(Action._getFeedDetailsResponse)
                 .eraseToAnyPublisher()
@@ -142,13 +151,14 @@ struct HomePageDomain {
             state.detailsPageLoadingStatus = .error(error)
             
         case let .getEpisodes(feedId):
+            state.detailsPageLoadingStatus = .loading
             return provider.getEpisodes(feedId)
                 .map(Action._getEpisodesResponse)
                 .eraseToAnyPublisher()
             
         case let ._getEpisodesResponse(.success(episodes)):
-            state.episodesList = episodes.items
             state.detailsPageLoadingStatus = .none
+            state.episodesList = episodes.items
 
         case .getPersistedFeeds:
             return provider.getPersistedFeeds()
@@ -163,6 +173,19 @@ struct HomePageDomain {
             
         case let .removeFeedFromFavorites(feed):
             try? provider.removeFromFavorites(feed)
+            
+        case let .getPodcastListByCategory(category):
+            state.podcastsListLoadingStatus = .loading
+            return provider.getFeedRequest(.feeds(byTerm: "music"))
+                .map(Action.getPodcastListByCategoryResponse)
+                .eraseToAnyPublisher()
+            
+        case let .getPodcastListByCategoryResponse(.success(response)):
+            state.podcastsListLoadingStatus = .none
+            state.podcastsListByCategory = response.feeds
+            
+        case let .getPodcastListByCategoryResponse(.failure(error)):
+            state.podcastsListLoadingStatus = .error(error)
         }
         return Empty().eraseToAnyPublisher()
     }
