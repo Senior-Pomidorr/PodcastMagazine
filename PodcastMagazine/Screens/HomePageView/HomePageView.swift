@@ -62,7 +62,9 @@ struct HomePageView: View {
                                         .padding(.horizontal, 8)
                                 }
                             }
+                            .padding(.bottom, 15)
                         }
+                        
                     case .loading:
                         ProgressView()
                     case let .error(error):
@@ -73,7 +75,7 @@ struct HomePageView: View {
                         }
                     }
                 }
-                .padding()
+                .padding(.horizontal)
             }
             .background(Color.white)
             .onAppear {
