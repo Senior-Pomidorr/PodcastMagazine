@@ -24,14 +24,16 @@ struct AllCategoryView: View {
                     alignment: .center,
                     spacing: 20) {
                         ForEach(categories) { item in
-                            NavigationLink(
-                                destination: PodcastListView(category: item, store: store),
-                                label: {
-                                    CategoryCellView(
-                                        categoryCellInputData: item
-                                    )
-                                }
-                            )
+                            CategoryCellView(store: store, categoryCellInputData: item)
+                            
+//                            NavigationLink(
+//                                destination: PodcastListView(category: item, store: store),
+//                                label: {
+//                                    CategoryCellView(
+//                                        categoryCellInputData: item
+//                                    )
+//                                }
+//                            )
                         }
                     }
             }

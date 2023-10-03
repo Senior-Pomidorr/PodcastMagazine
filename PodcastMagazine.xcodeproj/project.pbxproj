@@ -59,6 +59,7 @@
 		86FF7EF62AC630F500A8FE52 /* LoadableImage in Frameworks */ = {isa = PBXBuildFile; productRef = 86FF7EF52AC630F500A8FE52 /* LoadableImage */; };
 		A15054572ACB1A50001B70F0 /* AllCategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15054562ACB1A50001B70F0 /* AllCategoryView.swift */; };
 		A15054592ACB49EA001B70F0 /* PodcastListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15054582ACB49EA001B70F0 /* PodcastListView.swift */; };
+		A150545B2ACC8E2F001B70F0 /* PodcastDescriptionDomain.swift in Sources */ = {isa = PBXBuildFile; fileRef = A150545A2ACC8E2F001B70F0 /* PodcastDescriptionDomain.swift */; };
 		A17F6E8F2AC217D800819964 /* HomePageDomain.swift in Sources */ = {isa = PBXBuildFile; fileRef = A17F6E8E2AC217D800819964 /* HomePageDomain.swift */; };
 		A17F6E922AC36D9600819964 /* HomePageHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A17F6E912AC36D9600819964 /* HomePageHeaderView.swift */; };
 		A17F6E952AC36E2000819964 /* CategoryCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A17F6E942AC36E2000819964 /* CategoryCellView.swift */; };
@@ -131,6 +132,7 @@
 		86F342112AC19DBD0007213C /* Repository */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Repository; sourceTree = "<group>"; };
 		A15054562ACB1A50001B70F0 /* AllCategoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllCategoryView.swift; sourceTree = "<group>"; };
 		A15054582ACB49EA001B70F0 /* PodcastListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastListView.swift; sourceTree = "<group>"; };
+		A150545A2ACC8E2F001B70F0 /* PodcastDescriptionDomain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastDescriptionDomain.swift; sourceTree = "<group>"; };
 		A17F6E8E2AC217D800819964 /* HomePageDomain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageDomain.swift; sourceTree = "<group>"; };
 		A17F6E912AC36D9600819964 /* HomePageHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageHeaderView.swift; sourceTree = "<group>"; };
 		A17F6E942AC36E2000819964 /* CategoryCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCellView.swift; sourceTree = "<group>"; };
@@ -346,8 +348,8 @@
 				A17F6E912AC36D9600819964 /* HomePageHeaderView.swift */,
 				A17F6E942AC36E2000819964 /* CategoryCellView.swift */,
 				A17F6EAF2AC5FC1C00819964 /* PodcastCellView.swift */,
-				A1DDCEA82AC9629D00829B6E /* CustomBackButton.swift */,
 				A1DDCEAA2AC97A0100829B6E /* EpisodeCellView.swift */,
+				A1DDCEA82AC9629D00829B6E /* CustomBackButton.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -447,6 +449,7 @@
 				A1A44D332AC18D6A00F2FED9 /* HomePageView.swift */,
 				A17F6E8E2AC217D800819964 /* HomePageDomain.swift */,
 				A1DDCEA62AC95C1000829B6E /* PodcastDescriptionView.swift */,
+				A150545A2ACC8E2F001B70F0 /* PodcastDescriptionDomain.swift */,
 				A15054562ACB1A50001B70F0 /* AllCategoryView.swift */,
 				A15054582ACB49EA001B70F0 /* PodcastListView.swift */,
 			);
@@ -546,6 +549,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A150545B2ACC8E2F001B70F0 /* PodcastDescriptionDomain.swift in Sources */,
 				10AA8E462AC57812001FF853 /* HeaderResultView.swift in Sources */,
 				A1DDCEA92AC9629D00829B6E /* CustomBackButton.swift in Sources */,
 				10B8F9792AC4A9A1008DE769 /* SearchBarView.swift in Sources */,
@@ -737,7 +741,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"PodcastMagazine/Preview Content\"";
-				DEVELOPMENT_TEAM = A5PP5569YS;
+				DEVELOPMENT_TEAM = Z262BFFWGC;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PodcastMagazine/Info.plist;
@@ -772,7 +776,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"PodcastMagazine/Preview Content\"";
-				DEVELOPMENT_TEAM = A5PP5569YS;
+				DEVELOPMENT_TEAM = Z262BFFWGC;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PodcastMagazine/Info.plist;
