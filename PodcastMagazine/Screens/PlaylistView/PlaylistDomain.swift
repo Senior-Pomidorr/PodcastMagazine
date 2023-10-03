@@ -45,8 +45,8 @@ struct PlayListDomain {
         case viewAppered
         case _getFavoritesListRequest
         case _getPlaylistRequest
-        case _getFavoritesListResponse(Repository.Response<[Feed]>)
-        case _getPlaylistResponse(Repository.Response<[Playlist]>)
+        case _getFavoritesListResponse([Feed])
+        case _getPlaylistResponse([Playlist])
     }
     
     //MARK: Dependecies
@@ -69,47 +69,45 @@ struct PlayListDomain {
                 .map(Action._getFavoritesListResponse)
                 .eraseToAnyPublisher()
             
-        case let ._getFavoritesListResponse(.success(response)):
+        case ._getFavoritesListResponse(let favorites):
             state.playlistStatus = .none
-            state.favoritesList = response
             
-        case let ._getFavoritesListResponse(.failure(error)):
-            state.playlistStatus = .error(error)
+            //        case let ._getFavoritesListResponse(.failure(error)):
+            //            state.playlistStatus = .error(error)
             
         case ._getPlaylistRequest:
             return provider.getPlaylists()
                 .map(Action._getPlaylistResponse)
                 .eraseToAnyPublisher()
             
-        case let ._getPlaylistResponse(.success(response)):
+        case ._getPlaylistResponse(let playlist):
             state.playlistStatus = .none
-            state.playlistList = response
             
-        case let ._getPlaylistResponse(.failure(error)):
-            state.playlistStatus = .error(error)
         }
+        
         return Empty().eraseToAnyPublisher()
     }
 }
+    
+    // MARK: PlaylistStore
+    final class PlaylistStore: ObservableObject {
+        @Published private(set) var state: PlayListDomain.State
+        private let reduce: PlayListDomain
+        private var cancelleble: Set<AnyCancellable> = .init()
+        
+        init(
+            state: PlayListDomain.State,
+            reducer: PlayListDomain
+        ) {
+            self.state = state
+            self.reduce = reducer
+        }
+        
+        func send(_ action: PlayListDomain.Action) {
+            reduce.reduce(&state, with: action)
+                .receive(on: DispatchQueue.main)
+                .sink(receiveValue: send(_:))
+                .store(in: &cancelleble)
+        }
+    }
 
-// MARK: PlaylistStore
-final class PlaylistStore: ObservableObject {
-    @Published private(set) var state: PlayListDomain.State
-    private let reduce: PlayListDomain
-    private var cancelleble: Set<AnyCancellable> = .init()
-    
-    init(
-        state: PlayListDomain.State,
-        reducer: PlayListDomain
-    ) {
-        self.state = state
-        self.reduce = reducer
-    }
-    
-    func send(_ action: PlayListDomain.Action) {
-        reduce.reduce(&state, with: action)
-            .receive(on: DispatchQueue.main)
-            .sink(receiveValue: send(_:))
-            .store(in: &cancelleble)
-    }
-}
