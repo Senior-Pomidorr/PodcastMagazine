@@ -10,9 +10,8 @@ import Models
 import LoadableImage
 
 struct PodcastCellView: View {
-    var store: HomePageStore
+    @ObservedObject var store: HomePageStore
     var podcast: Feed
-    var podcastInFavorite: Bool = false
     @State private var navigateToPodcastDescription = false
     
     var body: some View {
@@ -60,8 +59,14 @@ struct PodcastCellView: View {
             VStack {
                 Button {
                     print("add/del from favorite")
+                    if inFavorite(feed: podcast) {
+                        store.send(.removeFeedFromFavorites(podcast))
+                    } else {
+                        store.send(.addFeedToFavorites(podcast))
+                    }
+                    store.send(.getPersistedFeeds)
                 } label: {
-                    Image(systemName: podcastInFavorite ? "heart.fill" : "heart")
+                    Image(systemName: inFavorite(feed: podcast) ? "heart.fill" : "heart")
                         .frame(width: 20, height: 20)
                         .foregroundStyle(.red)
                 }
@@ -77,6 +82,7 @@ struct PodcastCellView: View {
         .shadow(color: .black.opacity(0.1), radius: 3, x: 0, y: 5)
         .onTapGesture {
             print("press podcast cell")
+            print("PODCAST ID =", podcast.id)
             navigateToPodcastDescription = true
         }
         .background(
@@ -88,6 +94,10 @@ struct PodcastCellView: View {
                 }
             )
         )
+    }
+    
+    private func inFavorite(feed: Feed) -> Bool {
+        return store.state.persistedFeeds?.contains { $0.id == feed.id } ?? false
     }
 }
 

@@ -18,7 +18,13 @@ struct ResultCellView: View {
             .fill(
                 isResultCell
                 ? .clear
-                : Color.azure1
+                : Color.color5.opacity(0.7)
+            )
+            .shadow(
+                color: .black.opacity(isResultCell ? 0 : 0.1),
+                radius: 3,
+                x: 0,
+                y: 5
             )
             .overlay {
                 HStack {
@@ -36,7 +42,7 @@ struct ResultCellView: View {
                                     .scaledToFill()
                                     .frame(width: 56, height: 56)
                                     .clipShape(RoundedRectangle(cornerRadius: 16))
-                                    
+                                
                             }
                         }
                     
@@ -47,24 +53,27 @@ struct ResultCellView: View {
                             style: CustomFont.bold
                         )
                         HStack {
-                            TextView(
-                                text: item.medium?.rawValue,
-                                default: "20.02",
-                                size: isResultCell ? 14 : 12,
-                                style: CustomFont.light,
-                                color: .tintGray3
-                            )
-                            
-                            Text(
-                                isResultCell
-                                ? "|"
-                                : "•"
-                            )
-                            .foregroundStyle(
-                                isResultCell
-                                ? .tintGray0
-                                : .tintGray2
-                            )
+                            // TODO: Временное решение if else, возможно поменяется запрос
+                            if isResultCell {
+                                
+                                TextView(
+                                    text: getEpisodCount(item.episodeCount),
+                                    size: isResultCell ? 14 : 12,
+                                    style: CustomFont.light,
+                                    color: .tintGray3
+                                )
+                                
+                                Text(
+                                    isResultCell
+                                    ? "|"
+                                    : "•"
+                                )
+                                .foregroundStyle(
+                                    isResultCell
+                                    ? .tintGray0
+                                    : .tintGray2
+                                )
+                            }
                             
                             TextView(
                                 text: item.author,
@@ -81,6 +90,13 @@ struct ResultCellView: View {
                 }
                 .padding(.horizontal, 8)
             }
+    }
+    
+    func getEpisodCount(_ count: Int?) -> String? {
+        if let count {
+            return String(count)
+        }
+        return nil
     }
 }
 

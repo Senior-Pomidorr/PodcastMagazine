@@ -15,8 +15,8 @@ struct HeaderResultView: View {
     var body: some View {
         VStack(spacing: 18) {
             HStack {
-                TextView(text: title)
-                
+                TextView(text: title.capitalized)
+         
                 Spacer()
                 
                 // элемент с крестиком вместо кнопки back в NavigationBar

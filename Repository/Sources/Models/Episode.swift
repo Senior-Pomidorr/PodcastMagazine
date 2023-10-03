@@ -51,7 +51,7 @@ public struct Episode: Identifiable, Decodable, Equatable {
     /// The internal PodcastIndex.org Feed ID.
     public let feedId: Int
     
-    public let feedTitle: String
+    public let feedTitle: String?
     
     /// The channel-level language specification of the feed. Languages accord with the RSS Language Spec - https://www.rssboard.org/rss-language-codes
     public let feedLanguage: String
@@ -77,7 +77,7 @@ public struct Episode: Identifiable, Decodable, Equatable {
         image: String,
         feedImage: String,
         feedId: Int,
-        feedTitle: String,
+        feedTitle: String?,
         feedLanguage: String,
         chaptersUrl: String?
     ) {
