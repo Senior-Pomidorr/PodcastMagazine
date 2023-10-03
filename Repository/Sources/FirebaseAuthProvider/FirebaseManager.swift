@@ -57,12 +57,24 @@ private extension FirebaseManager {
             .eraseToAnyPublisher()
     }
     
+    func singInWith(_ credential: AuthCredential) -> AnyPublisher<UserAccount, FirebaseError> {
+        auth.signIn(with: credential)
+            .map(\.user)
+            .map(UserAccount.init)
+            .mapError(FirebaseError.logInFail)
+            .eraseToAnyPublisher()
+    }
+    
     func createUserWith(email: String, password: String) -> AnyPublisher<UserAccount, FirebaseError> {
         auth.createUser(withEmail: email, password: password)
             .map(\.user)
             .map(UserAccount.init)
             .mapError(FirebaseError.createUserFail)
             .eraseToAnyPublisher()
+    }
+    
+    func changePassword(email: String) {
+        auth.sendPasswordReset(withEmail: email)
     }
     
     func currentUserPublisher() -> AnyPublisher<UserAccount, FirebaseError> {

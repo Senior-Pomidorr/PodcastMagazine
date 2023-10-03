@@ -17,7 +17,7 @@ public final class Repository {
     
     //MARK: - Private properties
     private let apiManager: APIManager
-    private let realmManager: RealmManager
+    private var realmManager: RealmManager?
     private let firebaseManager: FirebaseManager
     private let mainQueue: DispatchQueue = .main
     private let logger = Logger(
@@ -28,8 +28,14 @@ public final class Repository {
     //MARK: - init(_:)
     private init() {
         apiManager = .init(logger: logger)
-        realmManager = try! .init(logger: .shared)
         firebaseManager = .init()
+        do {
+            realmManager = try .init(
+                config: .init(deleteRealmIfMigrationNeeded: true)
+                )
+        } catch {
+            logger.error("\(error.localizedDescription)")
+        }
     }
     
     //MARK: - Public methods
@@ -63,16 +69,16 @@ public final class Repository {
             .eraseToAnyPublisher()
     }
     
-    
     func loadPersisted<T: Persistable>() -> AnyPublisher<[T], Never> {
-        Just(realmManager.values(T.self))
+        Just(realmManager?.values(T.self))
+            .compactMap { $0 }
             .receive(on: mainQueue)
             .eraseToAnyPublisher()
     }
     
     
     func writeToDatabase<T: Persistable>(_ block: @escaping (WriteTransaction) -> T) throws {
-        try realmManager.write(block)
+        try realmManager?.write(block)
     }
     
 }

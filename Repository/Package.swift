@@ -88,3 +88,21 @@ fileprivate enum Dependencies: CaseIterable {
         .product(name: "FirebaseAuthCombine-Community", package: "firebase-ios-sdk")
     }
 }
+
+fileprivate enum Firebase {
+    case Auth
+    case AuthCombine
+    case Storage
+    
+    var target: Target.Dependency {
+        switch self {
+        case .Auth: return .product(name: "FirebaseAuth", package: "firebase-ios-sdk")
+        case .AuthCombine: return .product(name: "FirebaseAuthCombine-Community", package: "firebase-ios-sdk")
+        case .Storage: return .product(name: "Firestore", package: "firebase-ios-sdk")
+        }
+    }
+    
+    static let package: Package.Dependency = .package(
+        url: "https://github.com/firebase/firebase-ios-sdk",
+        .upToNextMajor(from: "10.15.0"))
+}
