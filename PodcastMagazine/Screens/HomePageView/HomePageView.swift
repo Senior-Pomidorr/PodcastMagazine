@@ -28,14 +28,17 @@ struct HomePageView: View {
                         ScrollView(.horizontal, showsIndicators: false) {
                             HStack(spacing: 16) {
                                 ForEach(store.state.categoryList.prefix(maxCategories)) { item in
-                                    NavigationLink(
-                                        destination: PodcastListView(category: item, store: store),
-                                        label: {
-                                            CategoryCellView(
-                                                categoryCellInputData: item
-                                            )
-                                        }
-                                    )
+                                    CategoryCellView(store: store, categoryCellInputData: item)
+                                    
+//                                    NavigationLink(
+//                                        destination: PodcastListView(category: item, store: store),
+//                                        label: {
+//                                            CategoryCellView(
+//                                                categoryCellInputData: item
+//                                            )
+//                                        }
+//                                    )
+                                    
                                 }
                             }
                         }

@@ -96,8 +96,8 @@ struct HomePageDomain {
         switch action {
             
         case .viewAppeared:
-            guard state.homePageLoadingStatus != .loading else { break }
-            state.homePageLoadingStatus = .loading
+            //guard state.homePageLoadingStatus != .loading else { break }
+            //state.homePageLoadingStatus = .loading
             
             return Publishers.Merge(
                 Just(._getCategoryRequest),
@@ -119,17 +119,18 @@ struct HomePageDomain {
                 .eraseToAnyPublisher()
             
         case let ._getCategoryResponse(.success(response)):
-            state.homePageLoadingStatus = .none
+            //state.homePageLoadingStatus = .none
             state.categoryList = response.feeds
             print("!!!!!!!!!! --- category =", state.categoryList.count)
             
         case let ._getPodcastsResponse(.success(response)):
-            state.homePageLoadingStatus = .none
+            //state.homePageLoadingStatus = .none
             state.podcastsList = response.feeds
             print("!!!!!!!!!! --- podcast =", state.podcastsList.count)
             
         case let ._getCategoryResponse(.failure(error)), let ._getPodcastsResponse(.failure(error)):
-            state.homePageLoadingStatus = .error(error)
+         //   state.homePageLoadingStatus = .error(error)
+            break
             
         case .categoryCellDidTap:
             break
@@ -138,26 +139,27 @@ struct HomePageDomain {
             return fetchCategoryRequest(selected: selectedCategory)
             
         case let .getFeedDetails(feedId):
-            state.detailsPageLoadingStatus = .loading
+            //state.detailsPageLoadingStatus = .loading
             return provider.getFeedDetail(feedId)
                 .map(Action._getFeedDetailsResponse)
                 .eraseToAnyPublisher()
             
         case let ._getFeedDetailsResponse(.success(feedDetail)):
             state.feedDetails = feedDetail
-            state.detailsPageLoadingStatus = .none
+            //state.detailsPageLoadingStatus = .none
             
         case let ._getFeedDetailsResponse(.failure(error)), let ._getEpisodesResponse(.failure(error)):
-            state.detailsPageLoadingStatus = .error(error)
+           // state.detailsPageLoadingStatus = .error(error)
+            break
             
         case let .getEpisodes(feedId):
-            state.detailsPageLoadingStatus = .loading
+            //state.detailsPageLoadingStatus = .loading
             return provider.getEpisodes(feedId)
                 .map(Action._getEpisodesResponse)
                 .eraseToAnyPublisher()
             
         case let ._getEpisodesResponse(.success(episodes)):
-            state.detailsPageLoadingStatus = .none
+            //state.detailsPageLoadingStatus = .none
             state.episodesList = episodes.items
 
         case .getPersistedFeeds:
@@ -175,13 +177,13 @@ struct HomePageDomain {
             try? provider.removeFromFavorites(feed)
             
         case let .getPodcastListByCategory(category):
-            state.podcastsListLoadingStatus = .loading
-            return provider.getFeedRequest(.feeds(byTerm: "music"))
+            //state.podcastsListLoadingStatus = .loading
+            return provider.getFeedRequest(.recentFeeds(by: category, max: 20))
                 .map(Action.getPodcastListByCategoryResponse)
                 .eraseToAnyPublisher()
             
         case let .getPodcastListByCategoryResponse(.success(response)):
-            state.podcastsListLoadingStatus = .none
+            //state.podcastsListLoadingStatus = .none
             state.podcastsListByCategory = response.feeds
             
         case let .getPodcastListByCategoryResponse(.failure(error)):
