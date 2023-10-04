@@ -9,12 +9,62 @@ import SwiftUI
 
 struct AccountSettingsView: View {
     @StateObject private var store: ProfileStore
+    @AppStorage("tabBar") var hideTabBar = false
+    @State private var showImage: Bool = false
+    @State private var showSetImage: Bool = false
+    @State private var isShowPhotoLibrary = false
+    @State private var isShowCamera = false
+    @State private var image = UIImage()
     
     //MARK: - Body
     var body: some View {
+        ZStack {
+            profileView
+                .padding(.horizontal, 24)
+            
+            if showImage {
+                scaledImage
+            }
+            
+            if showSetImage {
+                setImage
+            }
+        }
+        .navigationBarHidden(true)
+        .onAppear {
+            hideTabBar = true
+        }
+        .onDisappear {
+            hideTabBar = false
+        }
+        .sheet(isPresented: $isShowPhotoLibrary) {
+            ImagePicker(selectedImage: $image, sourceType: .photoLibrary)
+                .ignoresSafeArea()
+        }
+        .sheet(isPresented: $isShowCamera) {
+            ImagePicker(selectedImage: $image, sourceType: .camera)
+                .ignoresSafeArea()
+        }
+    }
+    
+    //MARK: - ACCOUNT VIEW
+    var profileView: some View {
         VStack {
             AccountHeaderView()
-            ProfileImageSectionView(url: "https://loremflickr.com/cache/resized/65535_52661697260_0d20d6fed2_320_240_nofilter.jpg")
+            
+            ProfileImageSectionView(
+                image: image,
+                action: {
+                    withAnimation {
+                        showSetImage.toggle()
+                    }
+                })
+            .onTapGesture {
+                withAnimation(.bouncy) {
+                    showImage.toggle()
+                }
+            }
+            
             CustomTextField(
                 title: "First name",
                 placeholder: "enter first name",
@@ -30,21 +80,118 @@ struct AccountSettingsView: View {
                 placeholder: "enter email",
                 text: bindEmail()
             )
-//            CustomTextField(
-//                title: "Date of Birth",
-//                placeholder: "enter date",
-//                text: bindBirthDate()
-//            )
+            
             GenderSectionView(selectedGender: bindGender())
+            
             Spacer()
+            
             SaveButtonView()
-//                .background(store.state.buttonIsActive
-//                            ? .blue
-//                            : .gray
-//                )
         }
-        .padding(.horizontal, 24)
-        .navigationBarHidden(true)
+    }
+    
+    var setImage: some View {
+        ZStack {
+            Color.black.opacity(0.1)
+                .ignoresSafeArea()
+                .onTapGesture {
+                    withAnimation(.easeInOut) {
+                        showSetImage = false
+                    }
+                }
+            
+            VStack(spacing: 20) {
+                
+                Text("Change your picture")
+                    .font(.headline)
+                
+                Divider()
+                
+                Button(action: {
+                    withAnimation {
+                        isShowCamera.toggle()
+                        showSetImage = false
+                    }
+                }, label: {
+                    HStack(spacing: 30) {
+                        Image(systemName: "camera.fill")
+                        Text("Take a photo")
+                            .font(.headline)
+                        Spacer()
+                    }
+                    .padding()
+                    .background(
+                        RoundedRectangle(cornerRadius: 8)
+                            .foregroundColor(Color.tintGray1.opacity(0.5))
+                    )
+                })
+                Button(action: {
+                    withAnimation {
+                        isShowPhotoLibrary.toggle()
+                        showSetImage = false
+                    }
+                }, label: {
+                    HStack(spacing: 30) {
+                        Image(systemName: "folder.fill")
+                        Text("Choose from your file")
+                            .font(.headline)
+                        Spacer()
+                    }
+                    .padding()
+                    .background(
+                        RoundedRectangle(cornerRadius: 8)
+                            .foregroundColor(Color.tintGray1.opacity(0.5))
+                    )
+                })
+                Button(action: {
+                    
+                    showSetImage = false
+                    image = UIImage()
+                    
+                }, label: {
+                    HStack(spacing: 30) {
+                        Image(systemName: "trash.fill")
+                        Text("Delete Photo")
+                            .font(.headline)
+                        Spacer()
+                    }
+                    .foregroundColor(.red)
+                    .padding()
+                    .background(
+                        RoundedRectangle(cornerRadius: 8)
+                            .foregroundColor(Color.tintGray1.opacity(0.5))
+                    )
+                })
+            }
+            .foregroundColor(.black)
+            .padding()
+            .background(
+                RoundedRectangle(cornerRadius: 20)
+                    .foregroundColor(.white)
+            )
+            .padding()
+        }
+        .background(.ultraThinMaterial)
+    }
+    
+    var scaledImage: some View {
+        ZStack {
+            Color.black.opacity(0.1)
+                .ignoresSafeArea()
+                .onTapGesture {
+                    withAnimation(.bouncy) {
+                        showImage = false
+                    }
+                }
+            
+            ZStack {
+                Image(uiImage: image)
+                    .resizable()
+            }
+            .frame(width: 300, height: 300)
+            .background(Color.purple)
+            .clipShape(.rect(cornerRadius: 30))
+        }
+        .background(.ultraThinMaterial)
     }
     
     init(store: ProfileStore = ProfileDomain.previewStore) {
@@ -87,7 +234,6 @@ struct AccountSettingsView: View {
         )
     }
 }
-
 
 #Preview {
     AccountSettingsView(store: ProfileDomain.previewStore)

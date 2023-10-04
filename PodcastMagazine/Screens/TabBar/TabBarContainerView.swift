@@ -8,11 +8,13 @@
 import Foundation
 import SwiftUI
 
-struct CustomTabBarContainerView<Content:View>: View {
+struct TabBarContainerView<Content:View>: View {
     
+    @AppStorage("tabBar") var hideTabBar = false
     @Binding var selection: TabBarItem
-    let content: Content
     @State private var tabs: [TabBarItem] = []
+    @State private var showPlayer: Bool = false
+    let content: Content
     
     init(selection: Binding<TabBarItem>, @ViewBuilder content: () -> Content) {
         self._selection = selection
@@ -20,13 +22,25 @@ struct CustomTabBarContainerView<Content:View>: View {
     }
     
     var body: some View {
-        ZStack(alignment: .bottom) {
-            content
-                .ignoresSafeArea()
+        VStack(spacing: 0) {
+            ZStack {
+                content
+                    .fadeOutBottom(fadeLength: 10)
+            }
             
-            // Player view
+            if showPlayer {
+                //TODO: - PLAYER VIEW
+//                Color.gray.opacity(0.5)
+//                    .frame(height: 65)
+//                    .frame(maxWidth: .infinity)
+//                    .cornerRadius(20)
+//                    .padding(.horizontal)
+            }
             
-            TabBarView(tabs: tabs, selection: $selection)
+            if !hideTabBar {
+                TabBarView(tabs: tabs, selection: $selection)
+                    .animation(.easeInOut, value: hideTabBar)
+            }
         }
         .onPreferenceChange(TabBarItemsPreferencesKey.self, perform: { value in
             self.tabs = value

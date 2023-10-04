@@ -78,5 +78,27 @@ final class RealmProviderTests: XCTestCase {
         
         XCTAssertTrue(result.isEmpty)
     }
+    
+    func test_deleteExactFeed() throws {
+        let secondFeed = Feed(id: 2, url: "Bar", title: "Bar", description: "Bar", image: nil, author: nil, ownerName: nil, artwork: nil, language: "Bar", medium: nil, episodeCount: nil, categories: nil)
+        
+        try sut.write {
+            $0.add(self.testFeed)
+            $0.add(secondFeed)
+        }
+        
+        var result = sut.values(Feed.self)
+        
+        XCTAssertEqual(result.count, 2)
+        
+        try sut.write {
+            $0.delete(self.testFeed)
+        }
+        
+        result = sut.values(Feed.self)
+        
+        XCTAssertFalse(result.isEmpty)
+        XCTAssertFalse(result.contains(testFeed))
+    }
 
 }

@@ -25,7 +25,7 @@ struct PodcastMagazineApp: App {
             } else {
                 // HomePageView()
                 // SearchContentView()
-                CustomTabBarContainerView(selection: $tabSelection) {
+                TabBarContainerView(selection: $tabSelection) {
                     HomePageView()
                         .tabBarItem(tab: TabBarItem.home, selection: $tabSelection)
                     SearchContentView()

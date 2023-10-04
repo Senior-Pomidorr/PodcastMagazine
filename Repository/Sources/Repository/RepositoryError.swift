@@ -19,6 +19,7 @@ public extension Repository {
         case logOutError(Error)
         case createUserError(Error)
         case noUser
+        case realmUnavailable
         
         public var errorDescription: String { String(describing: self) }
         
