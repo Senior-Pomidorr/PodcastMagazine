@@ -9,6 +9,7 @@ import SwiftUI
 
 struct AccountSettingsView: View {
     @StateObject private var store: ProfileStore
+    @AppStorage("tabBar") var hideTabBar = false
     @State private var showImage: Bool = false
     @State private var showSetImage: Bool = false
     @State private var isShowPhotoLibrary = false
@@ -30,6 +31,12 @@ struct AccountSettingsView: View {
             }
         }
         .navigationBarHidden(true)
+        .onAppear {
+            hideTabBar = true
+        }
+        .onDisappear {
+            hideTabBar = false
+        }
         .sheet(isPresented: $isShowPhotoLibrary) {
             ImagePicker(selectedImage: $image, sourceType: .photoLibrary)
                 .ignoresSafeArea()

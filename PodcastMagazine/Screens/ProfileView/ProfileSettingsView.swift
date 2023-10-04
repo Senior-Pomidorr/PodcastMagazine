@@ -58,6 +58,7 @@ struct ProfileSettingsView: View {
                     })
                     .padding(.bottom, 60)
                 }
+                .tint(.black)
                 .padding()
             }
         }
