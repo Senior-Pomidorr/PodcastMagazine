@@ -48,7 +48,12 @@ struct PlaylistView: View {
                 .padding(.top, 24)
                 .padding(.horizontal, 28)
                 List {
-                    CreatePlaylistButton()
+                    NavigationLink {
+                        CreatePlaylistView()
+                    } label: {
+                        CreatePlaylistButton()
+                    }
+
                     ForEach(mockFeed, id: \.id) {feed in
                         ForEach(1..<20) {repeatFeed in
                             PlaylistCell(namePodcast: feed.title, partPodcast: feed.title)
