@@ -11,6 +11,7 @@ import Models
 struct HomePageView: View {
     
     @StateObject var store: HomePageStore = HomePageDomain.liveStore
+    @AppStorage("tabBar") var hideTabBar = false
     @State private var selectedIndex: Int = 0
     private var maxCategories = 20
     @State var cellIdTap: Models.Category? = nil
@@ -80,6 +81,7 @@ struct HomePageView: View {
             }
             .background(Color.white)
             .onAppear {
+                hideTabBar = false
                 store.send(.viewAppeared)
                 store.send(.getPersistedFeeds)
             }

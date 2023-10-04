@@ -12,6 +12,7 @@ import LoadableImage
 struct PodcastDiscriptionView: View {
     
     var podcastID: Int
+    @AppStorage("tabBar") var hideTabBar = false
     @StateObject var store: PodcastDescriptionStore = PodcastDescriptionDomain.liveStore
     
     var body: some View {
@@ -82,15 +83,19 @@ struct PodcastDiscriptionView: View {
                                 .frame(width: 100, height: 100, alignment: .center)
                         }
                     }
-
+                    
                     Spacer()
                 }
             }
-            .padding()
+            .padding(.horizontal)
         }
         .onAppear {
             print("Пришел id =", podcastID)
+            hideTabBar = true
             store.send(.viewAppeared(podcastID))
+        }
+        .onDisappear {
+            hideTabBar = false
         }
         .background(Color.white)
         .navigationTitle("Podcast")

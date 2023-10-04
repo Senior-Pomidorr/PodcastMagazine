@@ -12,6 +12,7 @@ import LoadableImage
 struct EpisodeCellView: View {
     
     var episode: Episode
+    
     @State private var navigateToEpisodePlayer = false
     
     var body: some View {
@@ -24,7 +25,7 @@ struct EpisodeCellView: View {
             .background(Color.gray.opacity(0.2))
             .clipShape(RoundedRectangle(cornerRadius: 16))
             .padding(.horizontal, 8)
-
+            
             HStack(alignment: .top) {
                 VStack {
                     HStack(alignment: .firstTextBaseline) {
@@ -52,7 +53,8 @@ struct EpisodeCellView: View {
         }
         .background(
             NavigationLink(
-                destination: Text("Player Screen"),
+                destination:
+                    Text("Player Screen"),
                 isActive: $navigateToEpisodePlayer,
                 label: {
                     EmptyView()

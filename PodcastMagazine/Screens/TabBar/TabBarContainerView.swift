@@ -10,6 +10,7 @@ import SwiftUI
 
 struct TabBarContainerView<Content:View>: View {
     
+    @AppStorage("tabBar") var hideTabBar = false
     @Binding var selection: TabBarItem
     @State private var tabs: [TabBarItem] = []
     @State private var showPlayer: Bool = false
@@ -36,7 +37,10 @@ struct TabBarContainerView<Content:View>: View {
 //                    .padding(.horizontal)
             }
             
-            TabBarView(tabs: tabs, selection: $selection)
+            if !hideTabBar {
+                TabBarView(tabs: tabs, selection: $selection)
+                    .animation(.easeInOut, value: hideTabBar)
+            }
         }
         .onPreferenceChange(TabBarItemsPreferencesKey.self, perform: { value in
             self.tabs = value
