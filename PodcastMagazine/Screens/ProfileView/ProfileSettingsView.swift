@@ -56,7 +56,7 @@ struct ProfileSettingsView: View {
                             )
                             .foregroundColor(.blue)
                     })
-                    .padding(.bottom, 60)
+                    .padding(.bottom)
                 }
                 .tint(.black)
                 .padding()

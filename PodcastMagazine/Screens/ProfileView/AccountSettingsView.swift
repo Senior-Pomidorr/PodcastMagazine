@@ -60,7 +60,7 @@ struct AccountSettingsView: View {
                     }
                 })
             .onTapGesture {
-                withAnimation(.bouncy) {
+                withAnimation {
                     showImage.toggle()
                 }
             }
@@ -220,7 +220,7 @@ struct AccountSettingsView: View {
         )
     }
     
-    func bindBirthDate() -> Binding<Date> {
+    func bindBirthDate() -> Binding<String> {
         .init(
             get: { store.state.dateOfBirth },
             set: { store.send(.setDateOfBirth($0)) }
