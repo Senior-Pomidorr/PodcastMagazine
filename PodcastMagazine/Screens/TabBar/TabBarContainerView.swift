@@ -29,11 +29,6 @@ struct TabBarContainerView<Content:View>: View {
             
             if showPlayer {
                 //TODO: - PLAYER VIEW
-//                Color.gray.opacity(0.5)
-//                    .frame(height: 65)
-//                    .frame(maxWidth: .infinity)
-//                    .cornerRadius(20)
-//                    .padding(.horizontal)
             }
             
             if !hideTabBar {
