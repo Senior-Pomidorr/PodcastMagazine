@@ -104,5 +104,40 @@ final class EndpointTests: XCTestCase {
             URL(string: "https://api.podcastindex.org/api/1.0/search/byterm?q=everything+everywhere+daily&max=1")
         )
     }
+    
+    func test_randomEpisodes() {
+        XCTAssertEqual(
+            Endpoint.randomEpisodes().url,
+            URL(string: "https://api.podcastindex.org/api/1.0/episodes/random?max=20")
+        )
+    }
+    
+    func test_randomEpisodesWithMaxParameter() {
+        XCTAssertEqual(
+            Endpoint.randomEpisodes(max: 1).url,
+            URL(string: "https://api.podcastindex.org/api/1.0/episodes/random?max=1")
+        )
+    }
+    
+    func test_randomEpisodesWithCategoryAndMaxParameter() {
+        XCTAssertEqual(
+            Endpoint.randomEpisodes(by: .sample, max: 1).url,
+            URL(string: "https://api.podcastindex.org/api/1.0/episodes/random?cat=Books&max=1")
+        )
+    }
+    
+    func test_episodesByPerson() {
+        XCTAssertEqual(
+            Endpoint.episodes(by: "adam curry").url,
+            URL(string: "https://api.podcastindex.org/api/1.0/search/byperson?q=adam%20curry&max=20")
+        )
+    }
+    
+    func test_episodesByPersonWithMaxParameter() {
+        XCTAssertEqual(
+            Endpoint.episodes(by: "adam curry", max: 1).url,
+            URL(string: "https://api.podcastindex.org/api/1.0/search/byperson?q=adam%20curry&max=1")
+        )
+    }
 
 }
