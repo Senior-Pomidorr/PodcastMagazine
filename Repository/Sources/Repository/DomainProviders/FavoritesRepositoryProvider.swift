@@ -14,14 +14,20 @@ public struct FavoritesAndPlaylistsRepositoryProvider {
     public var getFavoritesFeeds: () -> AnyPublisher<[Feed], Never>
     public var getPlaylists: () -> AnyPublisher<[Playlist], Never>
     public var getEpisodes: (Endpoint) -> Repository.ResponsePublisher<EpisodesResponse>
+    public var getPersistedEpisodes: () -> AnyPublisher<[Episode], Never>
+    public var addToFavorites: (Playlist) throws -> Void
+    public var removeFromFavorites: (Playlist) throws -> Void
     
     public static var live: FavoritesAndPlaylistsRepositoryProvider {
         let repository = Repository.shared
         return .init(
             getFavoritesFeeds: repository.loadPersisted,
             getPlaylists: repository.loadPersisted,
-            getEpisodes: repository.request
-            )
+            getEpisodes: repository.request,
+            getPersistedEpisodes: repository.loadPersisted,
+            addToFavorites: repository.addPersisted,
+            removeFromFavorites: repository.deletePersisted
+        )
     }
     
     /// Создает экземпляр провайдера, публикующий передаваемые модели с заданной задержкой по времени.
@@ -34,6 +40,8 @@ public struct FavoritesAndPlaylistsRepositoryProvider {
         feedResult: [Feed] = [.sample],
         playlistsResult: [Playlist] = [.sample],
         episodesResult: Repository.Response<EpisodesResponse> = .success(.sample),
+        persistedEpisodes: [Episode] = [.sample],
+        writeToFavoritesResult: @escaping (Playlist) throws -> Void = { _ in },
         delay: DispatchQueue.SchedulerTimeType.Stride = 2
     ) -> Self {
         .init(
@@ -47,7 +55,12 @@ public struct FavoritesAndPlaylistsRepositoryProvider {
                 Just(episodesResult)
                     .delay(for: delay, scheduler: DispatchQueue.main)
                     .eraseToAnyPublisher()
-            }
+            },
+            getPersistedEpisodes: Just(persistedEpisodes)
+                .delay(for: delay, scheduler: DispatchQueue.main)
+                .eraseToAnyPublisher,
+            addToFavorites: writeToFavoritesResult,
+            removeFromFavorites: writeToFavoritesResult
         )
     }
 }

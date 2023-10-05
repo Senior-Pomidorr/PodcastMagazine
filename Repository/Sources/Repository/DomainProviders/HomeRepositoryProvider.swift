@@ -28,16 +28,8 @@ public struct HomeRepositoryProvider {
             getFeedDetail: { repository.request(.feeds(by: $0)) }, 
             getEpisodes: { repository.request(.episodes(by: $0)) },
             getPersistedFeeds: repository.loadPersisted,
-            addToFavorites: { feed in
-                try repository.writeToDatabase { transaction in
-                    transaction.add(feed)
-                }
-            }, 
-            removeFromFavorites: { feed in
-                try repository.writeToDatabase { transaction in
-                    transaction.delete(feed)
-                }
-            }
+            addToFavorites: repository.addPersisted,
+            removeFromFavorites: repository.deletePersisted
         )
     }
     

@@ -82,9 +82,16 @@ public final class Repository {
             .eraseToAnyPublisher()
     }
     
+    func addPersisted<T: Persistable>(_ value: T) throws {
+        try realmManager?.write {
+            $0.add(value)
+        }
+    }
     
-    func writeToDatabase<T: Persistable>(_ block: @escaping (WriteTransaction<T>) -> Void) throws {
-        try realmManager?.write(block)
+    func deletePersisted<T: Persistable>(_ value: T) throws {
+        try realmManager?.write {
+            $0.delete(value)
+        }
     }
     
 }
