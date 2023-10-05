@@ -6,9 +6,12 @@
 //
 
 import SwiftUI
+import Models
+import LoadableImage
 
 struct FavoritesCell: View {
-    private var ColourGenre = Color.blue
+    var feed: Feed
+//    private var ColourGenre = Color.blue
     
     var body: some View {
         VStack(alignment: .center) {
@@ -18,26 +21,29 @@ struct FavoritesCell: View {
                     .frame(width: 120, height: 160)
                     .cornerRadius(16)
                 VStack(spacing: 6) {
-                    Rectangle()
-                        .foregroundColor(Color("tintGray1"))
-                        .frame(width: 60, height: 60)
-                        .cornerRadius(8)
-//
-                    Text("Baby Pesut")
+                    LoadableImage(feed.image ?? "No image") { image in
+                        image
+                            .resizable()
+                            .scaledToFill()
+                    }
+                    .foregroundColor(Color("tintGray1"))
+                    .frame(width: 60, height: 60)
+                    .cornerRadius(8)
+                    
+                    Text(feed.title)
                         .font(.custom(.bold, size: 14))
-                        .padding(.top, 6)
-                    Text("Dr. Oi om jean")
+//                        .padding(.top, 6)
+                        .frame(width: 120)
+                        .multilineTextAlignment(.center)
+                    Text(feed.author ?? "unknown")
                         .font(.custom(.regular, size: 12))
                         .foregroundStyle(Color("GreyTextColor"))
-                       
-                    
                 }
-              
             }
         }
     }
 }
 
 #Preview {
-    FavoritesCell()
+    FavoritesCell(feed: Feed.sample)
 }

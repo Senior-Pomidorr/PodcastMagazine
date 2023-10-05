@@ -21,8 +21,16 @@ enum PlaylistLoadingStatus: Equatable {
     case error(Error)
 }
 
-//MARK: State
+
 struct PlayListDomain {
+    
+    // MARK: PlaylistLive
+    static let playlistDomainLive = PlaylistStore(
+        state: State(),
+        reducer: PlayListDomain(provider: .live)
+    )
+    
+    // MARK: State
     struct State: Equatable {
         var favoritesList: [Feed]
         var playlistList: [Playlist]
@@ -40,7 +48,7 @@ struct PlayListDomain {
         }
     }
     
-    //MARK: Action
+    // MARK: Action
     enum Action {
         case viewAppered
         case _getFavoritesListRequest
@@ -49,10 +57,10 @@ struct PlayListDomain {
         case _getPlaylistResponse([Playlist])
     }
     
-    //MARK: Dependecies
+    // MARK: Dependecies
     let provider: FavoritesAndPlaylistsRepositoryProvider
     
-    //    MARK: Reducer
+    // MARK: Reducer
     func reduce(_ state: inout State, with action: Action) -> AnyPublisher<Action, Never> {
         switch action {
         case .viewAppered:
@@ -71,10 +79,6 @@ struct PlayListDomain {
             
         case ._getFavoritesListResponse(let favorites):
             state.playlistStatus = .none
-           
-            
-            //        case let ._getFavoritesListResponse(.failure(error)):
-            //            state.playlistStatus = .error(error)
             
         case ._getPlaylistRequest:
             return provider.getPlaylists()
@@ -85,7 +89,6 @@ struct PlayListDomain {
             state.playlistStatus = .none
             
         }
-        
         return Empty().eraseToAnyPublisher()
     }
 }

@@ -9,6 +9,7 @@ import SwiftUI
 import Models
 
 struct PlaylistView: View {
+    @StateObject var store: PlaylistStore = PlayListDomain.playlistDomainLive
     var mockFeed: [Feed] = [Feed.sample]
     
     
@@ -20,7 +21,7 @@ struct PlaylistView: View {
                         .font(.system(size: 16, weight: .bold))
                     Spacer()
                     NavigationLink {
-                        FavoritesViewScreen()
+                        FavoritesView()
                     } label: {
                         Text("See All")
                             .foregroundColor(Color("GreyTextColor"))
@@ -28,18 +29,21 @@ struct PlaylistView: View {
                     }
                 }
                 .padding(.horizontal, 28)
+                switch store.state.playlistStatus {
+                case .none:
                 ScrollView(.horizontal, showsIndicators: false) {
-                    HStack(spacing: 16) {
-                        FavoritesCell()
-                        FavoritesCell()
-                        FavoritesCell()
-                        FavoritesCell()
-                        FavoritesCell()
-                        FavoritesCell()
+                        HStack(spacing: 16) {
+                            ForEach(store.state.favoritesList) {item in
+                                FavoritesCell(feed: item)
+                            }
+                        }
+                        .padding(.top, 12)
+                        .padding(.horizontal, 28)
                     }
+                default:
+                    EmptyView()
                 }
-                .padding(.top, 12)
-                .padding(.horizontal, 28)
+                
                 HStack {
                     Text("Your Playlist")
                         .font(.system(size: 16, weight: .bold))
@@ -54,9 +58,9 @@ struct PlaylistView: View {
                         CreatePlaylistButton()
                     }
 
-                    ForEach(mockFeed, id: \.id) {feed in
+                    ForEach(store.state.playlistList) {feed in
                         ForEach(1..<20) {repeatFeed in
-                            PlaylistCell(namePodcast: feed.title, partPodcast: feed.title)
+                            PlaylistCell(playlist: feed)
                                 .listRowSeparator(.hidden)
                         }
                     }

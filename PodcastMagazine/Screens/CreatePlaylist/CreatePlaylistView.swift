@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct CreatePlaylistView: View {
+    @StateObject var store: CreatePlaylistStore = CreatePlaylistDomain.createPlaylistLive
     @State private var newPlaylistName = ""
     @State var searchFieldText: String = ""
     
@@ -46,14 +47,19 @@ struct CreatePlaylistView: View {
                         
                         SearchBarCreatePlaylist(searchTextPlaylist: $searchFieldText)
                             .padding(.vertical, 18)
-                        VStack(spacing: 16) {
-                            CreatePlaylistCells()
-                            CreatePlaylistCells()
-                            CreatePlaylistCells()
-                            CreatePlaylistCells()
-                            CreatePlaylistCells()
-                            CreatePlaylistCells()
-                            CreatePlaylistCells()
+                        switch store.state.createPlaylistStatus {
+                        case .none:
+                            VStack(spacing: 16) {
+                                CreatePlaylistCells()
+                                CreatePlaylistCells()
+                                CreatePlaylistCells()
+                                CreatePlaylistCells()
+                                CreatePlaylistCells()
+                                CreatePlaylistCells()
+                                CreatePlaylistCells()
+                            }
+                        default:
+                            EmptyView()
                         }
                     }
                 }

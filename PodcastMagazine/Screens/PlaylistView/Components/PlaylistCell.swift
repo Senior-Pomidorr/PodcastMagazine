@@ -6,11 +6,10 @@
 //
 
 import SwiftUI
+import Models
 
 struct PlaylistCell: View {
-    var image: Image?
-    var namePodcast: String
-    var partPodcast: String
+    var playlist: Playlist
     
     var body: some View {
         HStack(alignment: .center) {
@@ -19,9 +18,9 @@ struct PlaylistCell: View {
                 .frame(width: 48, height: 48)
                 .cornerRadius(8)
             VStack(alignment: .leading, spacing: 4) {
-                Text(namePodcast)
+                Text(playlist.name)
                     .font(.custom(.bold, size: 14))
-                Text(partPodcast)
+                Text(playlist.name)
                     .font(.custom(.regular, size: 12))
                     .foregroundStyle(Color("GreyTextColor"))
             }
@@ -31,5 +30,5 @@ struct PlaylistCell: View {
 }
 
 #Preview {
-    PlaylistCell(namePodcast: "Author Title", partPodcast: "Episodes")
+    PlaylistCell(playlist: Playlist.sample)
 }

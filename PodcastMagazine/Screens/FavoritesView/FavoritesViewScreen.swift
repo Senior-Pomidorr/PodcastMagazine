@@ -8,19 +8,18 @@
 import SwiftUI
 import Models
 
-struct FavoritesViewScreen: View {
+struct FavoritesView: View {
     var mockFeed: [Feed] = [Feed.sample]
     var body: some View {
         NavigationView {
             List {
                 ForEach(mockFeed, id: \.id) {feed in
                     ForEach(1..<20) {repeatFeed in
-                        PlaylistCell(namePodcast: "Title", partPodcast: "Subtitle")
+                        PlaylistCell(playlist: Playlist.sample)
                             .listRowSeparator(.hidden)
                     }
                 }
             }
-            .padding(.horizontal, 8)
             .listStyle(PlainListStyle())
         }
         .navigationTitle("Favorites")
@@ -31,5 +30,5 @@ struct FavoritesViewScreen: View {
 }
 
 #Preview {
-    FavoritesViewScreen()
+    FavoritesView()
 }

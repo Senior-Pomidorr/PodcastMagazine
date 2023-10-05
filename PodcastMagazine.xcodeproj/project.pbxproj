@@ -63,7 +63,6 @@
 		3CA3A2362ACC198C00103A58 /* TabBarContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CA3A2352ACC198C00103A58 /* TabBarContainerView.swift */; };
 		3CA3A2382ACC19A300103A58 /* TabBarPreferenceKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CA3A2372ACC19A300103A58 /* TabBarPreferenceKey.swift */; };
 		3CA3A23A2ACC19B400103A58 /* TabBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CA3A2392ACC19B400103A58 /* TabBarItem.swift */; };
-		3CA3A23D2ACC1E1A00103A58 /* FavoritesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CA3A23C2ACC1E1A00103A58 /* FavoritesView.swift */; };
 		8658CCE62AC873C7005B454C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8658CCE52AC873C7005B454C /* GoogleService-Info.plist */; };
 		86F3420E2AC19B870007213C /* Repository in Frameworks */ = {isa = PBXBuildFile; productRef = 86F3420D2AC19B870007213C /* Repository */; };
 		86F342102AC19B8D0007213C /* Models in Frameworks */ = {isa = PBXBuildFile; productRef = 86F3420F2AC19B8D0007213C /* Models */; };
@@ -152,7 +151,6 @@
 		3CA3A2352ACC198C00103A58 /* TabBarContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarContainerView.swift; sourceTree = "<group>"; };
 		3CA3A2372ACC19A300103A58 /* TabBarPreferenceKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarPreferenceKey.swift; sourceTree = "<group>"; };
 		3CA3A2392ACC19B400103A58 /* TabBarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarItem.swift; sourceTree = "<group>"; };
-		3CA3A23C2ACC1E1A00103A58 /* FavoritesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesView.swift; sourceTree = "<group>"; };
 		8658CCE52AC873C7005B454C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		86F342112AC19DBD0007213C /* Repository */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Repository; sourceTree = "<group>"; };
 		A15054562ACB1A50001B70F0 /* AllCategoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllCategoryView.swift; sourceTree = "<group>"; };
@@ -255,14 +253,6 @@
 				0DDD05F72ACDAEB200D921C9 /* RepeatButton.swift */,
 			);
 			path = Components;
-			sourceTree = "<group>";
-		};
-		0DDD05FB2ACEE7A800D921C9 /* FavoritesScreen */ = {
-			isa = PBXGroup;
-			children = (
-				0DDD05F92ACEE79800D921C9 /* FavoritesViewScreen.swift */,
-			);
-			path = FavoritesScreen;
 			sourceTree = "<group>";
 		};
 		0DF51C9B2AC497B700413A8A /* CreatePlaylist */ = {
@@ -394,7 +384,7 @@
 		3CA3A23B2ACC1DE400103A58 /* FavoritesView */ = {
 			isa = PBXGroup;
 			children = (
-				3CA3A23C2ACC1E1A00103A58 /* FavoritesView.swift */,
+				0DDD05F92ACEE79800D921C9 /* FavoritesViewScreen.swift */,
 			);
 			path = FavoritesView;
 			sourceTree = "<group>";
@@ -505,7 +495,6 @@
 				3CA3A23B2ACC1DE400103A58 /* FavoritesView */,
 				A1A44D322AC18D4A00F2FED9 /* HomePageView */,
 				0D0E87AE2AC48BD00036FE52 /* PlaylistView */,
-				0DDD05FB2ACEE7A800D921C9 /* FavoritesScreen */,
 				0DF51C9B2AC497B700413A8A /* CreatePlaylist */,
 				3CA3A2322ACC128C00103A58 /* TabBar */,
 			);
@@ -674,7 +663,6 @@
 				A1A44D232AC18C9700F2FED9 /* PodcastMagazineApp.swift in Sources */,
 				3CA3A2362ACC198C00103A58 /* TabBarContainerView.swift in Sources */,
 				3C7D49D22AC2FDEC0084CD25 /* ProfileHeaderView.swift in Sources */,
-				3CA3A23D2ACC1E1A00103A58 /* FavoritesView.swift in Sources */,
 				107B45DB2AC9CC76003A9C65 /* HeaderScrollView.swift in Sources */,
 				0D3C1C632AC7169400AD84DF /* SkipButton.swift in Sources */,
 				10B8F97B2AC4A9A1008DE769 /* SearchStore.swift in Sources */,
