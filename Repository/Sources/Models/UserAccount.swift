@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct UserAccount {
+public struct UserAccount: Equatable {
     public var imageUrl: String?
     public var firstName: String
     public var lastName: String

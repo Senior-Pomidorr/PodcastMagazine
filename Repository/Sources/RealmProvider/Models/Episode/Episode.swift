@@ -21,6 +21,7 @@ extension Episode: Persistable {
         case datePublished(Int)
         case datePublishedPretty(String)
         case dateCrawled(Int)
+        case duration(Int)
         case enclosureUrl(String)
         case explicit(Int)
         case episode(Int)
@@ -54,6 +55,7 @@ extension Episode: Persistable {
             case let .feedTitle(title):          return ("feedTitle", title)
             case let .feedLanguage(language):    return ("feedLanguage", language)
             case let .chaptersUrl(url):          return ("chaptersUrl", url)
+            case let .duration(duration):        return ("duration", duration)
             }
         }
     }
@@ -69,6 +71,7 @@ extension Episode: Persistable {
             datePublished: managedObject.datePublished,
             datePublishedPretty: managedObject.datePublishedPretty,
             dateCrawled: managedObject.dateCrawled,
+            duration: managedObject.duration,
             enclosureUrl: managedObject.enclosureUrl,
             explicit: managedObject.explicit,
             episode: managedObject.episode,

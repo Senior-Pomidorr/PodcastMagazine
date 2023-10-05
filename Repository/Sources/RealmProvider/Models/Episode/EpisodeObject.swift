@@ -17,6 +17,7 @@ public final class EpisodeObject: Object, ObjectKeyIdentifiable {
     @Persisted public var guid: String
     @Persisted public var datePublished: Int
     @Persisted public var datePublishedPretty: String
+    @Persisted public var duration: Int?
     @Persisted public var dateCrawled: Int
     @Persisted public var enclosureUrl: String
     @Persisted public var explicit: Int
@@ -40,6 +41,7 @@ public final class EpisodeObject: Object, ObjectKeyIdentifiable {
         self.datePublished = episode.datePublished
         self.datePublishedPretty = episode.datePublishedPretty
         self.dateCrawled = episode.dateCrawled
+        self.duration = episode.duration
         self.enclosureUrl = episode.enclosureUrl
         self.explicit = episode.explicit
         self.episode = episode.episode
