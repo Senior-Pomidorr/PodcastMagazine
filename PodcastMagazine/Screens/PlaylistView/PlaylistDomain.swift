@@ -71,6 +71,7 @@ struct PlayListDomain {
             
         case ._getFavoritesListResponse(let favorites):
             state.playlistStatus = .none
+           
             
             //        case let ._getFavoritesListResponse(.failure(error)):
             //            state.playlistStatus = .error(error)

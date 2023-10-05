@@ -20,7 +20,7 @@ struct PlaylistView: View {
                         .font(.system(size: 16, weight: .bold))
                     Spacer()
                     NavigationLink {
-                        //See All present
+                        FavoritesViewScreen()
                     } label: {
                         Text("See All")
                             .foregroundColor(Color("GreyTextColor"))
@@ -64,8 +64,9 @@ struct PlaylistView: View {
                 .padding(.horizontal, 8)
                 .listStyle(PlainListStyle())
             }
-            navigationTitle("Playlist")
         }
+        .navigationTitle("Playlist")
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 

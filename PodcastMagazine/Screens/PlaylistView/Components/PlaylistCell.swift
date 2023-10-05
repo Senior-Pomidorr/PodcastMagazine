@@ -18,16 +18,18 @@ struct PlaylistCell: View {
                 .foregroundColor(Color("tintGray0"))
                 .frame(width: 48, height: 48)
                 .cornerRadius(8)
-            VStack(alignment: .leading) {
+            VStack(alignment: .leading, spacing: 4) {
                 Text(namePodcast)
+                    .font(.custom(.bold, size: 14))
                 Text(partPodcast)
+                    .font(.custom(.regular, size: 12))
+                    .foregroundStyle(Color("GreyTextColor"))
             }
             .padding(.leading, 12)
         }
-//        .padding(.horizontal, 28)
     }
 }
 
 #Preview {
-    PlaylistCell(namePodcast: "", partPodcast: "")
+    PlaylistCell(namePodcast: "Author Title", partPodcast: "Episodes")
 }

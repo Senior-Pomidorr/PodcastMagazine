@@ -50,10 +50,9 @@ struct CreatePlaylistDomain {
     enum Action {
         case viewAppeared
         case addPlaylistDidTap(String)
-        case searchDidTap(String)
-        case episodesCeelDidTap(Repository.Response<Episode>)
+        case episodesCellDidTap(Repository.Response<Episode>)
         case _getEpisodesRequest
-        case _getFeedPocdasts
+        case _getPocdastsRequest
         case _getEpisodesResponse(Repository.Response<EpisodesResponse>)
         case _getPodcastsResponse([Feed])
     }
@@ -68,12 +67,12 @@ struct CreatePlaylistDomain {
             state.createPlaylistStatus = .loading
             return Publishers.Merge(
                 Just(._getEpisodesRequest),
-                Just(._getFeedPocdasts)
+                Just(._getPocdastsRequest)
             )
             .eraseToAnyPublisher()
             
         case ._getEpisodesRequest:
-            return provider.getEpisodes(.episodes(by: 20))
+            return provider.getEpisodes(.randomEpisodes(max: 20))
             .map(Action._getEpisodesResponse)
             .eraseToAnyPublisher()
             
@@ -84,19 +83,23 @@ struct CreatePlaylistDomain {
         case let ._getEpisodesResponse(.failure(error)):
             state.createPlaylistStatus = .error(error)
             
+//        case ._getPocdastsRequest:
+//            return provider
+//                .map(Action.)
+//                .eraseToAnyPublisher()
+//            
         case ._getPodcastsResponse(_):
             break
             
         case .addPlaylistDidTap(_):
             break
-        case .searchDidTap(_):
+        case .episodesCellDidTap(_):
             break
-        case .episodesCeelDidTap(_):
-            break
-        case ._getFeedPocdasts:
-            break
+    
        
         
+        case ._getPocdastsRequest:
+            break
         }
         return Empty().eraseToAnyPublisher()
     }

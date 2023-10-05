@@ -20,6 +20,7 @@ struct CreatePlaylistButton: View {
                 Image(systemName: "plus")
             }
             Text("Create Playlist")
+                .font(.custom(.bold, size: 14))
                 .padding(.leading, 14)
         }
     }

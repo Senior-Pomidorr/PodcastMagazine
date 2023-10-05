@@ -24,6 +24,7 @@
 		0DDD05F42ACDAD6200D921C9 /* PlayButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DDD05F32ACDAD6200D921C9 /* PlayButton.swift */; };
 		0DDD05F62ACDAE0C00D921C9 /* NextTrackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DDD05F52ACDAE0C00D921C9 /* NextTrackButton.swift */; };
 		0DDD05F82ACDAEB200D921C9 /* RepeatButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DDD05F72ACDAEB200D921C9 /* RepeatButton.swift */; };
+		0DDD05FA2ACEE79800D921C9 /* FavoritesViewScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DDD05F92ACEE79800D921C9 /* FavoritesViewScreen.swift */; };
 		0DF51C9A2AC497AE00413A8A /* CreatePlaylistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DF51C992AC497AE00413A8A /* CreatePlaylistView.swift */; };
 		0DF51C9D2AC4A5AC00413A8A /* SearchBarCreatePlaylist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DF51C9C2AC4A5AC00413A8A /* SearchBarCreatePlaylist.swift */; };
 		0DF51CA02AC4B7FB00413A8A /* CreatePlaylistCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DF51C9F2AC4B7FB00413A8A /* CreatePlaylistCells.swift */; };
@@ -111,6 +112,7 @@
 		0DDD05F32ACDAD6200D921C9 /* PlayButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayButton.swift; sourceTree = "<group>"; };
 		0DDD05F52ACDAE0C00D921C9 /* NextTrackButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextTrackButton.swift; sourceTree = "<group>"; };
 		0DDD05F72ACDAEB200D921C9 /* RepeatButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepeatButton.swift; sourceTree = "<group>"; };
+		0DDD05F92ACEE79800D921C9 /* FavoritesViewScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewScreen.swift; sourceTree = "<group>"; };
 		0DF51C992AC497AE00413A8A /* CreatePlaylistView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePlaylistView.swift; sourceTree = "<group>"; };
 		0DF51C9C2AC4A5AC00413A8A /* SearchBarCreatePlaylist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarCreatePlaylist.swift; sourceTree = "<group>"; };
 		0DF51C9F2AC4B7FB00413A8A /* CreatePlaylistCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePlaylistCells.swift; sourceTree = "<group>"; };
@@ -253,6 +255,14 @@
 				0DDD05F72ACDAEB200D921C9 /* RepeatButton.swift */,
 			);
 			path = Components;
+			sourceTree = "<group>";
+		};
+		0DDD05FB2ACEE7A800D921C9 /* FavoritesScreen */ = {
+			isa = PBXGroup;
+			children = (
+				0DDD05F92ACEE79800D921C9 /* FavoritesViewScreen.swift */,
+			);
+			path = FavoritesScreen;
 			sourceTree = "<group>";
 		};
 		0DF51C9B2AC497B700413A8A /* CreatePlaylist */ = {
@@ -495,6 +505,7 @@
 				3CA3A23B2ACC1DE400103A58 /* FavoritesView */,
 				A1A44D322AC18D4A00F2FED9 /* HomePageView */,
 				0D0E87AE2AC48BD00036FE52 /* PlaylistView */,
+				0DDD05FB2ACEE7A800D921C9 /* FavoritesScreen */,
 				0DF51C9B2AC497B700413A8A /* CreatePlaylist */,
 				3CA3A2322ACC128C00103A58 /* TabBar */,
 			);
@@ -636,6 +647,7 @@
 				3C7D49D72AC31ABB0084CD25 /* SaveButtonView.swift in Sources */,
 				3C75CDF42ACC8F270055DD97 /* ImagePicker.swift in Sources */,
 				0DDD05F82ACDAEB200D921C9 /* RepeatButton.swift in Sources */,
+				0DDD05FA2ACEE79800D921C9 /* FavoritesViewScreen.swift in Sources */,
 				3C7D49D02AC2FAF30084CD25 /* ProfileSettingsRowView.swift in Sources */,
 				10AA8E482AC5A9EF001FF853 /* SearchHScrollView.swift in Sources */,
 				3CA3A2382ACC19A300103A58 /* TabBarPreferenceKey.swift in Sources */,
