@@ -12,7 +12,8 @@ import LoadableImage
 struct PodcastDiscriptionView: View {
     
     var podcastID: Int
-    var store: HomePageStore
+    @AppStorage("tabBar") var hideTabBar = false
+    @StateObject var store: PodcastDescriptionStore = PodcastDescriptionDomain.liveStore
     
     var body: some View {
         GeometryReader { geometry in
@@ -20,14 +21,14 @@ struct PodcastDiscriptionView: View {
                 HStack(alignment: .center) {
                     Spacer()
                     
-                    switch store.state.detailsPageLoadingStatus {
+                    switch store.state.pageLoadingStatus {
                     case .none:
                         VStack(alignment: .center, spacing: 8) {
                             RoundedRectangle(cornerRadius: 21)
                                 .fill(Color.color3)
                                 .frame(width: 84, height: 84)
                                 .overlay {
-                                    LoadableImage(store.state.feedDetails.feed.image ?? "https://random.imagecdn.app/100/100") { image in
+                                    LoadableImage(store.state.feedDetail.feed.image ?? "") { image in
                                         image
                                             .resizable()
                                             .scaledToFill()
@@ -38,22 +39,40 @@ struct PodcastDiscriptionView: View {
                                 )
                                 .shadow(color: .black.opacity(0.2), radius: 5, x: 0, y: 5)
                             
-                            Text(store.state.feedDetails.feed.title)
+                            Text(store.state.feedDetail.feed.title)
                                 .font(.custom(.bold, size: 16))
                                 .foregroundStyle(Color.black)
                             
                             HStack(alignment: .top) {
                                 
-                                if store.state.feedDetails.feed.episodeCount ?? 0 > 0 {
-                                    Text("\(store.state.feedDetails.feed.episodeCount ?? 0)" + " Eps")
+                                if store.state.feedDetail.feed.episodeCount ?? 0 > 0 {
+                                    Text("\(store.state.feedDetail.feed.episodeCount ?? 0)" + " Eps")
                                 } else {
                                     Text("No eps. count")
                                 }
                                 Text("⎮")
-                                Text(store.state.feedDetails.feed.author ?? "No author")
+                                Text(store.state.feedDetail.feed.author ?? "No author")
                             }
                             .font(.custom(.light, size: 14))
                             .foregroundStyle(Color.gray)
+                            
+                            HStack {
+                                Text("All Episode")
+                                    .font(.custom(.bold, size: 16))
+                                    .foregroundStyle(Color.black)
+                                Spacer()
+                            }
+                            .padding(.top)
+                            
+                            ScrollView(.vertical, showsIndicators: false) {
+                                VStack(alignment: .leading, spacing: 16) {
+                                    ForEach(store.state.episodeList) { episode in
+                                        EpisodeCellView(episode: episode)
+                                            .padding(.horizontal, 8)
+                                    }
+                                }
+                            }
+                            
                         }
                     case .loading:
                         ProgressView()
@@ -65,25 +84,18 @@ struct PodcastDiscriptionView: View {
                         }
                     }
                     
-                    
-                    
-                    
                     Spacer()
                 }
-                
-                HStack {
-                    Text("All Episode")
-                        .font(.custom(.bold, size: 16))
-                        .foregroundStyle(Color.black)
-                    Spacer()
-                }
-                .padding(.top)
-                
             }
-            .padding()
+            .padding(.horizontal)
         }
         .onAppear {
-            store.send(.getFeedDetails(podcastID))
+            print("Пришел id =", podcastID)
+            hideTabBar = true
+            store.send(.viewAppeared(podcastID))
+        }
+        .onDisappear {
+            hideTabBar = false
         }
         .background(Color.white)
         .navigationTitle("Podcast")
@@ -94,5 +106,5 @@ struct PodcastDiscriptionView: View {
 }
 
 #Preview {
-    PodcastDiscriptionView(podcastID: 75075, store: HomePageDomain.liveStore)
+    PodcastDiscriptionView(podcastID: 75075, store: PodcastDescriptionDomain.liveStore)
 }

@@ -11,15 +11,15 @@ import Combine
 import APIProvider
 
 public struct FavoritesAndPlaylistsRepositoryProvider {
-    public var getFavoritesFeeds: () -> Repository.ResponsePublisher<[Feed]>
-    public var getPlaylists: () -> Repository.ResponsePublisher<[Playlist]>
+    public var getFavoritesFeeds: () -> AnyPublisher<[Feed], Never>
+    public var getPlaylists: () -> AnyPublisher<[Playlist], Never>
     public var getEpisodes: (Endpoint) -> Repository.ResponsePublisher<EpisodesResponse>
     
     public static var live: FavoritesAndPlaylistsRepositoryProvider {
         let repository = Repository.shared
         return .init(
-            getFavoritesFeeds: Empty().eraseToAnyPublisher,
-            getPlaylists: Empty().eraseToAnyPublisher,
+            getFavoritesFeeds: repository.loadPersisted,
+            getPlaylists: repository.loadPersisted,
             getEpisodes: repository.request
             )
     }
@@ -31,8 +31,8 @@ public struct FavoritesAndPlaylistsRepositoryProvider {
     ///   - categoryResult: Желаемый результат запроса категорий.
     ///   - delay: Задержка, в секундах, перед срабатываем паблишера ответа.
     public static func preview(
-        feedResult: Repository.Response<[Feed]> = .success([.sample]),
-        playlistsResult: Repository.Response<[Playlist]> = .success([.sample]),
+        feedResult: [Feed] = [.sample],
+        playlistsResult: [Playlist] = [.sample],
         episodesResult: Repository.Response<EpisodesResponse> = .success(.sample),
         delay: DispatchQueue.SchedulerTimeType.Stride = 2
     ) -> Self {

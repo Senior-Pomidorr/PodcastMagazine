@@ -6,19 +6,22 @@
 //
 
 import SwiftUI
+import Models
 
 struct HomePageView: View {
     
     @StateObject var store: HomePageStore = HomePageDomain.liveStore
+    @AppStorage("tabBar") var hideTabBar = false
     @State private var selectedIndex: Int = 0
     private var maxCategories = 20
+    @State var cellIdTap: Models.Category? = nil
     
     var body: some View {
         NavigationView {
             GeometryReader { geometry in
                 VStack(spacing: 8) {
                     HomePageHeaderView()
-                    CategoryHeaderView()
+                    CategoryHeaderView(store: store)
                         .padding(.top)
                     
                     switch store.state.homePageLoadingStatus {
@@ -26,10 +29,21 @@ struct HomePageView: View {
                         ScrollView(.horizontal, showsIndicators: false) {
                             HStack(spacing: 16) {
                                 ForEach(store.state.categoryList.prefix(maxCategories)) { item in
-                                    CategoryCellView(categoryCellInputData: item)
+                                    CategoryCellView(store: store, categoryCellInputData: item)
+                                    
+//                                    NavigationLink(
+//                                        destination: PodcastListView(category: item, store: store),
+//                                        label: {
+//                                            CategoryCellView(
+//                                                categoryCellInputData: item
+//                                            )
+//                                        }
+//                                    )
+                                    
                                 }
                             }
                         }
+
                         
                         VStack {
                             ScrollView(.horizontal, showsIndicators: false) {
@@ -49,7 +63,9 @@ struct HomePageView: View {
                                         .padding(.horizontal, 8)
                                 }
                             }
+                            .padding(.bottom, 15)
                         }
+                        
                     case .loading:
                         ProgressView()
                     case let .error(error):
@@ -59,32 +75,35 @@ struct HomePageView: View {
                                 .frame(width: 100, height: 100, alignment: .center)
                         }
                     }
-                    
                 }
-                .padding()
+                .padding(.horizontal)
             }
             .background(Color.white)
             .onAppear {
+                hideTabBar = false
                 store.send(.viewAppeared)
+                store.send(.getPersistedFeeds)
             }
         }
     }
 }
 
 struct CategoryHeaderView: View {
+    @ObservedObject var store: HomePageStore
+    
     var body: some View {
         HStack {
             Text("Category")
                 .font(.custom(.bold, size: 16))
                 .foregroundStyle(Color.black)
             Spacer()
-            Button(action: {
-                print("Tap See all button")
-            }, label: {
+            NavigationLink {
+                AllCategoryView(store: store, categories: store.state.categoryList)
+            } label: {
                 Text("See all")
                     .font(.custom(.light, size: 16))
                     .foregroundStyle(Color.gray)
-            })
+            }
         }
     }
 }

@@ -12,18 +12,29 @@ import Repository
 struct PodcastMagazineApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     @AppStorage("isOnboarding") var isOnboarding: Bool = true
+    @State private var tabSelection: TabBarItem = .home
     @State var isModalVisible = false
     
     var body: some Scene {
         WindowGroup {
             if isOnboarding {
                 OnboardingView()
-//                    .sheet(isPresented: $isModalVisible) {
-//                        OnboardingView()
-//                    }
-                } else {
-                HomePageView()
+                //                    .sheet(isPresented: $isModalVisible) {
+                //                        OnboardingView()
+                //                    }
+            } else {
+                // HomePageView()
                 // SearchContentView()
+                TabBarContainerView(selection: $tabSelection) {
+                    HomePageView()
+                        .tabBarItem(tab: TabBarItem.home, selection: $tabSelection)
+                    SearchContentView()
+                        .tabBarItem(tab: TabBarItem.search, selection: $tabSelection)
+                    PlaylistView()
+                        .tabBarItem(tab: TabBarItem.favorites, selection: $tabSelection)
+                    ProfileSettingsView()
+                        .tabBarItem(tab: TabBarItem.settings, selection: $tabSelection)
+                }
             }
         }
     }

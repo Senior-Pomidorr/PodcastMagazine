@@ -15,7 +15,7 @@ struct PlaylistCell: View {
     var body: some View {
         HStack(alignment: .center) {
             Rectangle()
-                .foregroundColor(Color("Grey"))
+                .foregroundColor(Color("tintGray0"))
                 .frame(width: 48, height: 48)
                 .cornerRadius(8)
             VStack(alignment: .leading) {

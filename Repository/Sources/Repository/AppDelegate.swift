@@ -7,7 +7,9 @@
 
 import UIKit
 import FirebaseCore
-
+import GoogleSignIn
+import FirebaseAuth
+import SwiftFP
 
 public final class AppDelegate: NSObject, UIApplicationDelegate {
     public func application(
@@ -16,6 +18,17 @@ public final class AppDelegate: NSObject, UIApplicationDelegate {
     ) -> Bool {
         FirebaseApp.configure()
         FirebaseConfiguration.shared.setLoggerLevel(.debug)
+        
+        GIDSignIn.sharedInstance.restorePreviousSignIn { [weak self] user, error in
+            guard
+                let user = user,
+                let credential = self?.getCredential(from: user)
+            else {
+                return
+            }
+            
+        }
+        
         return true
     }
     
@@ -24,7 +37,23 @@ public final class AppDelegate: NSObject, UIApplicationDelegate {
         open url: URL,
         options: [UIApplication.OpenURLOptionsKey : Any] = [:]
     ) -> Bool {
+        if GIDSignIn.sharedInstance.handle(url) {
+            return true
+        }
         
-        return true
+        return false
     }
+}
+
+private extension AppDelegate {
+    func getCredential(from user: GIDGoogleUser) -> AuthCredential? {
+        guard let idToken = user.idToken?.tokenString else {
+            return nil
+        }
+        return GoogleAuthProvider.credential(
+            withIDToken: idToken,
+            accessToken: user.accessToken.tokenString
+        )
+    }
+     
 }

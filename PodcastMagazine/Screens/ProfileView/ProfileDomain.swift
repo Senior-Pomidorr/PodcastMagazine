@@ -26,7 +26,7 @@ struct User: Equatable {
     var firstName: String
     var lastName: String
     var email: String
-    var dateOfBirth: Date
+    var dateOfBirth: String
     var gender: Gender
     
     init(
@@ -34,7 +34,7 @@ struct User: Equatable {
         firstName: String = .init(),
         lastName: String = .init(),
         email: String = .init(),
-        dateOfBirth: Date = .init(),
+        dateOfBirth: String = .init(),
         gender: Gender = .none
     ) {
         self.imageName = imageName
@@ -58,7 +58,7 @@ struct ProfileDomain {
         var name: String
         var lastName: String
         var email: String
-        var dateOfBirth: Date
+        var dateOfBirth: String
         var gender: User.Gender
         var dataLoadingStatus: DataLoadingStatus
         
@@ -66,7 +66,7 @@ struct ProfileDomain {
             !name.isEmpty
             && !lastName.isEmpty
             && !email.isEmpty
-            && dateOfBirth != Date()
+            && dateOfBirth.isEmpty
         }
         
         var user: User {
@@ -85,7 +85,7 @@ struct ProfileDomain {
             name: String = .init(),
             lastName: String = .init(),
             email: String = .init(),
-            dateOfBirth: Date = .init(),
+            dateOfBirth: String = .init(),
             gender: User.Gender = .none,
             buttonIsActive: Bool = false,
             dataLoadingStatus: DataLoadingStatus = .none
@@ -95,8 +95,6 @@ struct ProfileDomain {
             self.email = email
             self.dateOfBirth = dateOfBirth
             self.gender = gender
-   //         self.buttonIsActive = buttonIsActive
-            
             self.dataLoadingStatus = dataLoadingStatus
         }
     }
@@ -104,11 +102,10 @@ struct ProfileDomain {
     //MARK: - ACTION
     enum Action {
         case viewAppeared
- //       case profileImageDidTap(Image)
         case setFirstName(String)
         case setLastName(String)
         case setEmail(String)
-        case setDateOfBirth(Date)
+        case setDateOfBirth(String)
         case setGender(User.Gender)
         case viewDisappeared
         case _getUserRequest
@@ -187,7 +184,6 @@ struct ProfileDomain {
     )
 }
 
-
 final class ProfileStore: ObservableObject {
     @Published private(set) var state: ProfileDomain.State
     
@@ -208,8 +204,4 @@ final class ProfileStore: ObservableObject {
             .sink(receiveValue: send(_:))
             .store(in: &cancelable)
     }
-}
-
-enum Regex: String {
-    case email =  "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
 }

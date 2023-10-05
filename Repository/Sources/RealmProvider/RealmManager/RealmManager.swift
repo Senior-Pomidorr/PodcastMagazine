@@ -23,7 +23,7 @@ public struct RealmManager {
     }
     
     //MARK: - Public methods
-    public func write<T: Persistable>(_ block: @escaping (WriteTransaction) -> T) throws {
+    public func write<T: Persistable>(_ block: @escaping (WriteTransaction<T>) -> Void) throws {
         Logger.shared.logLevel(.debug, message: #function)
         try realm.write {
             block(WriteTransaction(realm: realm))

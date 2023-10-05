@@ -26,7 +26,7 @@ public final class EpisodeObject: Object, ObjectKeyIdentifiable {
     @Persisted public var image: String
     @Persisted public var feedImage: String
     @Persisted public var feedId: Int
-    @Persisted public var feedTitle: String
+    @Persisted public var feedTitle: String?
     @Persisted public var feedLanguage: String
     @Persisted public var chaptersUrl: String?
     
