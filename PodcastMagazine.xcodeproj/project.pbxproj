@@ -28,6 +28,9 @@
 		10AA8E462AC57812001FF853 /* HeaderResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10AA8E452AC57812001FF853 /* HeaderResultView.swift */; };
 		10AA8E482AC5A9EF001FF853 /* SearchHScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10AA8E472AC5A9EF001FF853 /* SearchHScrollView.swift */; };
 		10AA8E4A2AC5AA3C001FF853 /* SearchVGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10AA8E492AC5AA3C001FF853 /* SearchVGridView.swift */; };
+		10ACA6D32ACC0B580080E116 /* TextPlacePlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10ACA6D22ACC0B580080E116 /* TextPlacePlayerView.swift */; };
+		10ACA6FF2ACEAB8D0080E116 /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10ACA6FE2ACEAB8D0080E116 /* AudioManager.swift */; };
+		10ACA7032ACEE7500080E116 /* winampIntro.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 10ACA7022ACEE7500080E116 /* winampIntro.mp3 */; };
 		10B8F9772AC4A9A1008DE769 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10B8F96D2AC4A9A1008DE769 /* SearchView.swift */; };
 		10B8F9782AC4A9A1008DE769 /* SearchContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10B8F96E2AC4A9A1008DE769 /* SearchContentView.swift */; };
 		10B8F9792AC4A9A1008DE769 /* SearchBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10B8F9702AC4A9A1008DE769 /* SearchBarView.swift */; };
@@ -96,6 +99,9 @@
 		10AA8E452AC57812001FF853 /* HeaderResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderResultView.swift; sourceTree = "<group>"; };
 		10AA8E472AC5A9EF001FF853 /* SearchHScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHScrollView.swift; sourceTree = "<group>"; };
 		10AA8E492AC5AA3C001FF853 /* SearchVGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVGridView.swift; sourceTree = "<group>"; };
+		10ACA6D22ACC0B580080E116 /* TextPlacePlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextPlacePlayerView.swift; sourceTree = "<group>"; };
+		10ACA6FE2ACEAB8D0080E116 /* AudioManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioManager.swift; sourceTree = "<group>"; };
+		10ACA7022ACEE7500080E116 /* winampIntro.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = winampIntro.mp3; sourceTree = "<group>"; };
 		10B8F96D2AC4A9A1008DE769 /* SearchView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
 		10B8F96E2AC4A9A1008DE769 /* SearchContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchContentView.swift; sourceTree = "<group>"; };
 		10B8F9702AC4A9A1008DE769 /* SearchBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchBarView.swift; sourceTree = "<group>"; };
@@ -239,6 +245,15 @@
 				10B8F9742AC4A9A1008DE769 /* ResultStore.swift */,
 			);
 			path = UDF;
+			sourceTree = "<group>";
+		};
+		10ACA6D12ACC0B200080E116 /* SoundPlayer */ = {
+			isa = PBXGroup;
+			children = (
+				10ACA6D22ACC0B580080E116 /* TextPlacePlayerView.swift */,
+				10ACA6FE2ACEAB8D0080E116 /* AudioManager.swift */,
+			);
+			path = SoundPlayer;
 			sourceTree = "<group>";
 		};
 		10B8F96C2AC4A9A1008DE769 /* SearchView */ = {
@@ -396,6 +411,7 @@
 			isa = PBXGroup;
 			children = (
 				0D0C9B032AC5EFD4000A4C29 /* Onboarding */,
+				10ACA6D12ACC0B200080E116 /* SoundPlayer */,
 				10B8F96C2AC4A9A1008DE769 /* SearchView */,
 				107B45DC2AC9FD84003A9C65 /* ResultView */,
 				3C7D49C52AC2F2870084CD25 /* ProfileScreen */,
@@ -419,6 +435,7 @@
 		A1A44D352AC18D8000F2FED9 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				10ACA7022ACEE7500080E116 /* winampIntro.mp3 */,
 				A17F6E962AC4B21900819964 /* Fonts */,
 				A1A44D262AC18C9800F2FED9 /* Assets.xcassets */,
 			);
@@ -497,6 +514,7 @@
 				A17F6EA02AC4B23C00819964 /* Manrope-Bold.ttf in Resources */,
 				A17F6EA12AC4B23C00819964 /* Manrope-ExtraLight.ttf in Resources */,
 				8658CCE62AC873C7005B454C /* GoogleService-Info.plist in Resources */,
+				10ACA7032ACEE7500080E116 /* winampIntro.mp3 in Resources */,
 				A17F6EA22AC4B23C00819964 /* Manrope-SemiBold.ttf in Resources */,
 				A17F6E9F2AC4B23C00819964 /* Manrope-Light.ttf in Resources */,
 			);
@@ -518,6 +536,7 @@
 				10B8F97D2AC4A9A1008DE769 /* SearchDomain.swift in Sources */,
 				0DF51CA02AC4B7FB00413A8A /* CreatePlaylistCells.swift in Sources */,
 				0D3C1C5E2AC7060C00AD84DF /* NextButton.swift in Sources */,
+				10ACA6D32ACC0B580080E116 /* TextPlacePlayerView.swift in Sources */,
 				3C7D49C92AC2F2C00084CD25 /* AccountSettingsView.swift in Sources */,
 				3C7D49CD2AC2F9350084CD25 /* CustomTextField.swift in Sources */,
 				3C7D49DB2AC31AF00084CD25 /* GenderSectionView.swift in Sources */,
@@ -525,6 +544,7 @@
 				107B45D72AC9BE18003A9C65 /* TextView.swift in Sources */,
 				A17F6E952AC36E2000819964 /* CategoryCellView.swift in Sources */,
 				107B45D52AC97692003A9C65 /* Color + ext.swift in Sources */,
+				10ACA6FF2ACEAB8D0080E116 /* AudioManager.swift in Sources */,
 				A17F6EAA2AC4B68500819964 /* Font+Extension.swift in Sources */,
 				1014E80E2AC608A1008EE3FD /* CategoryItemView.swift in Sources */,
 				10EB28F82AC8619E0084203B /* ResultCellView.swift in Sources */,
