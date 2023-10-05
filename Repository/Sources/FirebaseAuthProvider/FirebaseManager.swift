@@ -46,6 +46,12 @@ public struct FirebaseManager {
         .eraseToAnyPublisher()
     }
     
+    public func changePassword(email: String) -> AnyPublisher<Void, FirebaseError> {
+        auth.sendPasswordReset(withEmail: email)
+            .mapError(FirebaseError.resetPasswordFail)
+            .eraseToAnyPublisher()
+    }
+    
 }
 
 private extension FirebaseManager {
@@ -71,10 +77,6 @@ private extension FirebaseManager {
             .map(UserAccount.init)
             .mapError(FirebaseError.createUserFail)
             .eraseToAnyPublisher()
-    }
-    
-    func changePassword(email: String) {
-        auth.sendPasswordReset(withEmail: email)
     }
     
     func currentUserPublisher() -> AnyPublisher<UserAccount, FirebaseError> {

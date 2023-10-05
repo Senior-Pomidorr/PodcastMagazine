@@ -14,8 +14,7 @@ extension UserAccount {
         self.init(
             firstName: user.displayName ?? .init(),
             lastName: .init(),
-            email: user.email ?? .init(),
-            password: .init()
+            email: user.email ?? .init()
         )
     }
 }
