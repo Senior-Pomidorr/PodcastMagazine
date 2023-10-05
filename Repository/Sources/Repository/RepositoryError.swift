@@ -20,6 +20,7 @@ public extension Repository {
         case createUserError(Error)
         case noUser
         case realmUnavailable
+        case resetPasswordFail(Error)
         
         public var errorDescription: String { String(describing: self) }
         
@@ -38,6 +39,7 @@ public extension Repository {
             case .logOutFail(let error): self = .logOutError(error)
             case .createUserFail(let error): self = .createUserError(error)
             case .noUser: self = .noUser
+            case .resetPasswordFail(let error): self = .resetPasswordFail(error)
             }
         }
     }

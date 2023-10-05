@@ -12,6 +12,7 @@ public extension FirebaseManager {
         case logInFail(Error)
         case logOutFail(Error)
         case createUserFail(Error)
+        case resetPasswordFail(Error)
         case noUser
         
         public var errorDescription: String? {

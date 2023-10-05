@@ -30,6 +30,9 @@ public struct Episode: Identifiable, Decodable, Equatable {
     /// The time this episode was found in the feed
     public let dateCrawled: Int
     
+    /// The estimated length of the item specified by the enclosureUrl in seconds. Will be null for liveItem.
+    public let duration: Int?
+    
     /// URL/link to the episode file
     public let enclosureUrl: String
     
@@ -69,6 +72,7 @@ public struct Episode: Identifiable, Decodable, Equatable {
         datePublished: Int,
         datePublishedPretty: String,
         dateCrawled: Int,
+        duration: Int?,
         enclosureUrl: String,
         explicit: Int,
         episode: Int?,
@@ -89,6 +93,7 @@ public struct Episode: Identifiable, Decodable, Equatable {
         self.datePublished = datePublished
         self.datePublishedPretty = datePublishedPretty
         self.dateCrawled = dateCrawled
+        self.duration = duration
         self.enclosureUrl = enclosureUrl
         self.explicit = explicit
         self.episode = episode
@@ -118,7 +123,8 @@ public extension Episode {
         guid: "incomparable/batman/19",
         datePublished: 1546399813, 
         datePublishedPretty: "January 01, 2019 9:30pm",
-        dateCrawled: 1598369047,
+        dateCrawled: 1598369047, 
+        duration: nil,
         enclosureUrl: "https://www.theincomparable.com/podcast/batmanuniversity302.mp3",
         explicit: 0,
         episode: 19,

@@ -30,9 +30,7 @@ public final class Repository {
         apiManager = .init(logger: logger)
         firebaseManager = .init()
         do {
-            realmManager = try .init(
-                config: .init(deleteRealmIfMigrationNeeded: true)
-                )
+            realmManager = try .init(config: .init(deleteRealmIfMigrationNeeded: true))
         } catch {
             logger.error("\(error.localizedDescription)")
         }
@@ -69,6 +67,14 @@ public final class Repository {
             .eraseToAnyPublisher()
     }
     
+    func firebaseResetPassword(_ email: String) -> ResponsePublisher<Void> {
+        firebaseManager.changePassword(email: email)
+            .map(Response.success)
+            .mapError(RepositoryError.init)
+            .catch(Response.catchError)
+            .eraseToAnyPublisher()
+    }
+    
     func loadPersisted<T: Persistable>() -> AnyPublisher<[T], Never> {
         Just(realmManager?.values(T.self))
             .compactMap { $0 }
@@ -84,7 +90,6 @@ public final class Repository {
 }
 
 public extension Repository {
-    
     /// Контейнер, отражающий результат работы репозитория..
     /// Тип `success` содержит запрашиваемую модель. `failure` хранит ошибку, возникшую во время работы.
     enum Response<Wrapped> {
@@ -95,6 +100,49 @@ public extension Repository {
             Just(.failure(error))
         }
     }
-    
 }
+
+//struct ResponsePublisher<Value>: Publisher {
+//    enum Response<Wrapped> {
+//        case success(Wrapped)
+//        case failure(Repository.RepositoryError)
+//    }
+//    
+//    typealias Output = Response<Value>
+//    typealias Failure = Never
+//    
+//    let output: Output
+//    
+//    //MARK: - init(_:)
+//    init(output: Value) {
+//        self.output = .success(output)
+//    }
+//    
+//    init(error: Repository.RepositoryError) {
+//        self.output = .failure(error)
+//    }
+//    
+//    //MARK: - receive
+//    func receive<S>(
+//        subscriber: S
+//    ) where S : Subscriber, Never == S.Failure, Response<Value> == S.Input {
+//        subscriber.receive(output)
+//    }
+//    
+//}
+//
+//extension ResponsePublisher {
+//    class Subscription<Target: Subscriber>: Subscription {
+//        var target: Target?
+//        
+//        func request(_ demand: Subscribers.Demand) {
+//            
+//        }
+//        
+//        func cancel() {
+//            target = nil
+//        }
+//        
+//    }
+//}
 
