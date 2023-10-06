@@ -25,6 +25,14 @@ struct PodcastMagazineApp: App {
             } else {
                 // HomePageView()
                  TestView(episodeURL: "")
+//                PlayerView(
+//                    albumImage: "Unknow",
+//                    episodeTitle: "Unknow",
+//                    authorTitle: "Unknow",
+//                    startTimePocast: "Unknow",
+//                    endTimePocast: "Unknow",
+//                    sliderTimeTrack: 0.0
+//                )
 //                TabBarContainerView(selection: $tabSelection) {
 //                    HomePageView()
 //                        .tabBarItem(tab: TabBarItem.home, selection: $tabSelection)

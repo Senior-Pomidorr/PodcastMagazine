@@ -56,7 +56,7 @@ struct PlayerDomain {
     }
     
     // MARK: - Dependencies
-    let audioManager: SoundManager
+    let audioManager: AudioManager
     
     // MARK: - func reduce
     func reduce(

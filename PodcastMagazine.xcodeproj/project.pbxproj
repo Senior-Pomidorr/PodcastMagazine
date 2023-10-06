@@ -36,12 +36,10 @@
 		10AA8E462AC57812001FF853 /* HeaderResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10AA8E452AC57812001FF853 /* HeaderResultView.swift */; };
 		10AA8E482AC5A9EF001FF853 /* SearchHScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10AA8E472AC5A9EF001FF853 /* SearchHScrollView.swift */; };
 		10AA8E4A2AC5AA3C001FF853 /* SearchVGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10AA8E492AC5AA3C001FF853 /* SearchVGridView.swift */; };
-		10ACA6D32ACC0B580080E116 /* TextPlacePlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10ACA6D22ACC0B580080E116 /* TextPlacePlayerView.swift */; };
-		10ACA6FF2ACEAB8D0080E116 /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10ACA6FE2ACEAB8D0080E116 /* AudioManager.swift */; };
 		10ACA7032ACEE7500080E116 /* winampIntro.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 10ACA7022ACEE7500080E116 /* winampIntro.mp3 */; };
 		10ACA7052ACF0FC30080E116 /* PlayerDomain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10ACA7042ACF0FC30080E116 /* PlayerDomain.swift */; };
 		10ACA70B2ACF2DEF0080E116 /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10ACA70A2ACF2DEF0080E116 /* TestView.swift */; };
-		10ACA70D2ACF3AC40080E116 /* SoundManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10ACA70C2ACF3AC40080E116 /* SoundManager.swift */; };
+		10ACA70D2ACF3AC40080E116 /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10ACA70C2ACF3AC40080E116 /* AudioManager.swift */; };
 		10B8F9772AC4A9A1008DE769 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10B8F96D2AC4A9A1008DE769 /* SearchView.swift */; };
 		10B8F9782AC4A9A1008DE769 /* SearchContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10B8F96E2AC4A9A1008DE769 /* SearchContentView.swift */; };
 		10B8F9792AC4A9A1008DE769 /* SearchBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10B8F9702AC4A9A1008DE769 /* SearchBarView.swift */; };
@@ -129,12 +127,10 @@
 		10AA8E452AC57812001FF853 /* HeaderResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderResultView.swift; sourceTree = "<group>"; };
 		10AA8E472AC5A9EF001FF853 /* SearchHScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHScrollView.swift; sourceTree = "<group>"; };
 		10AA8E492AC5AA3C001FF853 /* SearchVGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVGridView.swift; sourceTree = "<group>"; };
-		10ACA6D22ACC0B580080E116 /* TextPlacePlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextPlacePlayerView.swift; sourceTree = "<group>"; };
-		10ACA6FE2ACEAB8D0080E116 /* AudioManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioManager.swift; sourceTree = "<group>"; };
 		10ACA7022ACEE7500080E116 /* winampIntro.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = winampIntro.mp3; sourceTree = "<group>"; };
 		10ACA7042ACF0FC30080E116 /* PlayerDomain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerDomain.swift; sourceTree = "<group>"; };
 		10ACA70A2ACF2DEF0080E116 /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
-		10ACA70C2ACF3AC40080E116 /* SoundManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundManager.swift; sourceTree = "<group>"; };
+		10ACA70C2ACF3AC40080E116 /* AudioManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioManager.swift; sourceTree = "<group>"; };
 		10B8F96D2AC4A9A1008DE769 /* SearchView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
 		10B8F96E2AC4A9A1008DE769 /* SearchContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchContentView.swift; sourceTree = "<group>"; };
 		10B8F9702AC4A9A1008DE769 /* SearchBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchBarView.swift; sourceTree = "<group>"; };
@@ -249,6 +245,7 @@
 		0DDD05ED2ACD98C800D921C9 /* PlayerView */ = {
 			isa = PBXGroup;
 			children = (
+				10ACA70E2AD020B70080E116 /* UDF */,
 				0DDD05EB2ACD98BD00D921C9 /* PlayerView.swift */,
 				0DDD05F02ACDAB8E00D921C9 /* Components */,
 			);
@@ -315,16 +312,13 @@
 			path = UDF;
 			sourceTree = "<group>";
 		};
-		10ACA6D12ACC0B200080E116 /* SoundPlayer */ = {
+		10ACA70E2AD020B70080E116 /* UDF */ = {
 			isa = PBXGroup;
 			children = (
-				10ACA6D22ACC0B580080E116 /* TextPlacePlayerView.swift */,
-				10ACA6FE2ACEAB8D0080E116 /* AudioManager.swift */,
-				10ACA7042ACF0FC30080E116 /* PlayerDomain.swift */,
 				10ACA70A2ACF2DEF0080E116 /* TestView.swift */,
-				10ACA70C2ACF3AC40080E116 /* SoundManager.swift */,
+				10ACA7042ACF0FC30080E116 /* PlayerDomain.swift */,
 			);
-			path = SoundPlayer;
+			path = UDF;
 			sourceTree = "<group>";
 		};
 		10B8F96C2AC4A9A1008DE769 /* SearchView */ = {
@@ -364,6 +358,7 @@
 		3C75CDF22ACC8EFC0055DD97 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				10ACA70C2ACF3AC40080E116 /* AudioManager.swift */,
 				3C75CDF32ACC8F270055DD97 /* ImagePicker.swift */,
 			);
 			path = Services;
@@ -513,7 +508,6 @@
 			children = (
 				0DDD05ED2ACD98C800D921C9 /* PlayerView */,
 				0D0C9B032AC5EFD4000A4C29 /* Onboarding */,
-				10ACA6D12ACC0B200080E116 /* SoundPlayer */,
 				10B8F96C2AC4A9A1008DE769 /* SearchView */,
 				107B45DC2AC9FD84003A9C65 /* ResultView */,
 				3C7D49C52AC2F2870084CD25 /* ProfileView */,
@@ -647,9 +641,8 @@
 				10B8F97D2AC4A9A1008DE769 /* SearchDomain.swift in Sources */,
 				0DF51CA02AC4B7FB00413A8A /* CreatePlaylistCells.swift in Sources */,
 				0D3C1C5E2AC7060C00AD84DF /* NextButton.swift in Sources */,
-				10ACA6D32ACC0B580080E116 /* TextPlacePlayerView.swift in Sources */,
 				3C7D49C92AC2F2C00084CD25 /* AccountSettingsView.swift in Sources */,
-				10ACA70D2ACF3AC40080E116 /* SoundManager.swift in Sources */,
+				10ACA70D2ACF3AC40080E116 /* AudioManager.swift in Sources */,
 				3C7D49CD2AC2F9350084CD25 /* CustomTextField.swift in Sources */,
 				0DDD05F22ACDACC800D921C9 /* BackTrackButton.swift in Sources */,
 				3C7D49DB2AC31AF00084CD25 /* GenderSectionView.swift in Sources */,
@@ -657,7 +650,6 @@
 				107B45D72AC9BE18003A9C65 /* TextView.swift in Sources */,
 				A17F6E952AC36E2000819964 /* CategoryCellView.swift in Sources */,
 				107B45D52AC97692003A9C65 /* Color + ext.swift in Sources */,
-				10ACA6FF2ACEAB8D0080E116 /* AudioManager.swift in Sources */,
 				A17F6EAA2AC4B68500819964 /* Font+Extension.swift in Sources */,
 				1014E80E2AC608A1008EE3FD /* CategoryItemView.swift in Sources */,
 				10EB28F82AC8619E0084203B /* ResultCellView.swift in Sources */,

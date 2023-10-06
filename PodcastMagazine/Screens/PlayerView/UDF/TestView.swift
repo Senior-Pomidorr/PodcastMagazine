@@ -66,7 +66,7 @@ struct TestView: View {
             state: PlayerDomain.State(
                 episodes: [Episode.sample]
             ),
-            reducer: PlayerDomain(audioManager: SoundManager())
+            reducer: PlayerDomain(audioManager: AudioManager())
         )
         _store = .init(wrappedValue: store)
     }

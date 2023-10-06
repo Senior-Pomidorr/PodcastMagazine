@@ -9,7 +9,7 @@ import AVKit
 import Foundation
 import Combine
 
-class SoundManager {
+class AudioManager {
 
     private var player: AVPlayer = AVPlayer()
     
@@ -95,5 +95,31 @@ class SoundManager {
     func seek(to timeInterval: TimeInterval) async {
         let time = CMTime(seconds: timeInterval, preferredTimescale: 600)
         await player.seek(to: time)
+    }
+}
+
+// MARK: - playbackMode
+extension AudioManager {
+    static func playbackMode() {
+        do {
+            try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default)
+            try AVAudioSession.sharedInstance().setActive(true)
+        } catch {
+            print("Попытка включить \"playback\" неудачна")
+        }
+    }
+}
+
+// MARK: - Winamp intro
+extension AudioManager {
+    private func winampIntro() {
+        guard let url = Bundle.main.url(forResource: "winampIntro", withExtension: ".mp3") else {
+            return
+        }
+        
+        let intro = AVPlayerItem(asset: AVAsset(url: url))
+        
+        // пока нету реализации
+        // если дойдут руки сделаю
     }
 }

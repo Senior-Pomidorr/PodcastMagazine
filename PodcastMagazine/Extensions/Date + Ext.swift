@@ -16,3 +16,32 @@ extension Date {
         return formatter.string(from: self)
     }
 }
+
+/// `DateComponentsFormatter`
+/// расширение для DateComponentsFormatter
+/// пример использования:
+///   ```Text(
+///         DateComponentsFormatter
+///         .positional.string(from: audioManager.currentTime) ?? "0:00"
+///      )
+///  ```
+extension DateComponentsFormatter {
+    static let abbreviated: DateComponentsFormatter = {
+        let formatter = DateComponentsFormatter()
+        
+        formatter.allowedUnits = [.hour, .minute, .second]
+        formatter.unitsStyle = .abbreviated
+        
+        return formatter
+    }()
+    
+    static let positional: DateComponentsFormatter = {
+        let formatter = DateComponentsFormatter()
+        
+        formatter.allowedUnits = [.minute, .second]
+        formatter.unitsStyle = .positional
+        formatter.zeroFormattingBehavior = .pad
+        
+        return formatter
+    }()
+}
