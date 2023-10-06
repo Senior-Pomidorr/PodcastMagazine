@@ -73,7 +73,6 @@ class AudioManager {
                 .removeDuplicates()
                 .receive(on: DispatchQueue.main)
                 .eraseToAnyPublisher()
-
     }
     
     func play() {
@@ -116,7 +115,7 @@ extension AudioManager {
             return
         }
         
-        let intro = AVPlayerItem(asset: AVAsset(url: url))
+//        let intro = AVPlayerItem(asset: AVAsset(url: url))
         
         // пока нету реализации
         // если дойдут руки сделаю
