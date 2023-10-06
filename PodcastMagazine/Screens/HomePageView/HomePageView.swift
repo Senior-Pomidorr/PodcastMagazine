@@ -30,20 +30,9 @@ struct HomePageView: View {
                             HStack(spacing: 16) {
                                 ForEach(store.state.categoryList.prefix(maxCategories)) { item in
                                     CategoryCellView(store: store, categoryCellInputData: item)
-                                    
-//                                    NavigationLink(
-//                                        destination: PodcastListView(category: item, store: store),
-//                                        label: {
-//                                            CategoryCellView(
-//                                                categoryCellInputData: item
-//                                            )
-//                                        }
-//                                    )
-                                    
                                 }
                             }
                         }
-
                         
                         VStack {
                             ScrollView(.horizontal, showsIndicators: false) {

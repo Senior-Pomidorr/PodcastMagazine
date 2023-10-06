@@ -54,7 +54,7 @@ struct EpisodeCellView: View {
         .background(
             NavigationLink(
                 destination:
-                    Text("Player Screen"),
+                   EmptyView(),
                 isActive: $navigateToEpisodePlayer,
                 label: {
                     EmptyView()
