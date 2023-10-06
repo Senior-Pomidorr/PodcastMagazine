@@ -20,8 +20,8 @@ struct PodcastMagazineApp: App {
             if isOnboarding {
                 OnboardingView()
             } else {
-                // HomePageView()
-                 TestView(episodeURL: "")
+//                 HomePageView()
+//                 TestView(episodeURL: "")
 //                PlayerView(
 //                    albumImage: "Unknow",
 //                    episodeTitle: "Unknow",
@@ -30,16 +30,16 @@ struct PodcastMagazineApp: App {
 //                    endTimePocast: "Unknow",
 //                    sliderTimeTrack: 0.0
 //                )
-//                TabBarContainerView(selection: $tabSelection) {
-//                    HomePageView()
-//                        .tabBarItem(tab: TabBarItem.home, selection: $tabSelection)
-//                    SearchContentView()
-//                        .tabBarItem(tab: TabBarItem.search, selection: $tabSelection)
-//                    PlaylistView()
-//                        .tabBarItem(tab: TabBarItem.favorites, selection: $tabSelection)
-//                    ProfileSettingsView()
-//                        .tabBarItem(tab: TabBarItem.settings, selection: $tabSelection)
-//                }
+                TabBarContainerView(selection: $tabSelection) {
+                    HomePageView()
+                        .tabBarItem(tab: TabBarItem.home, selection: $tabSelection)
+                    SearchContentView()
+                        .tabBarItem(tab: TabBarItem.search, selection: $tabSelection)
+                    PlaylistView()
+                        .tabBarItem(tab: TabBarItem.favorites, selection: $tabSelection)
+                    ProfileSettingsView()
+                        .tabBarItem(tab: TabBarItem.settings, selection: $tabSelection)
+                }
             }
         }
     }
