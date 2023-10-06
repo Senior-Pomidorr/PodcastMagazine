@@ -19,8 +19,10 @@ struct PlayerDomain {
     struct State {
         // player properties
         var episodes:[Episode]
+        var selectedEpisodId: Int
+        var currentEpisod: Episode = Episode.sample
         var playerStatus: ScreenStatus
-        var currentEpisodeId: Int = .init()
+        var currdentIndex: Int = .init()
         
         var duration: TimeInterval
         var currentTime: TimeInterval
@@ -30,30 +32,28 @@ struct PlayerDomain {
         var title: String
         var image: String
         
-        func indexCurrentEpisode() -> Int {
-            return episodes.firstIndex(where: { $0.id == currentEpisodeId }) ?? 0
+        func findEpisideBy(id: Int) -> Episode {
+            return episodes.first { $0.id == id}!
+        }
+        
+        func findIndexBy(_ episod: Episode) -> Int? {
+            return episodes.firstIndex(of: episod)
         }
         
         func findNextEpisode() -> Episode? {
-            if  indexCurrentEpisode() < episodes.count - 1 {
-                let index = indexCurrentEpisode() + 1
+            if  currdentIndex < episodes.count - 1 {
+                let index = currdentIndex + 1
                 return episodes[index]
             }
             return nil
         }
         
         func findPreviousEpisode() -> Episode? {
-            if (indexCurrentEpisode() - 1) >= 0 {
-                let index = indexCurrentEpisode() - 1
+            if (currdentIndex - 1) >= 0 {
+                let index = currdentIndex - 1
                 return episodes[index]
             }
             return nil
-        }
-        
-        mutating func updateCurrentEpisodId(by episode: Episode?) {
-            if let episode {
-                currentEpisodeId = episode.id
-            }
         }
         
         func createUrl(from episode: Episode?) -> URL? {
@@ -66,6 +66,7 @@ struct PlayerDomain {
         
         init(
             episodes: [Episode] = .init(),
+            selectedEpisodId: Int = .init(),
             playerStatus: ScreenStatus = .none,
             duration: TimeInterval = .init(),
             currentTime: TimeInterval = .init(),
@@ -75,6 +76,7 @@ struct PlayerDomain {
             image: String = .init()
         ) {
             self.episodes = episodes
+            self.selectedEpisodId = selectedEpisodId
             self.playerStatus = playerStatus
             self.duration = duration
             self.currentTime = currentTime
@@ -114,10 +116,12 @@ struct PlayerDomain {
             }
             
             state.playerStatus = .loading
-            
-            let firstEpisod = state.episodes.first
-            audioManager.url = state.createUrl(from: firstEpisod)
-            state.updateCurrentEpisodId(by: firstEpisod)
+            let episod = state.findEpisideBy(id: state.selectedEpisodId)
+            state.currentEpisod = episod
+            audioManager.url = state.createUrl(from: episod)
+            state.currdentIndex = state.findIndexBy(episod) ?? 0
+            state.title = episod.title
+            state.image = episod.image
             
             return audioManager.playMedia()
                 .map(Action._playerResponse)
