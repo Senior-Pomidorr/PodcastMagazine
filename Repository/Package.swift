@@ -12,7 +12,10 @@ let package = Package(
     products: [
         .library(name: "Repository", targets: ["Repository"]),
         .library(name: "Models", targets: ["Models"]),
-        .library(name: "LoadableImage", targets: ["LoadableImage"])
+        .library(name: "LoadableImage", targets: ["LoadableImage"]),
+        .library(name: "RootDomain", targets: ["RootDomain"]),
+ //       .library(name: "AuthorizationDomain", targets: ["AuthorizationDomain"])
+//        .library(name: "SignInWithGoogle", targets: ["SignInWithGoogle"]),
     ],
     dependencies: Dependencies.allCases.map(\.package),
     targets: [
@@ -45,6 +48,19 @@ let package = Package(
                 "RealmProvider",
                 "FirebaseAuthProvider",
             ]),
+        .target(
+            name: "RootDomain",
+            dependencies: [
+                "Repository",
+                "Models",
+                Dependencies.SwiftUDF.target,
+            ]),
+//        .testTarget(
+//            name: "SignInWithGoogle",
+//            dependencies: [
+//                Dependencies.GoogleSignIn.target,
+//                "Repository"
+//            ]),
         .testTarget(
             name: "RepositoryTests",
             dependencies: [
@@ -59,6 +75,7 @@ let package = Package(
 //MARK: - Dependencies
 fileprivate enum Dependencies: CaseIterable {
     case SwiftFP
+    case SwiftUDF
     case Realm
     case FirebaseAuth
     case GoogleSignIn
@@ -72,6 +89,7 @@ fileprivate enum Dependencies: CaseIterable {
                 url: "https://github.com/firebase/firebase-ios-sdk",
                 .upToNextMajor(from: "10.15.0"))
         case .GoogleSignIn: return .package(url: "https://github.com/google/GoogleSignIn-iOS", from: "7.0.0")
+        case .SwiftUDF: return .package(url: "https://github.com/ShapovalovIlya/SwiftUDF.git", branch: "main")
         }
     }
     
@@ -81,6 +99,7 @@ fileprivate enum Dependencies: CaseIterable {
         case .SwiftFP: return .product(name: "SwiftFP", package: "SwiftFP")
         case .Realm: return .product(name: "RealmSwift", package: "realm-swift")
         case .GoogleSignIn: return .product(name: "GoogleSignInSwift", package: "GoogleSignIn-iOS")
+        case .SwiftUDF: return .product(name: "SwiftUDF", package: "SwiftUDF")
         }
     }
     

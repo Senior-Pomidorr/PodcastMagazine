@@ -26,7 +26,7 @@ public struct WriteTransaction<T: Persistable> {
     }
     
     @discardableResult
-    public func update(_ value: T, properties: T.PropertyValue...) -> T {
+    public func update(_ value: T, properties: [T.PropertyValue]) -> T {
         Logger.shared.logLevel(.debug, message: #function)
         let result = realm.create(
             T.ManagedObject.self,

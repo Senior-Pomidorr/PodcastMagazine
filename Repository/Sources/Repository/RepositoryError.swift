@@ -24,6 +24,19 @@ public extension Repository {
         
         public var errorDescription: String { String(describing: self) }
         
+        init(error: Error) {
+            switch error {
+            case let error as APIManager.APIError:
+                self.init(apiError: error)
+                
+            case let error as FirebaseManager.FirebaseError:
+                self.init(firebaseError: error)
+                
+            default:
+                self = .unknown(error)
+            }
+        }
+        
         init(apiError: APIManager.APIError) {
             switch apiError {
             case .urlError(let urlError): self = .urlError(urlError)

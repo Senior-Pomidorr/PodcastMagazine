@@ -16,8 +16,8 @@ public struct HomeRepositoryProvider {
     public var getFeedDetail: (Int) -> Repository.ResponsePublisher<FeedDetail>
     public var getEpisodes: (Int) -> Repository.ResponsePublisher<EpisodesResponse>
     public var getPersistedFeeds: () -> AnyPublisher<[Feed], Never>
-    public var addToFavorites: (Feed) throws -> Void
-    public var removeFromFavorites: (Feed) throws -> Void
+    public var addToFavorites: (Feed) throws -> Feed
+    public var removeFromFavorites: (Feed) throws -> Feed
     
     //MARK: - Live provider
     public static var live: HomeRepositoryProvider {
@@ -50,7 +50,7 @@ public struct HomeRepositoryProvider {
         categoryResult: Repository.Response<CategoryResponse> = .success(.sample),
         episodesResult: Repository.Response<EpisodesResponse> = .success(.sample),
         persistedFeeds: [Feed] = [.sample],
-        favoritesResponse: @escaping (Feed) throws -> Void,
+        favoritesResponse: @escaping (Feed) throws -> Feed,
         delay: DispatchQueue.SchedulerTimeType.Stride = 2
     ) -> Self {
         .init(

@@ -818,7 +818,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PodcastMagazine/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.music";
-				INFOPLIST_KEY_NSCameraUsageDescription = "$(PRODUCT_NAME) camera use";
+				INFOPLIST_KEY_NSCameraUsageDescription = "PodcastMagazine camera use";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -854,7 +854,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PodcastMagazine/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.music";
-				INFOPLIST_KEY_NSCameraUsageDescription = "$(PRODUCT_NAME) camera use";
+				INFOPLIST_KEY_NSCameraUsageDescription = "PodcastMagazine camera use";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
