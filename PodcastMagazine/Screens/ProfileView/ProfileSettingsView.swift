@@ -6,25 +6,26 @@
 //
 
 import SwiftUI
+import Models
 
 struct ProfileSettingsView: View {
     
-    @StateObject var store = ProfileStore(
-        state: ProfileDomain.State(dataLoadingStatus: .none),
-        reducer: ProfileDomain.live.reduce(_:with:))
+    @StateObject var store = AccountStore(
+        state: AccountDomain.State(dataLoadingStatus: .none),
+        reducer: AccountDomain.live.reduce(_:with:))
     
-    let url: String = "https://loremflickr.com/cache/resized/65535_52661697260_0d20d6fed2_320_240_nofilter.jpg"
+    let user: UserAccount = UserAccount.init(firstName: "Abigael", lastName: "Amaniah", email: "124124@gmail.com")
     
     var body: some View {
         NavigationView {
             GeometryReader { geometry in
                 VStack(spacing: 21) {
                     
-                    ProfileHeaderView(url: url)
+                    ProfileHeaderView(user: user)
                         .padding(.bottom)
                     
                     NavigationLink {
-                        AccountSettingsView(store: ProfileDomain.previewStore)
+                        AccountSettingsView(store: AccountDomain.previewStore)
                     } label: {
                         ProfileSettingsRowView(image: "person", title: "Account Settings")
                     }
@@ -42,23 +43,10 @@ struct ProfileSettingsView: View {
                     
                     Spacer()
                     
-                    Button(action: {
-                        
-                    }, label: {
-                        Text("Log Out")
-                            .padding()
-                            .frame(height: 55)
-                            .frame(maxWidth: .infinity)
-                            .cornerRadius(24)
-                            .background(
-                                RoundedRectangle(cornerRadius: 24)
-                                    .stroke(lineWidth: 1)
-                            )
-                            .foregroundColor(.blue)
-                    })
-                    .padding(.bottom)
+                    LogOutButton(action: { })
                 }
                 .tint(.black)
+                .background(Color.white)
                 .padding()
             }
         }
@@ -70,3 +58,4 @@ struct ProfileSettingsView: View {
         ProfileSettingsView()
     }
 }
+
