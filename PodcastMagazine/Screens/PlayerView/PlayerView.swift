@@ -9,10 +9,33 @@ import SwiftUI
 import LoadableImage
 import Models
 
+struct PlayButton: View {
+    var isPlaying: Bool
+    var action: () -> Void
+    
+    var body: some View {
+        Button {
+            action()
+        } label: {
+            Circle()
+                .fill(Color.blue)
+                .frame(width: 64, height: 64)
+                .overlay {
+                    Image(systemName: isPlaying
+                          ? "pause.fill"
+                          : "play.fill"
+                    )
+                    .font(.title)
+                    .foregroundStyle(.white)
+                }
+        }
+    }
+}
+
 struct PlayerView: View {
     @StateObject private var store: PlayerStore
     @State private var isEditing = false
-    @State private var isPlaying = true
+//    @State private var isPlaying = true
     
     let timer = Timer
         .publish(every: 0.5, on: .main, in: .common)
@@ -34,10 +57,10 @@ struct PlayerView: View {
                                     .resizable()
                                     .scaledToFill()
                             }
-                                .frame(width: geometry.size.width * 0.80, height: geometry.size.height * 0.50)
-                                .background(Color("tintBlue2"))
-                                .cornerRadius(16)
-                                .shadow(radius: 8)
+                            .frame(width: geometry.size.width * 0.80, height: geometry.size.height * 0.50)
+                            .background(Color("tintBlue2"))
+                            .cornerRadius(16)
+                            .shadow(radius: 8)
                             Spacer()
                         }
                         
@@ -69,21 +92,10 @@ struct PlayerView: View {
                                     .frame(width: 16, height: 16)
                             }
                             
-                            Button {
-                                isPlaying ? store.send(.pause) : store.send(.play)
-                                isPlaying.toggle()
-                                
-                            } label: {
-                                Circle()
-                                    .fill(Color.blue)
-                                    .frame(width: 64, height: 64)
-                                    .overlay {
-                                        Image(systemName: isPlaying ? "pause.fill" : "play.fill")
-                                            
-                                            .font(.title)
-                                            .foregroundStyle(.white)
-                                    }
-                            }
+                            PlayButton(
+                                isPlaying: store.state.isPlaying,
+                                action: { store.send(.playButtonTap) }
+                            )
                             
                             Button {
                                 store.send(.nextAudio)

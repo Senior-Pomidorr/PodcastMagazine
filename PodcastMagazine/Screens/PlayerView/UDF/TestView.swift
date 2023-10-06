@@ -21,13 +21,13 @@ struct TestView: View {
             switch store.state.screenStatus {
             case .none:
                 VStack {
-                    Button("Play") {
-                        store.send(.play)
-                    }
-                    
-                    Button("Pause") {
-                        store.send(.pause)
-                    }
+//                    Button("Play") {
+//                        store.send(.play)
+//                    }
+//                    
+//                    Button("Pause") {
+//                        store.send(.pause)
+//                    }
                     
                     PlayerSliderView(
                         sliderValue: bindingSlider(),
