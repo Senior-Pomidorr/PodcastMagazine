@@ -19,12 +19,17 @@ struct PodcastMagazineApp: App {
         WindowGroup {
             if isOnboarding {
                 OnboardingView()
-                //                    .sheet(isPresented: $isModalVisible) {
-                //                        OnboardingView()
-                //                    }
             } else {
-                // HomePageView()
-                // SearchContentView()
+//                 HomePageView()
+//                 TestView(episodeURL: "")
+//                PlayerView(
+//                    albumImage: "Unknow",
+//                    episodeTitle: "Unknow",
+//                    authorTitle: "Unknow",
+//                    startTimePocast: "Unknow",
+//                    endTimePocast: "Unknow",
+//                    sliderTimeTrack: 0.0
+//                )
                 TabBarContainerView(selection: $tabSelection) {
                     HomePageView()
                         .tabBarItem(tab: TabBarItem.home, selection: $tabSelection)
