@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Repository
+import Models
 
 @main
 struct PodcastMagazineApp: App {
@@ -19,12 +20,13 @@ struct PodcastMagazineApp: App {
         WindowGroup {
             if isOnboarding {
                 OnboardingView()
-                //                    .sheet(isPresented: $isModalVisible) {
-                //                        OnboardingView()
-                //                    }
             } else {
-                // HomePageView()
-                // SearchContentView()
+//                 HomePageView()
+//                 TestView(episodeURL: "")
+//                PlayerView(
+//                    selectedEpisode: Episode.sample,
+//                    episodes: [Episode.sample]
+//                )
                 TabBarContainerView(selection: $tabSelection) {
                     HomePageView()
                         .tabBarItem(tab: TabBarItem.home, selection: $tabSelection)

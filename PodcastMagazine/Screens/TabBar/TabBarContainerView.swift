@@ -25,21 +25,14 @@ struct TabBarContainerView<Content:View>: View {
         VStack(spacing: 0) {
             ZStack {
                 content
-                    .fadeOutBottom(fadeLength: 10)
             }
             
             if showPlayer {
                 //TODO: - PLAYER VIEW
-//                Color.gray.opacity(0.5)
-//                    .frame(height: 65)
-//                    .frame(maxWidth: .infinity)
-//                    .cornerRadius(20)
-//                    .padding(.horizontal)
             }
             
             if !hideTabBar {
                 TabBarView(tabs: tabs, selection: $selection)
-                    .animation(.easeInOut, value: hideTabBar)
             }
         }
         .onPreferenceChange(TabBarItemsPreferencesKey.self, perform: { value in

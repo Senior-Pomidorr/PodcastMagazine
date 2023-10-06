@@ -8,28 +8,28 @@
 import SwiftUI
 
 struct AccountSettingsView: View {
-    @StateObject private var store: ProfileStore
+    @StateObject private var store: AccountStore
     @AppStorage("tabBar") var hideTabBar = false
     @State private var showImage: Bool = false
     @State private var showSetImage: Bool = false
     @State private var isShowPhotoLibrary = false
     @State private var isShowCamera = false
+    @State private var birthDate = Date.now
     @State private var image = UIImage()
-    
+        
     //MARK: - Body
     var body: some View {
         ZStack {
             profileView
                 .padding(.horizontal, 24)
-            
             if showImage {
                 scaledImage
             }
-            
             if showSetImage {
                 setImage
             }
         }
+        .background(Color.white)
         .navigationBarHidden(true)
         .onAppear {
             hideTabBar = true
@@ -49,43 +49,48 @@ struct AccountSettingsView: View {
     
     //MARK: - ACCOUNT VIEW
     var profileView: some View {
-        VStack {
-            AccountHeaderView()
-            
-            ProfileImageSectionView(
-                image: image,
-                action: {
-                    withAnimation {
-                        showSetImage.toggle()
+        ZStack {
+            VStack {
+                AccountHeaderView()
+                
+                ScrollView {
+                    ProfileImageSectionView(
+                        image: image,
+                        action: {
+                            withAnimation {
+                                showSetImage.toggle()
+                            }
+                        })
+                    .onTapGesture {
+                        withAnimation {
+                            showImage.toggle()
+                        }
                     }
-                })
-            .onTapGesture {
-                withAnimation(.bouncy) {
-                    showImage.toggle()
+                    CustomTextField(
+                        title: "First name",
+                        placeholder: "ex: Abigael",
+                        text: bindName()
+                    )
+                    CustomTextField(
+                        title: "Last Name",
+                        placeholder: "ex: Amaniah",
+                        text: bindLastName()
+                    )
+                    CustomTextField(
+                        title: "E-mail",
+                        placeholder: "ex: Amaniah@mail.com",
+                        text: bindEmail()
+                    )
+                    
+                    DatePickerView(birthDate: $birthDate)
+                    
+                    GenderSectionView(selectedGender: bindGender())
                 }
             }
-            
-            CustomTextField(
-                title: "First name",
-                placeholder: "enter first name",
-                text: bindName()
-            )
-            CustomTextField(
-                title: "Last Name",
-                placeholder: "enter last name",
-                text: bindLastName()
-            )
-            CustomTextField(
-                title: "E-mail",
-                placeholder: "enter email",
-                text: bindEmail()
-            )
-            
-            GenderSectionView(selectedGender: bindGender())
-            
-            Spacer()
-            
-            SaveButtonView()
+            VStack {
+                Spacer()
+                SaveButtonView()
+            }
         }
     }
     
@@ -194,7 +199,7 @@ struct AccountSettingsView: View {
         .background(.ultraThinMaterial)
     }
     
-    init(store: ProfileStore = ProfileDomain.previewStore) {
+    init(store: AccountStore = AccountDomain.previewStore) {
         self._store = StateObject(wrappedValue: store)
     }
     
@@ -220,7 +225,7 @@ struct AccountSettingsView: View {
         )
     }
     
-    func bindBirthDate() -> Binding<Date> {
+    func bindBirthDate() -> Binding<String> {
         .init(
             get: { store.state.dateOfBirth },
             set: { store.send(.setDateOfBirth($0)) }
@@ -236,10 +241,5 @@ struct AccountSettingsView: View {
 }
 
 #Preview {
-    AccountSettingsView(store: ProfileDomain.previewStore)
+    AccountSettingsView(store: AccountDomain.previewStore)
 }
-
-
-
-
-

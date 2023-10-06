@@ -10,7 +10,7 @@ import Models
 import Combine
 import Repository
 
-//MARK: PlaylistStatus
+// MARK: - PlaylistStatus
 enum PlaylistLoadingStatus: Equatable {
     static func == (lhs: PlaylistLoadingStatus, rhs: PlaylistLoadingStatus) -> Bool {
         String(describing: lhs) == String(describing: rhs)
@@ -21,8 +21,15 @@ enum PlaylistLoadingStatus: Equatable {
     case error(Error)
 }
 
-//MARK: State
 struct PlayListDomain {
+    
+    // MARK: - PlaylistLive
+    static let playlistDomainLive = PlaylistStore(
+        state: State(),
+        reducer: PlayListDomain(provider: .live)
+    )
+    
+    // MARK: - State
     struct State: Equatable {
         var favoritesList: [Feed]
         var playlistList: [Playlist]
@@ -40,7 +47,7 @@ struct PlayListDomain {
         }
     }
     
-    //MARK: Action
+    // MARK: - Action
     enum Action {
         case viewAppered
         case _getFavoritesListRequest
@@ -49,15 +56,16 @@ struct PlayListDomain {
         case _getPlaylistResponse([Playlist])
     }
     
-    //MARK: Dependecies
+    // MARK: - Dependecies
     let provider: FavoritesAndPlaylistsRepositoryProvider
     
-    //    MARK: Reducer
+    // MARK: - Reducer
     func reduce(_ state: inout State, with action: Action) -> AnyPublisher<Action, Never> {
         switch action {
         case .viewAppered:
             guard state.playlistStatus != .loading else { break }
             state.playlistStatus = .loading
+            
             return Publishers.Merge(
                 Just(._getFavoritesListRequest),
                 Just(._getPlaylistRequest)
@@ -69,45 +77,41 @@ struct PlayListDomain {
                 .map(Action._getFavoritesListResponse)
                 .eraseToAnyPublisher()
             
-        case ._getFavoritesListResponse(let favorites):
+        case let ._getFavoritesListResponse(favorites):
             state.playlistStatus = .none
-            
-            //        case let ._getFavoritesListResponse(.failure(error)):
-            //            state.playlistStatus = .error(error)
+            state.favoritesList = favorites
             
         case ._getPlaylistRequest:
             return provider.getPlaylists()
                 .map(Action._getPlaylistResponse)
                 .eraseToAnyPublisher()
             
-        case ._getPlaylistResponse(let playlist):
+        case let ._getPlaylistResponse(playlist):
             state.playlistStatus = .none
-            
+            state.playlistList = playlist
         }
-        
         return Empty().eraseToAnyPublisher()
     }
 }
-    
-    // MARK: PlaylistStore
-    final class PlaylistStore: ObservableObject {
-        @Published private(set) var state: PlayListDomain.State
-        private let reduce: PlayListDomain
-        private var cancelleble: Set<AnyCancellable> = .init()
-        
-        init(
-            state: PlayListDomain.State,
-            reducer: PlayListDomain
-        ) {
-            self.state = state
-            self.reduce = reducer
-        }
-        
-        func send(_ action: PlayListDomain.Action) {
-            reduce.reduce(&state, with: action)
-                .receive(on: DispatchQueue.main)
-                .sink(receiveValue: send(_:))
-                .store(in: &cancelleble)
-        }
-    }
 
+// MARK: -  PlaylistStore
+final class PlaylistStore: ObservableObject {
+    @Published private(set) var state: PlayListDomain.State
+    private let reduce: PlayListDomain
+    private var cancelleble: Set<AnyCancellable> = .init()
+    
+    init(
+        state: PlayListDomain.State,
+        reducer: PlayListDomain
+    ) {
+        self.state = state
+        self.reduce = reducer
+    }
+    
+    func send(_ action: PlayListDomain.Action) {
+        reduce.reduce(&state, with: action)
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: send(_:))
+            .store(in: &cancelleble)
+    }
+}

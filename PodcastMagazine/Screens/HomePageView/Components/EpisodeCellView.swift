@@ -12,6 +12,7 @@ import LoadableImage
 struct EpisodeCellView: View {
     
     var episode: Episode
+    var episodeList: [Episode]
     
     @State private var navigateToEpisodePlayer = false
     
@@ -54,7 +55,7 @@ struct EpisodeCellView: View {
         .background(
             NavigationLink(
                 destination:
-                    Text("Player Screen"),
+                   PlayerView(selectedEpisode: episode, episodes: episodeList),
                 isActive: $navigateToEpisodePlayer,
                 label: {
                     EmptyView()
@@ -65,5 +66,5 @@ struct EpisodeCellView: View {
 }
 
 #Preview {
-    EpisodeCellView(episode: Episode.sample)
+    EpisodeCellView(episode: Episode.sample, episodeList: [])
 }

@@ -67,12 +67,11 @@ struct PodcastDiscriptionView: View {
                             ScrollView(.vertical, showsIndicators: false) {
                                 VStack(alignment: .leading, spacing: 16) {
                                     ForEach(store.state.episodeList) { episode in
-                                        EpisodeCellView(episode: episode)
+                                        EpisodeCellView(episode: episode, episodeList: store.state.episodeList)
                                             .padding(.horizontal, 8)
                                     }
                                 }
                             }
-                            
                         }
                     case .loading:
                         ProgressView()
@@ -83,7 +82,6 @@ struct PodcastDiscriptionView: View {
                                 .frame(width: 100, height: 100, alignment: .center)
                         }
                     }
-                    
                     Spacer()
                 }
             }
@@ -93,9 +91,6 @@ struct PodcastDiscriptionView: View {
             print("Пришел id =", podcastID)
             hideTabBar = true
             store.send(.viewAppeared(podcastID))
-        }
-        .onDisappear {
-            hideTabBar = false
         }
         .background(Color.white)
         .navigationTitle("Podcast")
