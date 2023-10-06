@@ -53,9 +53,11 @@ public final class Repository {
     
     func firebase(_ action: FirebaseManager.Action) -> ResponsePublisher<UserAccount> {
         firebaseManager.perform(action)
+            .tryMap(addPersisted)
             .map(Response.success)
             .mapError(RepositoryError.init)
             .catch(Response.catchError)
+            .receive(on: mainQueue)
             .eraseToAnyPublisher()
     }
     
@@ -64,6 +66,7 @@ public final class Repository {
             .map(Response.success)
             .mapError(RepositoryError.init)
             .catch(Response.catchError)
+            .receive(on: mainQueue)
             .eraseToAnyPublisher()
     }
     
@@ -72,26 +75,59 @@ public final class Repository {
             .map(Response.success)
             .mapError(RepositoryError.init)
             .catch(Response.catchError)
+            .receive(on: mainQueue)
             .eraseToAnyPublisher()
     }
     
     func loadPersisted<T: Persistable>() -> AnyPublisher<[T], Never> {
         Just(realmManager?.values(T.self))
-            .compactMap { $0 }
+            .replaceNil(with: [])
             .receive(on: mainQueue)
             .eraseToAnyPublisher()
     }
     
-    func addPersisted<T: Persistable>(_ value: T) throws {
-        try realmManager?.write {
+//    func loadCurrentUser() -> ResponsePublisher<UserAccount> {
+//        firebase(.currentUser)
+//            .flatMap { reponse in
+//                switch reponse {
+//                case .success(let wrapped):
+//                    return self.realmManager?
+//                        .values(UserAccount.self, isIncluded: { $0.email.contains(wrapped.email) })
+//                        .first
+//                        .flatMap(Just.init)
+//                        .publisher
+//                        .eraseToAnyPublisher()
+//                    
+//                case .failure(let repositoryError):
+//                    return Fail(outputType: UserAccount.self, failure: repositoryError)
+//                        .eraseToAnyPublisher()
+//                }
+//            }
+//            
+//            .catch(Response.catchError)
+//            .eraseToAnyPublisher()
+//    }
+    
+    @discardableResult
+    func addPersisted<T: Persistable>(_ value: T) throws -> T {
+        guard let realmManager = realmManager else {
+            throw RepositoryError.realmUnavailable
+        }
+        try realmManager.write {
             $0.add(value)
         }
+        return value
     }
     
-    func deletePersisted<T: Persistable>(_ value: T) throws {
-        try realmManager?.write {
+    @discardableResult
+    func deletePersisted<T: Persistable>(_ value: T) throws -> T {
+        guard let realmManager = realmManager else {
+            throw RepositoryError.realmUnavailable
+        }
+        try realmManager.write {
             $0.delete(value)
         }
+        return value
     }
     
 }

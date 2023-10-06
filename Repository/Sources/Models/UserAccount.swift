@@ -30,6 +30,8 @@ public struct UserAccount: Equatable {
         self.dateOfBirth = dateOfBirth
         self.gender = gender
     }
+    
+    public static let sample = Self(firstName: "Dick", lastName: "Penis", email: "www.apple.com")
 }
 
 public extension UserAccount {

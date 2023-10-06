@@ -16,8 +16,9 @@ public struct HomeRepositoryProvider {
     public var getFeedDetail: (Int) -> Repository.ResponsePublisher<FeedDetail>
     public var getEpisodes: (Int) -> Repository.ResponsePublisher<EpisodesResponse>
     public var getPersistedFeeds: () -> AnyPublisher<[Feed], Never>
-    public var addToFavorites: (Feed) throws -> Void
-    public var removeFromFavorites: (Feed) throws -> Void
+    public var getCurrentUser: () -> Repository.ResponsePublisher<UserAccount>
+    public var addToFavorites: (Feed) throws -> Feed
+    public var removeFromFavorites: (Feed) throws -> Feed
     
     //MARK: - Live provider
     public static var live: HomeRepositoryProvider {
@@ -28,6 +29,7 @@ public struct HomeRepositoryProvider {
             getFeedDetail: { repository.request(.feeds(by: $0)) }, 
             getEpisodes: { repository.request(.episodes(by: $0)) },
             getPersistedFeeds: repository.loadPersisted,
+            getCurrentUser: { repository.firebase(.currentUser) },
             addToFavorites: repository.addPersisted,
             removeFromFavorites: repository.deletePersisted
         )
@@ -49,8 +51,9 @@ public struct HomeRepositoryProvider {
         feedDetailResult: Repository.Response<FeedDetail> = .success(.sample),
         categoryResult: Repository.Response<CategoryResponse> = .success(.sample),
         episodesResult: Repository.Response<EpisodesResponse> = .success(.sample),
+        userResponse: Repository.Response<UserAccount> = .success(.sample),
         persistedFeeds: [Feed] = [.sample],
-        favoritesResponse: @escaping (Feed) throws -> Void,
+        favoritesResponse: @escaping (Feed) throws -> Feed,
         delay: DispatchQueue.SchedulerTimeType.Stride = 2
     ) -> Self {
         .init(
@@ -79,6 +82,9 @@ public struct HomeRepositoryProvider {
                     .delay(for: delay, scheduler: DispatchQueue.main)
                     .eraseToAnyPublisher()
             }, 
+            getCurrentUser: Just(userResponse)
+                .delay(for: delay, scheduler: DispatchQueue.main)
+                .eraseToAnyPublisher,
             addToFavorites: favoritesResponse,
             removeFromFavorites: favoritesResponse
         )
