@@ -9,9 +9,9 @@ import SwiftUI
 import Models
 
 struct PlaylistView: View {
+    
     @StateObject var store: PlaylistStore = PlayListDomain.playlistDomainLive
     var mockFeed: [Feed] = [Feed.sample]
-    
     
     var body: some View {
         NavigationView {
@@ -29,6 +29,7 @@ struct PlaylistView: View {
                     }
                 }
                 .padding(.horizontal, 28)
+                
                 switch store.state.playlistStatus {
                 case .none:
                 ScrollView(.horizontal, showsIndicators: false) {
@@ -68,6 +69,9 @@ struct PlaylistView: View {
                 .padding(.horizontal, 8)
                 .listStyle(PlainListStyle())
             }
+        }
+        .onAppear {
+            // получаем стартовые данные
         }
         .navigationTitle("Playlist")
         .navigationBarTitleDisplayMode(.inline)
