@@ -20,7 +20,7 @@ struct PlayerDomain {
         // player properties
         var episodes: [Episode]
         var selectedEpisod: Episode
-        var playerStatus: ScreenStatus
+        var screenStatus: ScreenStatus
         
         var currdentIndex: Int = .init()
         
@@ -46,7 +46,7 @@ struct PlayerDomain {
         ) {
             self.episodes = episodes
             self.selectedEpisod = selectedEpisod
-            self.playerStatus = playerStatus
+            self.screenStatus = playerStatus
             self.duration = duration
             self.currentTime = currentTime
             self.timeLeft = timeLeft
@@ -96,7 +96,7 @@ struct PlayerDomain {
         case pause
         case updateSliderValue
         case nextAudio
-        case backAudio
+        case previousAudio
         case _playerResponse(AVPlayerItem.Status)
         case seek(TimeInterval) // поиск места на треке (прогресс или перемотка)
     }
@@ -113,27 +113,29 @@ struct PlayerDomain {
         switch action {
         case .onAppeared:
             
-            guard state.playerStatus != .loading else {
+            guard state.screenStatus != .loading else {
                 break
             }
             // first start
-            state.playerStatus = .loading
+            state.screenStatus = .loading
             audioManager.url = state.createUrl(from: state.selectedEpisod)
             state.currdentIndex = state.findIndexBy(state.selectedEpisod) ?? 0
-            state.title = state.selectedEpisod.title
-            state.image = state.selectedEpisod.image
             
             return audioManager.playMedia()
                 .map(Action._playerResponse)
                 .eraseToAnyPublisher()
             
         case ._playerResponse(.readyToPlay):
-            state.playerStatus = .none
+            state.screenStatus = .none
             state.duration = audioManager.duration
+            state.title = state.selectedEpisod.title
+            state.image = state.selectedEpisod.image
+            // play
+            audioManager.play()
             
         case ._playerResponse(.failed):
             let error = PlayerError.failLoading
-            state.playerStatus = .error(error)
+            state.screenStatus = .error(error)
   
         case .play:
             audioManager.play()
@@ -141,12 +143,36 @@ struct PlayerDomain {
             audioManager.pause()
             
         case .nextAudio:
-            //...
-            break
+            if let episode = state.findNextEpisode() {
+                state.screenStatus = .loading
+                state.currdentIndex = state.findIndexBy(episode) ?? 0
+                state.selectedEpisod = episode
+                
+                audioManager.url = state.createUrl(from: episode)
+            } else {
+                // если эпизод не найден выходим
+                break
+            }
             
-        case .backAudio:
-            //...
-            break
+            return audioManager.playMedia()
+                .map(Action._playerResponse)
+                .eraseToAnyPublisher()
+            
+        case .previousAudio:
+            if let episode = state.findPreviousEpisode() {
+                state.screenStatus = .loading
+                state.currdentIndex = state.findIndexBy(episode) ?? 0
+                state.selectedEpisod = episode
+                
+                audioManager.url = state.createUrl(from: episode)
+            } else {
+                // если эпизод не найден выходим
+                break
+            }
+            
+            return audioManager.playMedia()
+                .map(Action._playerResponse)
+                .eraseToAnyPublisher()
             
         case .updateSliderValue:
             state.sliderValue = audioManager.currentTime

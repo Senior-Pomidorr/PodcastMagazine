@@ -12,7 +12,7 @@ import Models
 struct PlayerView: View {
     @StateObject private var store: PlayerStore
     @State private var isEditing = false
-    @State private var isPlayning = false
+    @State private var isPlayning = true
     
     let timer = Timer
         .publish(every: 0.5, on: .main, in: .common)
@@ -23,7 +23,7 @@ struct PlayerView: View {
             Color.white
                 .ignoresSafeArea(edges: .all)
             
-            switch store.state.playerStatus {
+            switch store.state.screenStatus {
             case .none:
                 GeometryReader { geometry in
                     VStack(alignment: .center, spacing: 0) {
@@ -48,7 +48,7 @@ struct PlayerView: View {
                             ShuffleButton()
                             
                             Button {
-                                //
+                                store.send(.previousAudio)
                             } label: {
                                 Image("back")
                                     .resizable()
@@ -68,7 +68,7 @@ struct PlayerView: View {
                             }
                             
                             Button {
-                                //
+                                store.send(.nextAudio)
                             } label: {
                                 Image("nextTrack")
                                     .resizable()

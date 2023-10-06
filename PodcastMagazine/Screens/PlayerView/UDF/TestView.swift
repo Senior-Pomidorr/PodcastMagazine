@@ -18,7 +18,7 @@ struct TestView: View {
     
     var body: some View {
         VStack {
-            switch store.state.playerStatus {
+            switch store.state.screenStatus {
             case .none:
                 VStack {
                     Button("Play") {
