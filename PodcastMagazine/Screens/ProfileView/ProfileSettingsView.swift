@@ -35,6 +35,7 @@ struct ProfileSettingsView: View {
                     } label: {
                         ProfileSettingsRowView(image: "checkmark.shield", title: "Change Password")
                     }
+                    
                     NavigationLink {
                         
                     } label: {
