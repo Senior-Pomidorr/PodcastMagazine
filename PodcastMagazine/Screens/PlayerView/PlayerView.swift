@@ -28,7 +28,17 @@ struct PlayerView: View {
                 GeometryReader { geometry in
                     VStack(alignment: .center, spacing: 0) {
                         HStack(alignment: .center) {
-                           AlbumImage(geometry: geometry)
+                            Spacer()
+                            LoadableImage(store.state.image) { image in
+                                image
+                                    .resizable()
+                                    .scaledToFill()
+                            }
+                                .frame(width: geometry.size.width * 0.80, height: geometry.size.height * 0.50)
+                                .background(Color("tintBlue2"))
+                                .cornerRadius(16)
+                                .shadow(radius: 8)
+                            Spacer()
                         }
                         
                         TextTitle(
