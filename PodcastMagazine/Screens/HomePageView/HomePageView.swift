@@ -20,7 +20,7 @@ struct HomePageView: View {
         NavigationView {
             GeometryReader { geometry in
                 VStack(spacing: 8) {
-                    HomePageHeaderView()
+                    HomePageHeaderView(user: store.state.currentUser)
                     CategoryHeaderView(store: store)
                         .padding(.top)
                     
@@ -72,6 +72,7 @@ struct HomePageView: View {
                 hideTabBar = false
                 store.send(.viewAppeared)
                 store.send(.getPersistedFeeds)
+                store.send(.getCurrentUser)
             }
         }
     }
