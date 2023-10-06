@@ -127,6 +127,7 @@ struct PlayerDomain {
             
         case ._playerResponse(.readyToPlay):
             state.screenStatus = .none
+            state.sliderValue = 0.0
             state.duration = audioManager.duration
             state.title = state.selectedEpisod.title
             state.image = state.selectedEpisod.image

@@ -7,24 +7,19 @@
 
 import SwiftUI
 
-struct TextTitle: View {
-    var episodeTitle: String
-    var authorTitle: String
-    
-    var body: some View {
-        VStack(spacing: 0) {
-            Text(episodeTitle)
-                .font(.custom(.bold, size: 16))
-                .kerning(0.32)
-            Text(authorTitle)
-                .font(.custom(.regular, size: 14))
-                .foregroundStyle(Color("GreyTextColor"))
-                .padding(.top, 5)
-        }
-        .padding(.top, 36)
-    }
-}
-
-#Preview {
-    TextTitle(episodeTitle: "", authorTitle: "")
-}
+//struct TextTitle: View {
+//    var episodeTitle: String
+//    
+//    var body: some View {
+//        VStack(spacing: 0) {
+//            Text(episodeTitle)
+//                .font(.custom(.bold, size: 16))
+//                .kerning(0.32)
+//        }
+//        .padding(.top, 36)
+//    }
+//}
+//
+//#Preview {
+//    TextTitle(episodeTitle: "")
+//}
