@@ -16,6 +16,7 @@ public struct HomeRepositoryProvider {
     public var getFeedDetail: (Int) -> Repository.ResponsePublisher<FeedDetail>
     public var getEpisodes: (Int) -> Repository.ResponsePublisher<EpisodesResponse>
     public var getPersistedFeeds: () -> AnyPublisher<[Feed], Never>
+    public var getCurrentUser: () -> Repository.ResponsePublisher<UserAccount>
     public var addToFavorites: (Feed) throws -> Feed
     public var removeFromFavorites: (Feed) throws -> Feed
     
@@ -28,6 +29,7 @@ public struct HomeRepositoryProvider {
             getFeedDetail: { repository.request(.feeds(by: $0)) }, 
             getEpisodes: { repository.request(.episodes(by: $0)) },
             getPersistedFeeds: repository.loadPersisted,
+            getCurrentUser: { repository.firebase(.currentUser) },
             addToFavorites: repository.addPersisted,
             removeFromFavorites: repository.deletePersisted
         )
