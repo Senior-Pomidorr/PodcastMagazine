@@ -13,13 +13,13 @@ struct SaveButtonView: View {
             
         }, label: {
             Text("Save Changes")
-                .font(.headline)
-                .foregroundStyle(.gray)
+                .font(.custom(.medium, size: 16))
+                .foregroundStyle(Color.tintGray3)
         })
         .padding()
         .frame(height: 55)
         .frame(maxWidth: .infinity)
-        .background(Color.gray.opacity(0.1))
+        .background(Color.tintBlue3)
         .cornerRadius(24)
     }
 }
