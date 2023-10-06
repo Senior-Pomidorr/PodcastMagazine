@@ -10,14 +10,16 @@ import Models
 import Combine
 import Repository
 
-//MARK: State
+//MARK: - CreatePlaylistDomain
 struct CreatePlaylistDomain {
     
-    static let createPlaylistLive = CreatePlaylistStore(
+    //MARK: - CreatePlaylistLive
+    static let createPlaylistLive = CreatePlaylistStore (
         state: Self.State(),
         reducer: Self.reduce(Self.init(provider: FavoritesAndPlaylistsRepositoryProvider.live))
     )
     
+    //MARK: - State
     struct State: Equatable {
         static func == (lhs: CreatePlaylistDomain.State, rhs: CreatePlaylistDomain.State) -> Bool {
             String(describing: lhs) == String(describing: rhs)
@@ -103,6 +105,7 @@ struct CreatePlaylistDomain {
         case let ._getQueryResponse(.success(result)):
             state.createPlaylistStatus = .none
             state.favoritesEpisodes = result.items
+            
         case let  ._getQueryResponse(.failure(error)):
             state.createPlaylistStatus = .error(error)
         }

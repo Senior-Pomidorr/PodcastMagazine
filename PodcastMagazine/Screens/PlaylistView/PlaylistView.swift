@@ -9,68 +9,81 @@ import SwiftUI
 import Models
 
 struct PlaylistView: View {
+    
     @StateObject var store: PlaylistStore = PlayListDomain.playlistDomainLive
     var mockFeed: [Feed] = [Feed.sample]
-    
     
     var body: some View {
         NavigationView {
             VStack {
                 HStack {
                     Text("Favorites")
-                        .font(.system(size: 16, weight: .bold))
+                        .font(.custom(.bold, size: 16))
+                        .foregroundStyle(Color.black)
                     Spacer()
                     NavigationLink {
                         FavoritesView()
                     } label: {
-                        Text("See All")
-                            .foregroundColor(Color("GreyTextColor"))
-                            .fontWeight(.semibold)
+                        Text("See all")
+                            .font(.custom(.light, size: 16))
+                            .foregroundStyle(Color.gray)
                     }
                 }
-                .padding(.horizontal, 28)
+                .padding(.horizontal)
+                
                 switch store.state.playlistStatus {
                 case .none:
-                ScrollView(.horizontal, showsIndicators: false) {
+                    ScrollView(.horizontal, showsIndicators: false) {
                         HStack(spacing: 16) {
-//                            ForEach(store.state.favoritesList) {item in
-                            FavoritesCell(feed: Feed.sample)
-//                            }
+                            ForEach(store.state.favoritesList) {item in
+                                FavoritesCell(feed: item)
+                            }
                         }
                         .padding(.top, 12)
                         .padding(.horizontal, 28)
                     }
+                    
+                    
+                    
+                    HStack {
+                        Text("Your Playlist")
+                            .font(.system(size: 16, weight: .bold))
+                        Spacer()
+                    }
+                    .padding(.top, 24)
+                    .padding(.horizontal, 28)
+                    
+                    List {
+                        NavigationLink {
+                            CreatePlaylistView()
+                        } label: {
+                            CreatePlaylistButton()
+                        }
+                        
+                        ForEach(store.state.playlistList.prefix(20)) {feed in
+                            //   ForEach(1..<20) { repeatFeed in
+                            PlaylistCell(playlist: feed)
+                                .listRowSeparator(.hidden)
+                            //  }
+                        }
+                    }
+                    .padding(.horizontal, 8)
+                    .listStyle(PlainListStyle())
+                    
                 default:
                     EmptyView()
                 }
-                
-                HStack {
-                    Text("Your Playlist")
-                        .font(.system(size: 16, weight: .bold))
-                    Spacer()
-                }
-                .padding(.top, 24)
-                .padding(.horizontal, 28)
-                List {
-                    NavigationLink {
-                        CreatePlaylistView()
-                    } label: {
-                        CreatePlaylistButton()
-                    }
-
-                    ForEach(store.state.playlistList) {feed in
-                        ForEach(1..<20) {repeatFeed in
-                            PlaylistCell(playlist: feed)
-                                .listRowSeparator(.hidden)
-                        }
-                    }
-                }
-                .padding(.horizontal, 8)
-                .listStyle(PlainListStyle())
             }
         }
+        .onAppear {
+            print("!!!!!!!!! --- Появился экран плейлиста --- !!!!!!!!")
+            store.send(.viewAppered)
+        }
+        .background(Color.white)
         .navigationTitle("Playlist")
         .navigationBarTitleDisplayMode(.inline)
+        .navigationBarBackButtonHidden(true)
+        .navigationBarItems(leading: CustomBackButton())
     }
 }
 
