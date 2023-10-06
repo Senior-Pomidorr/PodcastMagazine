@@ -42,7 +42,7 @@ struct PlaylistView: View {
                         .padding(.top, 12)
                         .padding(.horizontal, 28)
                     }
-                    
+
                     
                     
                     HStack {

@@ -67,7 +67,7 @@ struct PodcastDiscriptionView: View {
                             ScrollView(.vertical, showsIndicators: false) {
                                 VStack(alignment: .leading, spacing: 16) {
                                     ForEach(store.state.episodeList) { episode in
-                                        EpisodeCellView(episode: episode)
+                                        EpisodeCellView(episode: episode, episodeList: store.state.episodeList)
                                             .padding(.horizontal, 8)
                                     }
                                 }
