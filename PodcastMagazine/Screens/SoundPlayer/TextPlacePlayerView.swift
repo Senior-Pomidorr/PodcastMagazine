@@ -13,87 +13,15 @@ struct TextPlacePlayerView: View {
     let episode = Episode.sample
     let audioManager = AudioManager()
     
-    @State private var value: Double = 0.0
-    @State private var isEditing = false
-    
-    let timer = Timer
-        .publish(every: 0.5, on: .main, in: .common)
-        .autoconnect()
-    
     var body: some View {
         ZStack {
             Color.green.opacity(0.1)
-            VStack(spacing: 30) {
-                VStack {
-                    Button("add") {
-                        audioManager.addTrackBy(url: episode.enclosureUrl)
-                    }
-                    Button("preper") {
-                        audioManager.preperPlayer()
-                    }
-                }
-                
-                VStack {
-                    Button("Play") {
-                        audioManager.play()
-                    }
-                    
-                    Button("pause") {
-                        audioManager.pause()
-                    }
-                }
-                
-                HStack {
-                    Button("Next") {
-                        audioManager.next()
-                    }
-                    
-                    Text("|")
-                    
-                    Button("back") {
-                        audioManager.back()
-                    }
-                }
-                VStack {
-                    HStack {
-                        Text(DateComponentsFormatter.positional.string(from: audioManager.currentTime) ?? "0:00")
-                        Spacer()
-                        Text(DateComponentsFormatter.positional.string(from: audioManager.duration - audioManager.currentTime) ?? "0:00")
-                    }
-                    
-                    Slider(
-                        value: $value,
-                        in: 0...audioManager.duration) {editing in
-                            print("\(editing)")
-                            isEditing = editing
-                            if !editing {
-                                // тут как-то делаем промотку трека
-                                audioManager.seek(value)
-                            }
-                        }
-                }
-                .padding()
-                
-                VStack {
-                    Button("Print data player") {
-                        audioManager.checkPlayer()
-                    }
-                    
-                    Button("playList count") {
-                        audioManager.pListCount()
-                    }
-                }
-            }
+            TestPlaceView(audioManager: audioManager)
             .font(.title3.bold())
             .onAppear {
                 audioManager.addTrackBy(url: episode.enclosureUrl)
                 // preperPlayer не любит вызываться 2 раза, крашется
                 audioManager.preperPlayer()
-            }
-            // подписываемся на уведомления
-            .onReceive(timer) { _ in
-                guard let player = audioManager.playerQueue, !isEditing else { return }
-                value = player.currentTime().seconds
             }
         }
     }
@@ -123,3 +51,81 @@ extension DateComponentsFormatter {
         return formatter
     }()
 }
+
+// MARK: - TextPlacePlayerView
+struct TestPlaceView: View {
+    
+    let audioManager: AudioManager
+    @State private var value: Double = 0.0
+    @State private var isEditing = false
+    
+    let timer = Timer
+        .publish(every: 0.5, on: .main, in: .common)
+        .autoconnect()
+    
+    var body: some View {
+        VStack(spacing: 30) {
+            VStack {
+                Button("add") {
+                    audioManager.addTrackBy(url: Episode.sample.enclosureUrl)
+                }
+                Button("preper") {
+                    audioManager.preperPlayer()
+                }
+            }
+            
+            VStack {
+                Button("Play") {
+                    audioManager.play()
+                }
+                
+                Button("pause") {
+                    audioManager.pause()
+                }
+            }
+            
+            HStack {
+                Button("Next") {
+                    audioManager.next()
+                }
+                
+                Text("|")
+                
+                Button("back") {
+                    audioManager.back()
+                }
+            }
+            VStack {
+                HStack {
+                    Text(DateComponentsFormatter.positional.string(from: audioManager.currentTime) ?? "0:00")
+                    Spacer()
+                    Text(DateComponentsFormatter.positional.string(from: audioManager.duration - audioManager.currentTime) ?? "0:00")
+                }
+                
+                Slider(
+                    value: $value,
+                    in: 0...audioManager.duration) {editing in
+                        print("\(editing)")
+                        isEditing = editing
+                        if !editing {
+                            // тут как-то делаем промотку трека
+                            audioManager.seek(value)
+                        }
+                    }
+            }
+            .padding()
+            
+            VStack {
+                Button("playList count") {
+                    audioManager.pListCount()
+                }
+            }
+        }
+        // подписываемся на уведомления
+        .onReceive(timer) { _ in
+            guard let player = audioManager.playerQueue, !isEditing else { return }
+            value = player.currentTime().seconds
+        }
+    }
+}
+

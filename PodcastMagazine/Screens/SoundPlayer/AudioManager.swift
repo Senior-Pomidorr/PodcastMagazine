@@ -8,10 +8,10 @@
 import AVKit
 import Foundation
 
-class AudioManager: ObservableObject {
+class AudioManager {
     
     var playerQueue: AVQueuePlayer?
-    var playList = [AVPlayerItem]()
+    var playlist: [AVPlayerItem]
     
     /// текущее время трека
     var currentTime: Double {
@@ -25,7 +25,7 @@ class AudioManager: ObservableObject {
     /// вычисляет текущий индекс трека или 0
     private var indexCurrentTrack: Int {
         if let item = playerQueue?.currentItem,
-           let index = playList.firstIndex(of: item) {
+           let index = playlist.firstIndex(of: item) {
             return index
         }
         
@@ -35,12 +35,10 @@ class AudioManager: ObservableObject {
     // MARK: - init(:)
     init(
         playerQueue: AVQueuePlayer? = nil,
-        playList: [AVPlayerItem] = [AVPlayerItem]()
+        playlist: [AVPlayerItem] = []
     ) {
-        self.playerQueue = playerQueue
-        self.playList = playList
+        self.playlist = .init()
         
-        playbackMode()
         winampIntro()
     }
     
@@ -52,13 +50,13 @@ class AudioManager: ObservableObject {
         
         let playerItem = AVPlayerItem(asset: AVAsset(url: urlTrack))
         
-        playList.insert(contentsOf: [playerItem], at: 1)
+        playlist.insert(contentsOf: [playerItem], at: 1)
     }
     
     /// подготовить плеер для прослушивания последнего трека в playList
     /// Можно получить данные спустя немного времени когда трек начнет подгружаться
     func preperPlayer() {
-        playerQueue = AVQueuePlayer(items: playList)
+        playerQueue = AVQueuePlayer(items: playlist)
     }
     
     // MARK: - Player Inteface
@@ -71,14 +69,14 @@ class AudioManager: ObservableObject {
     }
     
     func next() {
-        if playList.count - 1 > indexCurrentTrack {
+        if playlist.count - 1 > indexCurrentTrack {
             playerQueue?.advanceToNextItem()
         }
     }
     
     func back() {
         if indexCurrentTrack > 0 {
-            playerQueue?.replaceCurrentItem(with: playList[indexCurrentTrack - 1])
+            playerQueue?.replaceCurrentItem(with: playlist[indexCurrentTrack - 1])
         }
     }
     /// поиск нужного времени в треке
@@ -92,7 +90,7 @@ class AudioManager: ObservableObject {
     }
     
     func pListCount() {
-        print("\(playList.count)")
+        print("\(playlist.count)")
     }
     
     func winampIntro() {
@@ -101,39 +99,18 @@ class AudioManager: ObservableObject {
         }
         
         let intro = AVPlayerItem(asset: AVAsset(url: url))
-        playList.append(intro)
+        playlist.append(intro)
     }
 }
 
-// MARK: - playbackMode, checkPlayer
+// MARK: - playbackMode
 extension AudioManager {
-    func playbackMode() {
+    static func playbackMode() {
         do {
             try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default)
             try AVAudioSession.sharedInstance().setActive(true)
         } catch {
             print("Попытка включить \"playback\" неудачна")
-        }
-    }
-    
-    func checkPlayer() {
-        guard let player = playerQueue else {
-            return
-        }
-        
-        let seconds = player.currentItem?.duration.seconds
-        
-        print("time duration: \(String(describing: seconds))")
-        
-        switch player.status {
-        case .unknown:
-            print("Player status is unknown")
-        case .readyToPlay:
-            print("Player status is readyToPlay")
-        case .failed:
-            print("Player status is failed")
-        @unknown default:
-            print("Player status is default")
         }
     }
 }

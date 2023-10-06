@@ -24,17 +24,17 @@ struct PodcastMagazineApp: App {
                 //                    }
             } else {
                 // HomePageView()
-                // SearchContentView()
-                TabBarContainerView(selection: $tabSelection) {
-                    HomePageView()
-                        .tabBarItem(tab: TabBarItem.home, selection: $tabSelection)
-                    SearchContentView()
-                        .tabBarItem(tab: TabBarItem.search, selection: $tabSelection)
-                    PlaylistView()
-                        .tabBarItem(tab: TabBarItem.favorites, selection: $tabSelection)
-                    ProfileSettingsView()
-                        .tabBarItem(tab: TabBarItem.settings, selection: $tabSelection)
-                }
+                 TestView(episodeURL: "")
+//                TabBarContainerView(selection: $tabSelection) {
+//                    HomePageView()
+//                        .tabBarItem(tab: TabBarItem.home, selection: $tabSelection)
+//                    SearchContentView()
+//                        .tabBarItem(tab: TabBarItem.search, selection: $tabSelection)
+//                    PlaylistView()
+//                        .tabBarItem(tab: TabBarItem.favorites, selection: $tabSelection)
+//                    ProfileSettingsView()
+//                        .tabBarItem(tab: TabBarItem.settings, selection: $tabSelection)
+//                }
             }
         }
     }
