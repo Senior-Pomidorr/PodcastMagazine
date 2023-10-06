@@ -52,7 +52,7 @@ struct User: Equatable {
     }
 }
 
-struct ProfileDomain {
+struct AccountDomain {
     //MARK: - STATE
     struct State: Equatable {
         var name: String
@@ -178,27 +178,27 @@ struct ProfileDomain {
         getUser: { _ in Empty().eraseToAnyPublisher()},
         updateUser: { _ in Empty().eraseToAnyPublisher()})
     
-    static let previewStore = ProfileStore(
+    static let previewStore = AccountStore(
         state: Self.State(),
-        reducer: ProfileDomain.live.reduce(_:with:)
+        reducer: AccountDomain.live.reduce(_:with:)
     )
 }
 
-final class ProfileStore: ObservableObject {
-    @Published private(set) var state: ProfileDomain.State
+final class AccountStore: ObservableObject {
+    @Published private(set) var state: AccountDomain.State
     
-    private let reducer: (inout ProfileDomain.State, ProfileDomain.Action) -> AnyPublisher<ProfileDomain.Action, Never>
+    private let reducer: (inout AccountDomain.State, AccountDomain.Action) -> AnyPublisher<AccountDomain.Action, Never>
     private var cancelable: Set<AnyCancellable> = .init()
     
     init(
-        state: ProfileDomain.State,
-        reducer: @escaping (inout ProfileDomain.State, ProfileDomain.Action) -> AnyPublisher<ProfileDomain.Action, Never>
+        state: AccountDomain.State,
+        reducer: @escaping (inout AccountDomain.State, AccountDomain.Action) -> AnyPublisher<AccountDomain.Action, Never>
     ) {
         self.state = state
         self.reducer = reducer
     }
     
-    func send(_ action: ProfileDomain.Action) {
+    func send(_ action: AccountDomain.Action) {
         reducer(&state, action)
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: send(_:))
