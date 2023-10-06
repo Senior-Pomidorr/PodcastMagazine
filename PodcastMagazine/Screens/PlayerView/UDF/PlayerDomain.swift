@@ -17,13 +17,52 @@ enum PlayerError: Error {
 struct PlayerDomain {
     // MARK: - State
     struct State {
+        // player properties
         var episodes:[Episode]
         var playerStatus: ScreenStatus
+        var currentEpisodeId: Int = .init()
         
         var duration: TimeInterval
         var currentTime: TimeInterval
         var timeLeft: TimeInterval
         var sliderValue: TimeInterval
+        // UI properties
+        var title: String
+        var image: String
+        
+        func indexCurrentEpisode() -> Int {
+            return episodes.firstIndex(where: { $0.id == currentEpisodeId }) ?? 0
+        }
+        
+        func findNextEpisode() -> Episode? {
+            if  indexCurrentEpisode() < episodes.count - 1 {
+                let index = indexCurrentEpisode() + 1
+                return episodes[index]
+            }
+            return nil
+        }
+        
+        func findPreviousEpisode() -> Episode? {
+            if (indexCurrentEpisode() - 1) >= 0 {
+                let index = indexCurrentEpisode() - 1
+                return episodes[index]
+            }
+            return nil
+        }
+        
+        mutating func updateCurrentEpisodId(by episode: Episode?) {
+            if let episode {
+                currentEpisodeId = episode.id
+            }
+        }
+        
+        func createUrl(from episode: Episode?) -> URL? {
+            if let episode,
+                let url = URL(string: episode.enclosureUrl) {
+                return url
+            }
+            return nil
+        }
         
         init(
             episodes: [Episode] = .init(),
@@ -31,7 +70,9 @@ struct PlayerDomain {
             duration: TimeInterval = .init(),
             currentTime: TimeInterval = .init(),
             timeLeft: TimeInterval = .init(),
-            sliderValue: TimeInterval = .init()
+            sliderValue: TimeInterval = .init(),
+            title: String = .init(),
+            image: String = .init()
         ) {
             self.episodes = episodes
             self.playerStatus = playerStatus
@@ -39,6 +80,8 @@ struct PlayerDomain {
             self.currentTime = currentTime
             self.timeLeft = timeLeft
             self.sliderValue = sliderValue
+            self.title = title
+            self.image = image
         }
     }
     
@@ -47,10 +90,9 @@ struct PlayerDomain {
         case onAppeared
         case play
         case pause
-        case setSliderValue(TimeInterval)
         case updateSliderValue
-//        case nextAudio
-//        case backAudio
+        case nextAudio
+        case backAudio
         case _playerResponse(AVPlayerItem.Status)
         case seek(TimeInterval) // поиск места на треке (прогресс или перемотка)
     }
@@ -70,8 +112,12 @@ struct PlayerDomain {
             guard state.playerStatus != .loading else {
                 break
             }
+            
             state.playerStatus = .loading
-            audioManager.urlString = state.episodes.first!.enclosureUrl
+            
+            let firstEpisod = state.episodes.first
+            audioManager.url = state.createUrl(from: firstEpisod)
+            state.updateCurrentEpisodId(by: firstEpisod)
             
             return audioManager.playMedia()
                 .map(Action._playerResponse)
@@ -90,12 +136,17 @@ struct PlayerDomain {
         case .pause:
             audioManager.pause()
             
-        case .updateSliderValue:
-            state.sliderValue = audioManager.currentTime
-            
-        case .setSliderValue:
+        case .nextAudio:
+            //...
             break
             
+        case .backAudio:
+            //...
+            break
+            
+        case .updateSliderValue:
+            state.sliderValue = audioManager.currentTime
+  
         case let .seek(timeInterval):
             state.sliderValue = timeInterval
             Task {

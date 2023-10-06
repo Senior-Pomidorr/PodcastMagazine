@@ -22,7 +22,7 @@ extension Date {
 /// пример использования:
 ///   ```Text(
 ///         DateComponentsFormatter
-///         .positional.string(from: audioManager.currentTime) ?? "0:00"
+///         .positional.string(from: currentTime) ?? "0:00"
 ///      )
 ///  ```
 extension DateComponentsFormatter {

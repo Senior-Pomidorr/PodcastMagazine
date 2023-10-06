@@ -12,8 +12,7 @@ import Combine
 class AudioManager {
 
     private var player: AVPlayer = AVPlayer()
-    
-    var urlString: String = .init()
+    var url: URL?
     
     /// общая продолжительность трека
     var duration: TimeInterval {
@@ -46,10 +45,10 @@ class AudioManager {
     
     
     init(
-        urlString: String = .init(),
+        url: URL? = nil,
         player: AVPlayer = AVPlayer()
     ) {
-        self.urlString = urlString
+        self.url = url
         self.player = player
     }
     
@@ -58,7 +57,7 @@ class AudioManager {
     /// так же добавляет item в AVPlayer
     /// - Returns: AnyPublisher<AVPlayerItem.Status, Never>
     func playMedia() -> AnyPublisher<AVPlayerItem.Status, Never> {
-        guard let url = URL(string: urlString) else {
+        guard let url = url else {
             return Just(.failed).eraseToAnyPublisher()
         }
         

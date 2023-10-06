@@ -29,14 +29,6 @@ struct SearchContentView: View {
             store.send(.viewAppeared)
         }
     }
-    
-//    func searchText() -> Binding<String> {
-//        .init {
-//            store.state.textQuery
-//        } set: {
-//            store.send(.didTypeQuery($0))
-//        }
-//    }
 }
 
 
