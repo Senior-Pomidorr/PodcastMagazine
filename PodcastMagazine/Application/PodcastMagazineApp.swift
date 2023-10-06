@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Repository
+import Models
 
 @main
 struct PodcastMagazineApp: App {
@@ -22,24 +23,20 @@ struct PodcastMagazineApp: App {
             } else {
 //                 HomePageView()
 //                 TestView(episodeURL: "")
-//                PlayerView(
-//                    albumImage: "Unknow",
-//                    episodeTitle: "Unknow",
-//                    authorTitle: "Unknow",
-//                    startTimePocast: "Unknow",
-//                    endTimePocast: "Unknow",
-//                    sliderTimeTrack: 0.0
-//                )
-                TabBarContainerView(selection: $tabSelection) {
-                    HomePageView()
-                        .tabBarItem(tab: TabBarItem.home, selection: $tabSelection)
-                    SearchContentView()
-                        .tabBarItem(tab: TabBarItem.search, selection: $tabSelection)
-                    PlaylistView()
-                        .tabBarItem(tab: TabBarItem.favorites, selection: $tabSelection)
-                    ProfileSettingsView()
-                        .tabBarItem(tab: TabBarItem.settings, selection: $tabSelection)
-                }
+                PlayerView(
+                    selectedEpisode: Episode.sample,
+                    episodes: [Episode.sample]
+                )
+//                TabBarContainerView(selection: $tabSelection) {
+//                    HomePageView()
+//                        .tabBarItem(tab: TabBarItem.home, selection: $tabSelection)
+//                    SearchContentView()
+//                        .tabBarItem(tab: TabBarItem.search, selection: $tabSelection)
+//                    PlaylistView()
+//                        .tabBarItem(tab: TabBarItem.favorites, selection: $tabSelection)
+//                    ProfileSettingsView()
+//                        .tabBarItem(tab: TabBarItem.settings, selection: $tabSelection)
+//                }
             }
         }
     }

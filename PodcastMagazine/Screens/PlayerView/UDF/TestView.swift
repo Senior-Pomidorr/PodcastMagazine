@@ -82,15 +82,7 @@ struct PlayerSliderView: View {
             Slider(
                 value: sliderValue,
                 in: 0...duration
-            ) { editing in
-                
-                isEditing = editing
-                
-                if !editing {
-                    // меняем состояние трека
-                    print("slider value: \(sliderValue)")
-                }
-            }
+            ) { editing in isEditing = editing }
         }
         .padding()
     }

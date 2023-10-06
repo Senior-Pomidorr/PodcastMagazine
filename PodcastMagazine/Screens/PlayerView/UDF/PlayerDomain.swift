@@ -18,10 +18,10 @@ struct PlayerDomain {
     // MARK: - State
     struct State {
         // player properties
-        var episodes:[Episode]
-        var selectedEpisodId: Int
-        var currentEpisod: Episode = Episode.sample
+        var episodes: [Episode]
+        var selectedEpisod: Episode
         var playerStatus: ScreenStatus
+        
         var currdentIndex: Int = .init()
         
         var duration: TimeInterval
@@ -32,6 +32,30 @@ struct PlayerDomain {
         var title: String
         var image: String
         
+        // MARK: - init(:)
+        init(
+            episodes: [Episode] = .init(),
+            selectedEpisod: Episode = Episode.sample,
+            playerStatus: ScreenStatus = .none,
+            duration: TimeInterval = .init(),
+            currentTime: TimeInterval = .init(),
+            timeLeft: TimeInterval = .init(),
+            sliderValue: TimeInterval = .init(),
+            title: String = .init(),
+            image: String = .init()
+        ) {
+            self.episodes = episodes
+            self.selectedEpisod = selectedEpisod
+            self.playerStatus = playerStatus
+            self.duration = duration
+            self.currentTime = currentTime
+            self.timeLeft = timeLeft
+            self.sliderValue = sliderValue
+            self.title = title
+            self.image = image
+        }
+        
+        // MARK: - Methods
         func findEpisideBy(id: Int) -> Episode {
             return episodes.first { $0.id == id}!
         }
@@ -63,28 +87,6 @@ struct PlayerDomain {
             }
             return nil
         }
-        
-        init(
-            episodes: [Episode] = .init(),
-            selectedEpisodId: Int = .init(),
-            playerStatus: ScreenStatus = .none,
-            duration: TimeInterval = .init(),
-            currentTime: TimeInterval = .init(),
-            timeLeft: TimeInterval = .init(),
-            sliderValue: TimeInterval = .init(),
-            title: String = .init(),
-            image: String = .init()
-        ) {
-            self.episodes = episodes
-            self.selectedEpisodId = selectedEpisodId
-            self.playerStatus = playerStatus
-            self.duration = duration
-            self.currentTime = currentTime
-            self.timeLeft = timeLeft
-            self.sliderValue = sliderValue
-            self.title = title
-            self.image = image
-        }
     }
     
     // MARK: - Action
@@ -114,14 +116,12 @@ struct PlayerDomain {
             guard state.playerStatus != .loading else {
                 break
             }
-            
+            // first start
             state.playerStatus = .loading
-            let episod = state.findEpisideBy(id: state.selectedEpisodId)
-            state.currentEpisod = episod
-            audioManager.url = state.createUrl(from: episod)
-            state.currdentIndex = state.findIndexBy(episod) ?? 0
-            state.title = episod.title
-            state.image = episod.image
+            audioManager.url = state.createUrl(from: state.selectedEpisod)
+            state.currdentIndex = state.findIndexBy(state.selectedEpisod) ?? 0
+            state.title = state.selectedEpisod.title
+            state.image = state.selectedEpisod.image
             
             return audioManager.playMedia()
                 .map(Action._playerResponse)
