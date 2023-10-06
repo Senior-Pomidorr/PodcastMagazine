@@ -8,6 +8,7 @@
 import Foundation
 import RealmSwift
 import Combine
+import Models
 
 public struct RealmManager {
     private let realm: Realm
@@ -44,5 +45,10 @@ public struct RealmManager {
         return realm.objects(type.ManagedObject.self)
             .where(isIncluded)
             .map(T.init)
+    }
+    
+    public func getPersisted(user: UserAccount) -> UserAccount? {
+        values(UserAccount.self, isIncluded: { $0.email == user.email })
+            .first
     }
 }

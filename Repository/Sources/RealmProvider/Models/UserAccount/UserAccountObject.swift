@@ -10,12 +10,12 @@ import RealmSwift
 import Models
 
 public final class UserAccountObject: Object, ObjectKeyIdentifiable {
-    @Persisted var imageUrl: String?
-    @Persisted var firstName: String
-    @Persisted var lastName: String
-    @Persisted var email: String
-    @Persisted var dateOfBirth: Date
-    @Persisted var gender: UserAccount.Gender
+    @Persisted public var imageUrl: String?
+    @Persisted public var firstName: String
+    @Persisted public var lastName: String
+    @Persisted public var email: String
+    @Persisted public var dateOfBirth: Date
+    @Persisted public var gender: UserAccount.Gender
     
     public var id: String {
         email

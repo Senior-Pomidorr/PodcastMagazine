@@ -15,8 +15,8 @@ public struct FavoritesAndPlaylistsRepositoryProvider {
     public var getPlaylists: () -> AnyPublisher<[Playlist], Never>
     public var getEpisodes: (Endpoint) -> Repository.ResponsePublisher<EpisodesResponse>
     public var getPersistedEpisodes: () -> AnyPublisher<[Episode], Never>
-    public var addToFavorites: (Playlist) throws -> Void
-    public var removeFromFavorites: (Playlist) throws -> Void
+    public var addToFavorites: (Playlist) throws -> Playlist
+    public var removeFromFavorites: (Playlist) throws -> Playlist
     
     public static var live: FavoritesAndPlaylistsRepositoryProvider {
         let repository = Repository.shared
@@ -41,7 +41,7 @@ public struct FavoritesAndPlaylistsRepositoryProvider {
         playlistsResult: [Playlist] = [.sample],
         episodesResult: Repository.Response<EpisodesResponse> = .success(.sample),
         persistedEpisodes: [Episode] = [.sample],
-        writeToFavoritesResult: @escaping (Playlist) throws -> Void = { _ in },
+        writeToFavoritesResult: @escaping (Playlist) throws -> Playlist = { $0 },
         delay: DispatchQueue.SchedulerTimeType.Stride = 2
     ) -> Self {
         .init(

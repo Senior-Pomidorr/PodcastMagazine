@@ -10,7 +10,7 @@ import RealmSwift
 
 public final class CategoryObject: Object, ObjectKeyIdentifiable {
     @Persisted public var id: String
-    @Persisted var name: String
+    @Persisted public var name: String
     
     convenience init(id: String, name: String) {
         self.init()
