@@ -69,6 +69,9 @@ struct CreatePlaylistView: View {
         .navigationTitle("Create playlist")
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(leading: CustomBackButton())
+        .onAppear {
+            store.send(.viewAppeared)
+        }
     }
 }
 

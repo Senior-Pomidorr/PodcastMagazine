@@ -33,9 +33,9 @@ struct PlaylistView: View {
                 case .none:
                 ScrollView(.horizontal, showsIndicators: false) {
                         HStack(spacing: 16) {
-                            ForEach(store.state.favoritesList) {item in
-                                FavoritesCell(feed: item)
-                            }
+//                            ForEach(store.state.favoritesList) {item in
+                            FavoritesCell(feed: Feed.sample)
+//                            }
                         }
                         .padding(.top, 12)
                         .padding(.horizontal, 28)
