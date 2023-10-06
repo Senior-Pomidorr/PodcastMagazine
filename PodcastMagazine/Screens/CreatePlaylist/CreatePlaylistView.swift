@@ -11,7 +11,7 @@ struct CreatePlaylistView: View {
     @StateObject var store: CreatePlaylistStore = CreatePlaylistDomain.createPlaylistLive
     @State private var newPlaylistName = ""
     @State var searchFieldText: String = ""
-    
+    @State var isTapped: Bool = false
     
     var body: some View {
         NavigationView {
@@ -47,17 +47,21 @@ struct CreatePlaylistView: View {
                         
                         SearchBarCreatePlaylist(searchTextPlaylist: $searchFieldText)
                             .padding(.vertical, 18)
-                        switch store.state.createPlaylistStatus {
+                        switch store.state.playlistStatus {
                         case .none:
-                            VStack(spacing: 16) {
-                                CreatePlaylistCells()
-                                CreatePlaylistCells()
-                                CreatePlaylistCells()
-                                CreatePlaylistCells()
-                                CreatePlaylistCells()
-                                CreatePlaylistCells()
-                                CreatePlaylistCells()
+                            ForEach(store.state.randomEpisodes) {feed in
+                                VStack(spacing: 16) {
+                                    CreatePlaylistCells(isTapped: isTapped, image: feed.image, title: feed.title, author: feed.description)
+                                }
                             }
+                            
+//                            ForEach(store.state.getEpisodesRequest.prefix(20)) {feed in
+//                                VStack(spacing: 16) {
+//                                    CreatePlaylistCells(isTapped: isTapped, image: feed.image, title: feed.title, author: feed.description)
+//                                }
+                            
+                        case let .error(error):
+                            Text("Ошибка  - \(error.localizedDescription)")
                         default:
                             EmptyView()
                         }
@@ -66,12 +70,12 @@ struct CreatePlaylistView: View {
             }
             .padding(.top, 30)
         }
-        .navigationTitle("Create playlist")
-        .navigationBarBackButtonHidden(true)
-        .navigationBarItems(leading: CustomBackButton())
         .onAppear {
             store.send(.viewAppeared)
         }
+        .navigationTitle("Create playlist")
+        .navigationBarBackButtonHidden(true)
+        .navigationBarItems(leading: CustomBackButton())
     }
 }
 

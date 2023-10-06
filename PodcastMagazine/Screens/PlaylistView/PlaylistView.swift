@@ -43,8 +43,6 @@ struct PlaylistView: View {
                         .padding(.horizontal, 28)
                     }
 
-                    
-                    
                     HStack {
                         Text("Your Playlist")
                             .font(.system(size: 16, weight: .bold))
@@ -59,16 +57,16 @@ struct PlaylistView: View {
                         } label: {
                             CreatePlaylistButton()
                         }
+                        .listRowSeparator(.hidden)
                         
                         ForEach(store.state.playlistList.prefix(20)) {feed in
-                            //   ForEach(1..<20) { repeatFeed in
                             PlaylistCell(playlist: feed)
-                                .listRowSeparator(.hidden)
-                            //  }
                         }
                     }
+                    .listRowSeparator(.hidden)
                     .padding(.horizontal, 8)
                     .listStyle(PlainListStyle())
+                    
                     
                 default:
                     EmptyView()

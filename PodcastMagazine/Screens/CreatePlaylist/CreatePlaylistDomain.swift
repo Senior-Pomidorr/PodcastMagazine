@@ -26,41 +26,34 @@ struct CreatePlaylistDomain {
         }
         
         var userQuery: String
-        var favoritesEpisodes: [Episode]
-        var createPlaylistStatus: PlaylistLoadingStatus
-        var searchQuery: String
-        var feed: [Feed]?
-        var episodesFeed: [EpisodesResponse]
+        var playlistStatus: PlaylistLoadingStatus
+        var getEpisodesRequest: [Episode]
+        var randomEpisodes: [Episode]
         var trimmingUserQuery: String {
             userQuery.trimmingCharacters(in: .whitespacesAndNewlines)
         }
         
         init(
-            query: String = .init(),
-            favoritesEpisodes: [Episode] = .init(),
-            createPlaylistStatus: PlaylistLoadingStatus = .none,
-            searchQuery: String = .init(),
-            feed: [Feed]? = nil,
-            episodesFeed: [EpisodesResponse] = .init()
+            userQuery: String = .init(),
+            playlistStatus: PlaylistLoadingStatus = .none,
+            _getEpisodesRequest: [Episode] = .init(),
+            randomEpisodes: [Episode] = .init()
         ) {
-            self.userQuery = query
-            self.favoritesEpisodes = favoritesEpisodes
-            self.createPlaylistStatus = createPlaylistStatus
-            self.searchQuery = searchQuery
-            self.feed = feed
-            self.episodesFeed = episodesFeed
+            self.userQuery = userQuery
+            self.playlistStatus = playlistStatus
+            self.getEpisodesRequest = _getEpisodesRequest
+            self.randomEpisodes = randomEpisodes
         }
     }
     
+    //MARK: - Action
     enum Action {
         case viewAppeared
         case _getQueryRequest
-        case episodesCellDidTap(Repository.Response<Episode>)
-        case _getEpisodesRequest
-        case _getPocdastsRequest
         case _getQueryResponse(Repository.Response<EpisodesResponse>)
+        case _getRandomEpisodesRequest
         case _getEpisodesResponse(Repository.Response<EpisodesResponse>)
-        case _getPodcastsResponse([Feed])
+        case episodesCellDidTap(Repository.Response<Episode>)
     }
     
     let provider: FavoritesAndPlaylistsRepositoryProvider
@@ -69,50 +62,42 @@ struct CreatePlaylistDomain {
         switch action {
             
         case .viewAppeared:
-            guard state.createPlaylistStatus != .loading else { break }
-            state.createPlaylistStatus = .loading
-            return Publishers.Merge(
-                Just(._getEpisodesRequest),
-                Just(._getPocdastsRequest)
-            )
-            .eraseToAnyPublisher()
+            guard state.playlistStatus != .loading else { break }
+            state.playlistStatus = .loading
+            return Just(._getRandomEpisodesRequest)
+                .eraseToAnyPublisher()
             
-        case ._getEpisodesRequest:
+        case ._getRandomEpisodesRequest:
             return provider.getEpisodes(.randomEpisodes(max: 20))
                 .map(Action._getEpisodesResponse)
                 .eraseToAnyPublisher()
             
         case let ._getEpisodesResponse(.success(result)):
-            state.createPlaylistStatus = .none
-            state.favoritesEpisodes = result.items
+            state.playlistStatus = .none
+            state.randomEpisodes = result.items
             
         case let ._getEpisodesResponse(.failure(error)):
-            state.createPlaylistStatus = .error(error)
-            
-        case ._getPodcastsResponse(_):
-            break
+            state.playlistStatus = .error(error)
             
         case ._getQueryRequest:
             return provider.getEpisodes(.feeds(byTitle: state.trimmingUserQuery))
                 .map(Action._getQueryResponse)
                 .eraseToAnyPublisher()
-        case .episodesCellDidTap(_):
-            break
-            
-        case ._getPocdastsRequest:
-            break
             
         case let ._getQueryResponse(.success(result)):
-            state.createPlaylistStatus = .none
-            state.favoritesEpisodes = result.items
+            state.playlistStatus = .none
+            state.getEpisodesRequest = result.items
             
         case let  ._getQueryResponse(.failure(error)):
-            state.createPlaylistStatus = .error(error)
+            state.playlistStatus = .error(error)
+            
+        case .episodesCellDidTap(_):
+            break
         }
         return Empty().eraseToAnyPublisher()
     }
 }
-
+//MARK: - CreatePlaylistStore
 final class CreatePlaylistStore: ObservableObject {
     @Published private(set) var state: CreatePlaylistDomain.State
     private let reducer: (inout CreatePlaylistDomain.State, CreatePlaylistDomain.Action) -> AnyPublisher<CreatePlaylistDomain.Action, Never>
