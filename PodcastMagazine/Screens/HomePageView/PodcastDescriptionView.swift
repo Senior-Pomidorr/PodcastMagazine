@@ -92,9 +92,6 @@ struct PodcastDiscriptionView: View {
             hideTabBar = true
             store.send(.viewAppeared(podcastID))
         }
-        .onDisappear {
-            hideTabBar = false
-        }
         .background(Color.white)
         .navigationTitle("Podcast")
         .navigationBarTitleDisplayMode(.inline)
