@@ -7,19 +7,19 @@
 
 import SwiftUI
 
-struct BackTrackButton: View {
-    var body: some View {
-        Button {
-            print("back track tap!")
-        } label: {
-            Image("back")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 16, height: 16)
-        }
-    }
-}
-
-#Preview {
-    BackTrackButton()
-}
+//struct BackTrackButton: View {
+//    var body: some View {
+//        Button {
+//            print("back track tap!")
+//        } label: {
+//            Image("back")
+//                .resizable()
+//                .scaledToFit()
+//                .frame(width: 16, height: 16)
+//        }
+//    }
+//}
+//
+//#Preview {
+//    BackTrackButton()
+//}

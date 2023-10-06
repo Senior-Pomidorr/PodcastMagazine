@@ -18,9 +18,11 @@ struct PlayerDomain {
     // MARK: - State
     struct State {
         // player properties
-        var episodes:[Episode]
-        var playerStatus: ScreenStatus
-        var currentEpisodeId: Int = .init()
+        var episodes: [Episode]
+        var selectedEpisod: Episode
+        var screenStatus: ScreenStatus
+        
+        var currdentIndex: Int = .init()
         
         var duration: TimeInterval
         var currentTime: TimeInterval
@@ -30,42 +32,10 @@ struct PlayerDomain {
         var title: String
         var image: String
         
-        func indexCurrentEpisode() -> Int {
-            return episodes.firstIndex(where: { $0.id == currentEpisodeId }) ?? 0
-        }
-        
-        func findNextEpisode() -> Episode? {
-            if  indexCurrentEpisode() < episodes.count - 1 {
-                let index = indexCurrentEpisode() + 1
-                return episodes[index]
-            }
-            return nil
-        }
-        
-        func findPreviousEpisode() -> Episode? {
-            if (indexCurrentEpisode() - 1) >= 0 {
-                let index = indexCurrentEpisode() - 1
-                return episodes[index]
-            }
-            return nil
-        }
-        
-        mutating func updateCurrentEpisodId(by episode: Episode?) {
-            if let episode {
-                currentEpisodeId = episode.id
-            }
-        }
-        
-        func createUrl(from episode: Episode?) -> URL? {
-            if let episode,
-                let url = URL(string: episode.enclosureUrl) {
-                return url
-            }
-            return nil
-        }
-        
+        // MARK: - init(:)
         init(
             episodes: [Episode] = .init(),
+            selectedEpisod: Episode = Episode.sample,
             playerStatus: ScreenStatus = .none,
             duration: TimeInterval = .init(),
             currentTime: TimeInterval = .init(),
@@ -75,13 +45,47 @@ struct PlayerDomain {
             image: String = .init()
         ) {
             self.episodes = episodes
-            self.playerStatus = playerStatus
+            self.selectedEpisod = selectedEpisod
+            self.screenStatus = playerStatus
             self.duration = duration
             self.currentTime = currentTime
             self.timeLeft = timeLeft
             self.sliderValue = sliderValue
             self.title = title
             self.image = image
+        }
+        
+        // MARK: - Methods
+        func findEpisideBy(id: Int) -> Episode {
+            return episodes.first { $0.id == id}!
+        }
+        
+        func findIndexBy(_ episod: Episode) -> Int? {
+            return episodes.firstIndex(of: episod)
+        }
+        
+        func findNextEpisode() -> Episode? {
+            if  currdentIndex < episodes.count - 1 {
+                let index = currdentIndex + 1
+                return episodes[index]
+            }
+            return nil
+        }
+        
+        func findPreviousEpisode() -> Episode? {
+            if (currdentIndex - 1) >= 0 {
+                let index = currdentIndex - 1
+                return episodes[index]
+            }
+            return nil
+        }
+        
+        func createUrl(from episode: Episode?) -> URL? {
+            if let episode,
+                let url = URL(string: episode.enclosureUrl) {
+                return url
+            }
+            return nil
         }
     }
     
@@ -92,7 +96,7 @@ struct PlayerDomain {
         case pause
         case updateSliderValue
         case nextAudio
-        case backAudio
+        case previousAudio
         case _playerResponse(AVPlayerItem.Status)
         case seek(TimeInterval) // поиск места на треке (прогресс или перемотка)
     }
@@ -109,27 +113,29 @@ struct PlayerDomain {
         switch action {
         case .onAppeared:
             
-            guard state.playerStatus != .loading else {
+            guard state.screenStatus != .loading else {
                 break
             }
-            
-            state.playerStatus = .loading
-            
-            let firstEpisod = state.episodes.first
-            audioManager.url = state.createUrl(from: firstEpisod)
-            state.updateCurrentEpisodId(by: firstEpisod)
+            // first start
+            state.screenStatus = .loading
+            audioManager.url = state.createUrl(from: state.selectedEpisod)
+            state.currdentIndex = state.findIndexBy(state.selectedEpisod) ?? 0
             
             return audioManager.playMedia()
                 .map(Action._playerResponse)
                 .eraseToAnyPublisher()
             
         case ._playerResponse(.readyToPlay):
-            state.playerStatus = .none
+            state.screenStatus = .none
             state.duration = audioManager.duration
+            state.title = state.selectedEpisod.title
+            state.image = state.selectedEpisod.image
+            // play
+            audioManager.play()
             
         case ._playerResponse(.failed):
             let error = PlayerError.failLoading
-            state.playerStatus = .error(error)
+            state.screenStatus = .error(error)
   
         case .play:
             audioManager.play()
@@ -137,12 +143,36 @@ struct PlayerDomain {
             audioManager.pause()
             
         case .nextAudio:
-            //...
-            break
+            if let episode = state.findNextEpisode() {
+                state.screenStatus = .loading
+                state.currdentIndex = state.findIndexBy(episode) ?? 0
+                state.selectedEpisod = episode
+                
+                audioManager.url = state.createUrl(from: episode)
+            } else {
+                // если эпизод не найден выходим
+                break
+            }
             
-        case .backAudio:
-            //...
-            break
+            return audioManager.playMedia()
+                .map(Action._playerResponse)
+                .eraseToAnyPublisher()
+            
+        case .previousAudio:
+            if let episode = state.findPreviousEpisode() {
+                state.screenStatus = .loading
+                state.currdentIndex = state.findIndexBy(episode) ?? 0
+                state.selectedEpisod = episode
+                
+                audioManager.url = state.createUrl(from: episode)
+            } else {
+                // если эпизод не найден выходим
+                break
+            }
+            
+            return audioManager.playMedia()
+                .map(Action._playerResponse)
+                .eraseToAnyPublisher()
             
         case .updateSliderValue:
             state.sliderValue = audioManager.currentTime
