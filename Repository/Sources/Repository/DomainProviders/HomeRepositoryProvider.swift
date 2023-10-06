@@ -51,6 +51,7 @@ public struct HomeRepositoryProvider {
         feedDetailResult: Repository.Response<FeedDetail> = .success(.sample),
         categoryResult: Repository.Response<CategoryResponse> = .success(.sample),
         episodesResult: Repository.Response<EpisodesResponse> = .success(.sample),
+        userResponse: Repository.Response<UserAccount> = .success(.sample),
         persistedFeeds: [Feed] = [.sample],
         favoritesResponse: @escaping (Feed) throws -> Feed,
         delay: DispatchQueue.SchedulerTimeType.Stride = 2
@@ -81,6 +82,9 @@ public struct HomeRepositoryProvider {
                     .delay(for: delay, scheduler: DispatchQueue.main)
                     .eraseToAnyPublisher()
             }, 
+            getCurrentUser: Just(userResponse)
+                .delay(for: delay, scheduler: DispatchQueue.main)
+                .eraseToAnyPublisher,
             addToFavorites: favoritesResponse,
             removeFromFavorites: favoritesResponse
         )
