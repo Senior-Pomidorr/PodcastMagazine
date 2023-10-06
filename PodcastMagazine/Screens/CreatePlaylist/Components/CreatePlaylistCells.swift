@@ -19,13 +19,16 @@ struct CreatePlaylistCells: View {
                 .background(Color(red: 0.73, green: 0.9, blue: 0.91))
                 .cornerRadius(16)
                 .padding(8)
-            VStack(alignment: .leading) {
+            VStack(alignment: .leading, spacing: 4) {
                 Text("Title")
+                    .font(.custom(.bold, size: 14))
                 HStack {
                     Text("Author")
+                        .font(.custom(.regular, size: 12))
                     Image(systemName: "circle.fill")
-                        .font(.system(size: 6))
+                        .font(.custom(.regular, size: 6))
                     Text("1:40")
+                        .font(.custom(.regular, size: 12))
                 }
                 .foregroundColor(Color(red: 0.64, green: 0.63, blue: 0.69))
             }
