@@ -21,17 +21,25 @@ struct PodcastMagazineApp: App {
                 OnboardingView()
             } else {
                 // HomePageView()
-                // SearchContentView()
-                TabBarContainerView(selection: $tabSelection) {
-                    HomePageView()
-                        .tabBarItem(tab: TabBarItem.home, selection: $tabSelection)
-                    SearchContentView()
-                        .tabBarItem(tab: TabBarItem.search, selection: $tabSelection)
-                    PlaylistView()
-                        .tabBarItem(tab: TabBarItem.favorites, selection: $tabSelection)
-                    ProfileSettingsView()
-                        .tabBarItem(tab: TabBarItem.settings, selection: $tabSelection)
-                }
+                 TestView(episodeURL: "")
+//                PlayerView(
+//                    albumImage: "Unknow",
+//                    episodeTitle: "Unknow",
+//                    authorTitle: "Unknow",
+//                    startTimePocast: "Unknow",
+//                    endTimePocast: "Unknow",
+//                    sliderTimeTrack: 0.0
+//                )
+//                TabBarContainerView(selection: $tabSelection) {
+//                    HomePageView()
+//                        .tabBarItem(tab: TabBarItem.home, selection: $tabSelection)
+//                    SearchContentView()
+//                        .tabBarItem(tab: TabBarItem.search, selection: $tabSelection)
+//                    PlaylistView()
+//                        .tabBarItem(tab: TabBarItem.favorites, selection: $tabSelection)
+//                    ProfileSettingsView()
+//                        .tabBarItem(tab: TabBarItem.settings, selection: $tabSelection)
+//                }
             }
         }
     }
