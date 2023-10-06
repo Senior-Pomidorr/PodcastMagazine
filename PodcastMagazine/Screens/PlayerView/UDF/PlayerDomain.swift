@@ -127,6 +127,7 @@ struct PlayerDomain {
             
         case ._playerResponse(.readyToPlay):
             state.screenStatus = .none
+            state.sliderValue = 0.0
             state.duration = audioManager.duration
             state.title = state.selectedEpisod.title
             state.image = state.selectedEpisod.image
@@ -144,6 +145,7 @@ struct PlayerDomain {
             
         case .nextAudio:
             if let episode = state.findNextEpisode() {
+                audioManager.pause()
                 state.screenStatus = .loading
                 state.currdentIndex = state.findIndexBy(episode) ?? 0
                 state.selectedEpisod = episode
@@ -160,6 +162,7 @@ struct PlayerDomain {
             
         case .previousAudio:
             if let episode = state.findPreviousEpisode() {
+                audioManager.pause()
                 state.screenStatus = .loading
                 state.currdentIndex = state.findIndexBy(episode) ?? 0
                 state.selectedEpisod = episode

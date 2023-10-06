@@ -12,7 +12,7 @@ import Models
 struct PlayerView: View {
     @StateObject private var store: PlayerStore
     @State private var isEditing = false
-    @State private var isPlayning = true
+    @State private var isPlaying = true
     
     let timer = Timer
         .publish(every: 0.5, on: .main, in: .common)
@@ -28,13 +28,26 @@ struct PlayerView: View {
                 GeometryReader { geometry in
                     VStack(alignment: .center, spacing: 0) {
                         HStack(alignment: .center) {
-                           AlbumImage(geometry: geometry)
+                            Spacer()
+                            LoadableImage(store.state.image) { image in
+                                image
+                                    .resizable()
+                                    .scaledToFill()
+                            }
+                                .frame(width: geometry.size.width * 0.80, height: geometry.size.height * 0.50)
+                                .background(Color("tintBlue2"))
+                                .cornerRadius(16)
+                                .shadow(radius: 8)
+                            Spacer()
                         }
                         
-                        TextTitle(
-                            episodeTitle: store.state.title,
-                            authorTitle: "Author"
-                        )
+                        VStack(spacing: 0) {
+                            Text(store.state.title)
+                                .font(.custom(.bold, size: 16))
+                                .kerning(0.32)
+                                .lineLimit(2)
+                        }
+                        .padding(.top, 36)
                         
                         SliderStack(
                             sliderValue: bindingSlider(),
@@ -57,14 +70,19 @@ struct PlayerView: View {
                             }
                             
                             Button {
-                                isPlayning ? store.send(.pause) : store.send(.play)
-                                isPlayning.toggle()
+                                isPlaying ? store.send(.pause) : store.send(.play)
+                                isPlaying.toggle()
                                 
                             } label: {
-                                Image("PlayButton")
-                                    .resizable()
-                                    .scaledToFit()
+                                Circle()
+                                    .fill(Color.blue)
                                     .frame(width: 64, height: 64)
+                                    .overlay {
+                                        Image(systemName: isPlaying ? "pause.fill" : "play.fill")
+                                            
+                                            .font(.title)
+                                            .foregroundStyle(.white)
+                                    }
                             }
                             
                             Button {
@@ -83,8 +101,20 @@ struct PlayerView: View {
                     }
                     .padding(.top, 20)
                 }
+                .navigationTitle("Now playing")
+                .navigationBarTitleDisplayMode(.inline)
+                .navigationBarBackButtonHidden(true)
+                .navigationBarItems(leading: CustomBackButton())
+                
             case .loading:
-                ProgressView()
+                VStack {
+                    ProgressView()
+                }
+                .navigationTitle("Now playing")
+                .navigationBarTitleDisplayMode(.inline)
+                .navigationBarBackButtonHidden(true)
+                .navigationBarItems(leading: CustomBackButton())
+                
             case .error(let error):
                 Text("Экран ошибки, ошибка: \(error.localizedDescription)")
             }
@@ -93,7 +123,7 @@ struct PlayerView: View {
             store.send(.onAppeared)
         }
         .onReceive(timer) { _ in
-            if isEditing {
+            if !isEditing {
                 store.send(.updateSliderValue)
             }
         }
