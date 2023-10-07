@@ -19,6 +19,7 @@ extension Date {
 
 /// `DateComponentsFormatter`
 /// расширение для DateComponentsFormatter
+/// Обязательно проверять TimeInterval на NaN
 /// пример использования:
 ///   ```Text(
 ///         DateComponentsFormatter
@@ -38,7 +39,7 @@ extension DateComponentsFormatter {
     static let positional: DateComponentsFormatter = {
         let formatter = DateComponentsFormatter()
         
-        formatter.allowedUnits = [.minute, .second]
+        formatter.allowedUnits = [.hour, .minute, .second]
         formatter.unitsStyle = .positional
         formatter.zeroFormattingBehavior = .pad
         

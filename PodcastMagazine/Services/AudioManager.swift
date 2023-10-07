@@ -10,6 +10,7 @@ import Foundation
 import Combine
 
 class AudioManager {
+    static let shared = AudioManager()
 
     private var player: AVPlayer = AVPlayer()
     var url: URL?
@@ -33,7 +34,7 @@ class AudioManager {
     }
     
     /// отсчет времени до завершения трека
-    var timeleft: TimeInterval {
+    var timeLeft: TimeInterval {
         if player.status == .readyToPlay {
             // unwrap возможно стоит заменить на duration
             // поидее проблем не должно быть так как проверяю статус плеера
@@ -44,12 +45,14 @@ class AudioManager {
     }
     
     
-    init(
+    private init(
         url: URL? = nil,
         player: AVPlayer = AVPlayer()
     ) {
         self.url = url
         self.player = player
+        
+        player.volume = 0.15
     }
     
     /// Создает AVPlayerItem
@@ -82,12 +85,6 @@ class AudioManager {
     func pause() {
         player.pause()
     }
-    
-    /// Поиск по временной шкале трека
-//    func seek(to timeInterval: TimeInterval) {
-//        let time = CMTime(seconds: timeInterval, preferredTimescale: 600)
-//        player.seek(to: time)
-//    }
     
     /// Поиск по временной шкале трека `async`
     func seek(to timeInterval: TimeInterval) async {
