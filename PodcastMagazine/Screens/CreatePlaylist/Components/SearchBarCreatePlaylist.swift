@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct SearchBarCreatePlaylist: View {
+    let store: CreatePlaylistStore = CreatePlaylistDomain.createPlaylistLive
     @Binding var searchTextPlaylist: String
     var body: some View {
         HStack {
@@ -21,7 +22,9 @@ struct SearchBarCreatePlaylist: View {
             Image("Search")
                 .offset(x: 10)
                 .foregroundColor(Color.gray)
-            
+//                .onTapGesture {
+//                    store.send(.getSearchRequest(searchTextPlaylist))
+//                }
         }
         .padding(.vertical, 8)
         .padding(.horizontal, 24)

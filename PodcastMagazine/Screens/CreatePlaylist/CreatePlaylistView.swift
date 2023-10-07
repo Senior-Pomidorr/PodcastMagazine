@@ -11,11 +11,11 @@ import Repository
 struct CreatePlaylistView: View {
     @StateObject var store: CreatePlaylistStore = CreatePlaylistDomain.createPlaylistLive
     @State private var newPlaylistName = ""
-    @State var searchFieldText: String = ""
-    @State var isTapped: Bool = false
+//    @State var searchFieldText: String = ""
+//    @State var isTapped: Bool = false
     @State private var isShowPhotoLibrary = false
     @State private var image = UIImage()
-    
+//    @State var searchText = CreatePlaylistDomain.Action._getSearchRequest("")
     var body: some View {
         NavigationView {
             ScrollView {
@@ -48,18 +48,21 @@ struct CreatePlaylistView: View {
                             .padding(.top, 6)
                             .padding(.horizontal, 32)
                         
-                        SearchBarCreatePlaylist(searchTextPlaylist: $searchFieldText)
+                        SearchBarCreatePlaylist(searchTextPlaylist: bindingSearch())
                             .padding(.vertical, 18)
+                            .onSubmit {
+                                store.send(.getSearchRequest)
+                            }
                         switch store.state.playlistStatus {
                         case .none:
-                            ForEach(store.state.getEpisodesRequest) {feed in
+                            ForEach(store.state.randomEpisodes) {feed in
                                 VStack(spacing: 16) {
-                                    CreatePlaylistCells(isTapped: isTapped, image: feed.image, title: feed.title, author: feed.feedTitle ?? "No feed title")
+                                    CreatePlaylistCells(image: feed.image, title: feed.title, author: feed.description)
                                 }
                             }
-                                                  
+                            
                         case let .error(error):
-                            Text(String(describing: error))
+                            Text(error.localizedDescription)
                         case .loading:
                             ProgressView()
                         }
@@ -82,6 +85,14 @@ struct CreatePlaylistView: View {
             ImagePicker(selectedImage: $image, sourceType: .photoLibrary)
                 .ignoresSafeArea()
         }
+    }
+    
+    // MARK: - Binding
+    func bindingSearch() -> Binding<String> {
+        .init(
+            get: { store.state.userQuery },
+            set: { store.send(.setUserQuery($0)) }
+            )
     }
 }
 
