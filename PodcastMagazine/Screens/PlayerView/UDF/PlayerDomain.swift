@@ -17,92 +17,86 @@ enum PlayerError: Error {
 struct PlayerDomain {
     // MARK: - State
     struct State {
-        // player properties
+
         var episodes: [Episode]
-        var selectedEpisod: Episode
+        var selectedEpisode: Episode
         var screenStatus: ScreenStatus
         
-        var currdentIndex: Int = .init()
+        var currentIndex: Int = .init()
         
         var duration: TimeInterval
-        var currentTime: TimeInterval
         var timeLeft: TimeInterval
-        var sliderValue: TimeInterval
-        // UI properties
+        var currentTime: TimeInterval
+
         var title: String
         var image: String
+        
+        var isPlaying: Bool
         
         // MARK: - init(:)
         init(
             episodes: [Episode] = .init(),
-            selectedEpisod: Episode = Episode.sample,
+            selectedEpisode: Episode = Episode.sample,
             playerStatus: ScreenStatus = .none,
             duration: TimeInterval = .init(),
-            currentTime: TimeInterval = .init(),
             timeLeft: TimeInterval = .init(),
-            sliderValue: TimeInterval = .init(),
+            currentTime: TimeInterval = .init(),
             title: String = .init(),
-            image: String = .init()
+            image: String = .init(),
+            isPlaying: Bool = false
         ) {
             self.episodes = episodes
-            self.selectedEpisod = selectedEpisod
+            self.selectedEpisode = selectedEpisode
             self.screenStatus = playerStatus
             self.duration = duration
-            self.currentTime = currentTime
             self.timeLeft = timeLeft
-            self.sliderValue = sliderValue
+            self.currentTime = currentTime
             self.title = title
             self.image = image
+            self.isPlaying = isPlaying
         }
         
         // MARK: - Methods
-        func findEpisideBy(id: Int) -> Episode {
+        func findEpisodeBy(id: Int) -> Episode {
             return episodes.first { $0.id == id}!
         }
         
-        func findIndexBy(_ episod: Episode) -> Int? {
-            return episodes.firstIndex(of: episod)
+        func findIndexBy(_ episode: Episode) -> Int? {
+            return episodes.firstIndex(of: episode)
         }
         
         func findNextEpisode() -> Episode? {
-            if  currdentIndex < episodes.count - 1 {
-                let index = currdentIndex + 1
-                return episodes[index]
-            }
-            return nil
+            guard currentIndex < episodes.count - 1 else { return nil }
+            let index = currentIndex + 1
+            return episodes[index]
         }
         
         func findPreviousEpisode() -> Episode? {
-            if (currdentIndex - 1) >= 0 {
-                let index = currdentIndex - 1
-                return episodes[index]
-            }
-            return nil
+            guard (currentIndex - 1) >= 0 else { return nil }
+            let index = currentIndex - 1
+            return episodes[index]
         }
         
         func createUrl(from episode: Episode?) -> URL? {
-            if let episode,
-                let url = URL(string: episode.enclosureUrl) {
-                return url
-            }
-            return nil
+            guard let url = episode.map(\.enclosureUrl) else { return nil }
+            return URL(string: url)
         }
     }
     
     // MARK: - Action
     enum Action {
         case onAppeared
-        case play
-        case pause
+        case playButtonTap
         case updateSliderValue
-        case nextAudio
-        case previousAudio
+        case nextButtonTap
+        case previousButtonTap
+        case shuffleButtonTap
         case _playerResponse(AVPlayerItem.Status)
-        case seek(TimeInterval) // поиск места на треке (прогресс или перемотка)
+        case seek(TimeInterval) // Поиск по временной шкале трека
     }
     
     // MARK: - Dependencies
-    let audioManager: AudioManager
+//    let audioManager: AudioManager
     
     // MARK: - func reduce
     func reduce(
@@ -111,79 +105,82 @@ struct PlayerDomain {
     ) -> AnyPublisher<Action, Never> {
         
         switch action {
-        case .onAppeared:
             
+        case .onAppeared:
             guard state.screenStatus != .loading else {
                 break
             }
             // first start
             state.screenStatus = .loading
-            audioManager.url = state.createUrl(from: state.selectedEpisod)
-            state.currdentIndex = state.findIndexBy(state.selectedEpisod) ?? 0
+            AudioManager.shared.url = state.createUrl(from: state.selectedEpisode)
+            state.currentIndex = state.findIndexBy(state.selectedEpisode) ?? 0
             
-            return audioManager.playMedia()
+            return AudioManager.shared.playMedia()
                 .map(Action._playerResponse)
                 .eraseToAnyPublisher()
             
         case ._playerResponse(.readyToPlay):
             state.screenStatus = .none
-            state.duration = audioManager.duration
-            state.title = state.selectedEpisod.title
-            state.image = state.selectedEpisod.image
+            state.currentTime = 0.0
+            state.duration = AudioManager.shared.duration
+            state.title = state.selectedEpisode.title
+            state.image = state.selectedEpisode.image
             // play
-            audioManager.play()
+            AudioManager.shared.play()
             
         case ._playerResponse(.failed):
             let error = PlayerError.failLoading
             state.screenStatus = .error(error)
-  
-        case .play:
-            audioManager.play()
-        case .pause:
-            audioManager.pause()
             
-        case .nextAudio:
-            if let episode = state.findNextEpisode() {
-                audioManager.pause()
-                state.screenStatus = .loading
-                state.currdentIndex = state.findIndexBy(episode) ?? 0
-                state.selectedEpisod = episode
-                
-                audioManager.url = state.createUrl(from: episode)
-            } else {
-                // если эпизод не найден выходим
-                break
+        case .playButtonTap:
+            switch state.isPlaying {
+            case true: 
+                AudioManager.shared.play()
+            case false:
+                AudioManager.shared.pause()
             }
+            state.isPlaying.toggle()
             
-            return audioManager.playMedia()
+        case .nextButtonTap:
+            guard let episode = state.findNextEpisode() else { break }
+            AudioManager.shared.pause()
+            state.screenStatus = .loading
+            state.currentIndex = state.findIndexBy(episode) ?? 0
+            state.selectedEpisode = episode
+            AudioManager.shared.url = state.createUrl(from: episode)
+            
+            return AudioManager.shared.playMedia()
                 .map(Action._playerResponse)
                 .eraseToAnyPublisher()
             
-        case .previousAudio:
-            if let episode = state.findPreviousEpisode() {
-                audioManager.pause()
-                state.screenStatus = .loading
-                state.currdentIndex = state.findIndexBy(episode) ?? 0
-                state.selectedEpisod = episode
-                
-                audioManager.url = state.createUrl(from: episode)
-            } else {
-                // если эпизод не найден выходим
-                break
-            }
+        case .previousButtonTap:
+            guard let episode = state.findPreviousEpisode() else { break }
+            AudioManager.shared.pause()
+            state.screenStatus = .loading
+            state.currentIndex = state.findIndexBy(episode) ?? 0
+            state.selectedEpisode = episode
+            AudioManager.shared.url = state.createUrl(from: episode)
             
-            return audioManager.playMedia()
+            return AudioManager.shared.playMedia()
                 .map(Action._playerResponse)
                 .eraseToAnyPublisher()
             
         case .updateSliderValue:
-            state.sliderValue = audioManager.currentTime
+            state.currentTime = checkingForNaN(AudioManager.shared.currentTime)
+            state.timeLeft = checkingForNaN(AudioManager.shared.timeLeft)
   
         case let .seek(timeInterval):
-            state.sliderValue = timeInterval
-            Task {
-                await audioManager.seek(to: timeInterval)
+            state.currentTime = timeInterval
+            return Future<Action, Never> { promise in
+                Task {
+                    await AudioManager.shared.seek(to: timeInterval)
+                    promise(.success(.updateSliderValue))
+                }
             }
+            .eraseToAnyPublisher()
+            
+        case .shuffleButtonTap:
+            state.episodes = state.episodes.shuffled()
             
         case ._playerResponse(_):
             break
@@ -191,14 +188,19 @@ struct PlayerDomain {
         
         return Empty().eraseToAnyPublisher()
     }
+    
+    func checkingForNaN(_ time: TimeInterval) -> Double {
+        guard time.isNaN != true else { return 0.0 }
+        return time
+    }
 }
 
-
+// MARK: - PlayerStore
 class PlayerStore: ObservableObject {
     @Published private(set) var state: PlayerDomain.State
     
     private var reducer: PlayerDomain
-    private var cancelleble: Set<AnyCancellable> = .init()
+    private var cancelable: Set<AnyCancellable> = .init()
     
     init(
         state: PlayerDomain.State,
@@ -212,6 +214,6 @@ class PlayerStore: ObservableObject {
         reducer.reduce(&state, action: action)
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: send(_:))
-            .store(in: &cancelleble)
+            .store(in: &cancelable)
     }
 }

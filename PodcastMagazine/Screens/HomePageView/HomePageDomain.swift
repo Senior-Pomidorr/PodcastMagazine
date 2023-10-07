@@ -44,6 +44,7 @@ struct HomePageDomain {
         var feedDetails: FeedDetail?
         var episodesList: [Episode]?
         var persistedFeeds: [Feed]?
+        var currentUser: UserAccount
         
         init(
             categoryList: [Models.Category] = .init(),
@@ -51,7 +52,8 @@ struct HomePageDomain {
             homePageLoadingStatus: HomePageLoadingStatus = .none,
             detailsPageLoadingStatus: HomePageLoadingStatus = .none,
             podcastsListLoadingStatus: HomePageLoadingStatus = .none,
-            podcastsListByCategory: [Feed] = .init()
+            podcastsListByCategory: [Feed] = .init(),
+            currentUser: UserAccount = .init(firstName: "", lastName: "", email: "")
         ) {
             self.categoryList = categoryList
             self.podcastsList = podcastsList
@@ -60,6 +62,7 @@ struct HomePageDomain {
             self.detailsPageLoadingStatus = detailsPageLoadingStatus
             self.podcastsListLoadingStatus = homePageLoadingStatus
             self.podcastsListByCategory = podcastsListByCategory
+            self.currentUser = currentUser
         }
     }
     
@@ -82,6 +85,8 @@ struct HomePageDomain {
         case removeFeedFromFavorites(Feed)
         case getPodcastListByCategory(Models.Category)
         case getPodcastListByCategoryResponse(Repository.Response<FeedsResponse>)
+        case getCurrentUser
+        case _getCurrentUserResponse(Repository.Response<UserAccount>)
     }
     
     // MARK: - Dependencies
@@ -188,6 +193,17 @@ struct HomePageDomain {
             
         case let .getPodcastListByCategoryResponse(.failure(error)):
             state.podcastsListLoadingStatus = .error(error)
+            
+        case .getCurrentUser:
+            return provider.getCurrentUser()
+                .map(Action._getCurrentUserResponse)
+                .eraseToAnyPublisher()
+            
+        case let ._getCurrentUserResponse(.success(user)):
+            state.currentUser = user
+            
+        case let ._getCurrentUserResponse(.failure(error)):
+            print("error user")
         }
         return Empty().eraseToAnyPublisher()
     }

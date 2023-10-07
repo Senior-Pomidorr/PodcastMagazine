@@ -9,6 +9,7 @@ import SwiftUI
 import Models
 
 struct AllCategoryView: View {
+    @AppStorage("tabBar") var hideTabBar = false
     @ObservedObject var store: HomePageStore
     var categories: [Models.Category]
     var colum: [GridItem] = [
@@ -37,6 +38,9 @@ struct AllCategoryView: View {
                         }
                     }
             }
+        }
+        .onAppear {
+            hideTabBar = false
         }
         .background(Color.white)
         .navigationTitle("All Categories")

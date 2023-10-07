@@ -10,7 +10,7 @@ import Models
 import LoadableImage
 
 struct PodcastListView: View {
-    
+    @AppStorage("tabBar") var hideTabBar = false
     var category: Models.Category
     @ObservedObject var store: HomePageStore
     
@@ -85,6 +85,7 @@ struct PodcastListView: View {
             .padding()
         }
         .onAppear {
+            hideTabBar = false
             store.send(.getPodcastListByCategory(category))
         }
         .background(Color.white)
