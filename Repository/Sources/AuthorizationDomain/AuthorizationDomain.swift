@@ -16,12 +16,16 @@ public struct AuthorizationDomain: ReducerDomain {
         public var email: String
         public var password: String
         
+        public var isEmailValid: Bool
+        
         public init(
             email: String = .init(),
-            password: String = .init()
+            password: String = .init(),
+            isEmailValid: Bool = true
         ) {
             self.email = email
             self.password = password
+            self.isEmailValid = isEmailValid
         }
     }
     
@@ -38,7 +42,7 @@ public struct AuthorizationDomain: ReducerDomain {
     //MARK: - init(_:)
     public init(
         repository: AuthorizationRepositoryProvider = .live,
-        emailValidation: @escaping (String) -> Bool = { _ in true }
+        emailValidation: @escaping (String) -> Bool = EmailValidator.validate
     ) {
         self.repository = repository
         self.emailValidation = emailValidation
@@ -48,7 +52,15 @@ public struct AuthorizationDomain: ReducerDomain {
     public func reduce(_ state: inout State, action: Action) -> AnyPublisher<Action, Never> {
         switch action {
         case .setEmail(let email):
-            state.email = email
+            switch email.isEmpty {
+            case true:
+                state.email = .init()
+                state.isEmailValid = true
+                
+            case false:
+                state.email = email
+                state.isEmailValid = emailValidation(email)
+            }
             
         case .setPassword(let password):
             state.password = password

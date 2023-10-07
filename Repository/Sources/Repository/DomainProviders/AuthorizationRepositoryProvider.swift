@@ -12,7 +12,7 @@ import Combine
 public struct AuthorizationRepositoryProvider {
     
     public static var live: Self {
-    //    let repository = Repository.shared
+        let repository = Repository.shared
         return .init()
     }
     

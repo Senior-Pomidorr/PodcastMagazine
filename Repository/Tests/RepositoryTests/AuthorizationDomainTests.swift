@@ -15,7 +15,7 @@ final class AuthorizationDomainTests: XCTestCase {
     override func setUp() async throws {
         try await super.setUp()
         
-        sut = .init()
+        sut = .init(repository: .preview())
         state = .init()
     }
     
@@ -36,6 +36,35 @@ final class AuthorizationDomainTests: XCTestCase {
         _ = sut.reduce(&state, action: .setPassword("Baz"))
         
         XCTAssertEqual(state.password, "Baz")
+    }
+    
+    func test_setInvalidEmail() {
+        sut = .init(
+            repository: .preview(),
+            emailValidation: { _ in false }
+        )
+        
+        _ = sut.reduce(&state, action: .setEmail("Baz"))
+        
+        XCTAssertFalse(state.isEmailValid)
+    }
+    
+    func test_setValidEmail() {
+        sut = .init(
+            repository: .preview(),
+            emailValidation: { _ in true }
+        )
+        
+        _ = sut.reduce(&state, action: .setEmail("Bar"))
+        
+        XCTAssertTrue(state.isEmailValid)
+    }
+    
+    func test_setEmailEmptyState() {
+        _ = sut.reduce(&state, action: .setEmail(""))
+        
+        XCTAssertTrue(state.email.isEmpty)
+        XCTAssertTrue(state.isEmailValid)
     }
     
 }

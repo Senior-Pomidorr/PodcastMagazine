@@ -15,7 +15,15 @@ final class EmailValidatorTests: XCTestCase {
     }
     
     func test_emailInvalid() {
-        XCTAssertTrue(EmailValidator.validate("isdaiquirigmailcom"))
+        XCTAssertFalse(EmailValidator.validate("isdaiquirigmailcom"))
+    }
+    
+    func test_emailWithDotInvalid() {
+        XCTAssertFalse(EmailValidator.validate("isdaiquirigmail.com"))
+    }
+    
+    func test_urlAddressIsInvalidEmail() {
+        XCTAssertFalse(EmailValidator.validate("www.apple.com"))
     }
 
 }

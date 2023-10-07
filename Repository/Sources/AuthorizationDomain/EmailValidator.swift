@@ -14,7 +14,7 @@ public struct EmailValidator {
         }
         
         let rangeToValidate = NSRange(
-            email.startIndex...email.endIndex,
+            email.startIndex..<email.endIndex,
             in: email
         )
         
