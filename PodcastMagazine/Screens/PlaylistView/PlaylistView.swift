@@ -59,7 +59,7 @@ struct PlaylistView: View {
                         }
                         .listRowSeparator(.hidden)
                         
-                        ForEach(store.state.playlistList.prefix(20)) {feed in
+                        ForEach(store.state.playlistList.prefix(10)) {feed in
                             PlaylistCell(playlist: feed)
                         }
                     }
@@ -74,7 +74,7 @@ struct PlaylistView: View {
             }
         }
         .onAppear {
-            print("!!!!!!!!! --- Появился экран плейлиста --- !!!!!!!!")
+//            print("!!!!!!!!! --- Появился экран плейлиста --- !!!!!!!!")
             store.send(.viewAppered)
         }
         .background(Color.white)

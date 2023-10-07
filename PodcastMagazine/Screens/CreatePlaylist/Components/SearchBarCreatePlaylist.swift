@@ -13,7 +13,10 @@ struct SearchBarCreatePlaylist: View {
         HStack {
             TextField("Search...", text: $searchTextPlaylist)
                 .foregroundColor(.black)
-                .disableAutocorrection(true)
+                .autocorrectionDisabled(true)
+                .autocapitalization(.none)
+                .keyboardType(.webSearch)
+//                .submitLabel(.done)
             Spacer()
             Image("Search")
                 .offset(x: 10)

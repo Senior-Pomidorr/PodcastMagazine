@@ -6,12 +6,15 @@
 //
 
 import SwiftUI
+import Repository
 
 struct CreatePlaylistView: View {
     @StateObject var store: CreatePlaylistStore = CreatePlaylistDomain.createPlaylistLive
     @State private var newPlaylistName = ""
     @State var searchFieldText: String = ""
     @State var isTapped: Bool = false
+    @State private var isShowPhotoLibrary = false
+    @State private var image = UIImage()
     
     var body: some View {
         NavigationView {
@@ -19,7 +22,7 @@ struct CreatePlaylistView: View {
                 VStack {
                     ZStack {
                         Button {
-                            
+                            isShowPhotoLibrary = true
                         } label: {
                             ZStack {
                                 Image("backgroundImage")
@@ -49,21 +52,16 @@ struct CreatePlaylistView: View {
                             .padding(.vertical, 18)
                         switch store.state.playlistStatus {
                         case .none:
-                            ForEach(store.state.randomEpisodes) {feed in
+                            ForEach(store.state.getEpisodesRequest) {feed in
                                 VStack(spacing: 16) {
-                                    CreatePlaylistCells(isTapped: isTapped, image: feed.image, title: feed.title, author: feed.description)
+                                    CreatePlaylistCells(isTapped: isTapped, image: feed.image, title: feed.title, author: feed.feedTitle ?? "No feed title")
                                 }
                             }
-                            
-//                            ForEach(store.state.getEpisodesRequest.prefix(20)) {feed in
-//                                VStack(spacing: 16) {
-//                                    CreatePlaylistCells(isTapped: isTapped, image: feed.image, title: feed.title, author: feed.description)
-//                                }
-                            
+                                                  
                         case let .error(error):
-                            Text("Ошибка  - \(error.localizedDescription)")
-                        default:
-                            EmptyView()
+                            Text(String(describing: error))
+                        case .loading:
+                            ProgressView()
                         }
                     }
                 }
@@ -76,6 +74,14 @@ struct CreatePlaylistView: View {
         .navigationTitle("Create playlist")
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(leading: CustomBackButton())
+        .toolbar {
+            AddPlaylistButton()
+        }
+        .frame(alignment: .trailing)
+        .sheet(isPresented: $isShowPhotoLibrary) {
+            ImagePicker(selectedImage: $image, sourceType: .photoLibrary)
+                .ignoresSafeArea()
+        }
     }
 }
 

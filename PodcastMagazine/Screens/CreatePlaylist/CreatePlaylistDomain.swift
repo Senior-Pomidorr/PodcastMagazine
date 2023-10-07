@@ -36,12 +36,12 @@ struct CreatePlaylistDomain {
         init(
             userQuery: String = .init(),
             playlistStatus: PlaylistLoadingStatus = .none,
-            _getEpisodesRequest: [Episode] = .init(),
+            getEpisodesRequest: [Episode] = .init(),
             randomEpisodes: [Episode] = .init()
         ) {
             self.userQuery = userQuery
             self.playlistStatus = playlistStatus
-            self.getEpisodesRequest = _getEpisodesRequest
+            self.getEpisodesRequest = getEpisodesRequest
             self.randomEpisodes = randomEpisodes
         }
     }
