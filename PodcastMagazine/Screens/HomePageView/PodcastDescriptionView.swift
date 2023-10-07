@@ -11,9 +11,19 @@ import LoadableImage
 
 struct PodcastDiscriptionView: View {
     
+    init(
+        podcastID: Int,
+        hideTabBar: Bool = false
+    ) {
+        self.hideTabBar = hideTabBar
+        self.podcastID = podcastID
+        let store = PodcastDescriptionDomain.liveStore
+        _store = .init(wrappedValue: store)
+    }
+    
     var podcastID: Int
     @AppStorage("tabBar") var hideTabBar = false
-    @StateObject var store: PodcastDescriptionStore = PodcastDescriptionDomain.liveStore
+    @StateObject var store: PodcastDescriptionStore
     
     var body: some View {
         GeometryReader { geometry in
@@ -88,7 +98,7 @@ struct PodcastDiscriptionView: View {
             .padding(.horizontal)
         }
         .onAppear {
-            print("Пришел id =", podcastID)
+//            print("Пришел id =", podcastID)
             hideTabBar = true
             store.send(.viewAppeared(podcastID))
         }
@@ -101,5 +111,6 @@ struct PodcastDiscriptionView: View {
 }
 
 #Preview {
-    PodcastDiscriptionView(podcastID: 75075, store: PodcastDescriptionDomain.liveStore)
+    PodcastDiscriptionView(podcastID: 75075, hideTabBar: false)
+//    PodcastDiscriptionView(podcastID: 75075, store: PodcastDescriptionDomain.liveStore)
 }
