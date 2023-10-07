@@ -7,12 +7,6 @@
 
 import Foundation
 
-struct Regex {
-    static let leastOneUppercased = ".*[A-Z]+.*"
-    static let leastOneDigit = ".*[0-9]+.*"
-    static let leastOneLowercase = ".*[a-z]+.*"
-}
-
 public struct Validator {
     public static func validate(email: String) -> Bool {
         guard let emailDetector = try? NSDataDetector(types: NSTextCheckingResult.CheckingType.link.rawValue) else {
@@ -37,11 +31,24 @@ public struct Validator {
     }
     
     public static func validate(password: String) -> Bool {
+        guard password.count > 7 else {
+            return false
+        }
         return NSCompoundPredicate(andPredicateWithSubpredicates: [
-            .init(format: .matchesPredicate, Regex.leastOneUppercased),
-            .init(format: .matchesPredicate, Regex.leastOneDigit),
-            .init(format: .matchesPredicate, Regex.leastOneLowercase)
+            .init(format: .matchesPredicate, Regex.uppercasedChar),
+            .init(format: .matchesPredicate, Regex.digit),
+            .init(format: .matchesPredicate, Regex.lowercasedChar),
+            .init(format: .matchesPredicate, Regex.symbol)
         ])
         .evaluate(with: password)
+    }
+}
+
+extension Validator {
+    struct Regex {
+        static let uppercasedChar = ".*[A-Z]+.*"
+        static let digit = ".*[0-9]+.*"
+        static let lowercasedChar = ".*[a-z]+.*"
+        static let symbol = ".*[!&^%$#@()/]+.*"
     }
 }

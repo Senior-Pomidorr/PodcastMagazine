@@ -41,5 +41,13 @@ final class ValidatorTests: XCTestCase {
     func test_passwordWithoutLowercaseIsInvalid() {
         XCTAssertFalse(Validator.validate(password: "PASSWORD1@"))
     }
+    
+    func test_passwordWithoutSymbolIsInvalid() {
+        XCTAssertFalse(Validator.validate(password: "Password1"))
+    }
+    
+    func test_passwordLessThanEightSymbol() {
+        XCTAssertFalse(Validator.validate(password: "Pas@1"))
+    }
 
 }
