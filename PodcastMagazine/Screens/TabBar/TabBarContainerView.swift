@@ -28,6 +28,7 @@ struct TabBarContainerView<Content:View>: View {
             }
             
             if showPlayer {
+                SmallAudioPlayerView()
                 //TODO: - PLAYER VIEW
             }
             
