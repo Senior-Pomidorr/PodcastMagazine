@@ -42,7 +42,7 @@ public struct AuthorizationDomain: ReducerDomain {
     //MARK: - init(_:)
     public init(
         repository: AuthorizationRepositoryProvider = .live,
-        emailValidation: @escaping (String) -> Bool = EmailValidator.validate
+        emailValidation: @escaping (String) -> Bool = Validator.validate(email:)
     ) {
         self.repository = repository
         self.emailValidation = emailValidation
