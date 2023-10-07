@@ -21,7 +21,7 @@ struct CategoryItemView: View {
                 }
                 .font(.caption)
                 .padding(.horizontal, 4)
-            }
+        }
     }
 }
 

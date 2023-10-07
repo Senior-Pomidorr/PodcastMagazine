@@ -14,7 +14,7 @@ struct CreatePlaylistButton: View {
         HStack(alignment: .center) {
             ZStack {
                 Rectangle()
-                    .foregroundColor(Color("Grey"))
+                    .foregroundColor(Color("tintGray0"))
                     .frame(width: 48, height: 48)
                     .cornerRadius(8)
                 Image(systemName: "plus")
