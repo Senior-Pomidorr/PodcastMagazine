@@ -32,6 +32,7 @@ struct PlayerDomain {
         var image: String
         
         var isPlaying: Bool
+        var isShuffled: Bool = false
         
         // MARK: - init(:)
         init(
@@ -180,7 +181,15 @@ struct PlayerDomain {
             .eraseToAnyPublisher()
             
         case .shuffleButtonTap:
-            state.episodes = state.episodes.shuffled()
+            switch state.isShuffled {
+            case true:
+                state.episodes = state.episodes.shuffled()
+            case false:
+                state.episodes = state.episodes.sorted(by: {
+                    $0.title.lowercased() < $1.title.lowercased()
+                })
+            }
+            state.isShuffled.toggle()
             
         case ._playerResponse(_):
             break

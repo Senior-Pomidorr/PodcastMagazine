@@ -33,7 +33,8 @@ struct PlayerView: View {
                     isPlaying: store.state.isPlaying,
                     sliderValue: bindingSlider(),
                     duration: store.state.duration,
-                    timeLeft: store.state.timeLeft
+                    timeLeft: store.state.timeLeft,
+                    isShuffled: store.state.isShuffled
                 )
                 
             case .loading:
@@ -98,6 +99,7 @@ struct PlayerContentView: View {
     var duration: TimeInterval
     
     var timeLeft: TimeInterval
+    var isShuffled: Bool
     
     var body: some View {
         GeometryReader { geometry in
@@ -116,13 +118,14 @@ struct PlayerContentView: View {
                     Spacer()
                 }
                 
-                VStack(spacing: 0) {
+                VStack(alignment: .center, spacing: 0) {
                     Text(title)
                         .font(.custom(.bold, size: 16))
                         .kerning(0.32)
                         .lineLimit(2)
                 }
                 .padding(.top, 36)
+                .padding(.horizontal, 33)
                 
                 SliderStack(
                     value: sliderValue,
@@ -132,12 +135,15 @@ struct PlayerContentView: View {
                 
                 HStack(alignment: .center, spacing: 32) {
                     Button {
-                        print("shuffle tap")
+                        shuffleButtonAction()
                     } label: {
-                        Image("shuffle")
+                        Image(systemName: "shuffle")
                             .resizable()
                             .scaledToFit()
                             .frame(width: 16, height: 16)
+                            .foregroundStyle(
+                                isShuffled ? .blue : .gray
+                            )
                     }
                     
                     Button {
@@ -173,12 +179,13 @@ struct PlayerContentView: View {
                     }
                     
                     Button {
-                        shuffleButtonAction()
+                        //
                     } label: {
-                        Image("repeat")
+                        Image(systemName: "repeat")
                             .resizable()
                             .scaledToFit()
                             .frame(width: 16, height: 16)
+                            .foregroundStyle(Color.gray)
                     }
                 }
                 .padding(.horizontal, 48)
