@@ -135,12 +135,16 @@ public final class Repository {
 public extension Repository {
     /// Контейнер, отражающий результат работы репозитория..
     /// Тип `success` содержит запрашиваемую модель. `failure` хранит ошибку, возникшую во время работы.
-    enum Response<Wrapped> {
+    enum Response<Wrapped>: Equatable {
         case success(Wrapped)
         case failure(RepositoryError)
         
         static func catchError(_ error: RepositoryError) -> Just<Self> {
             Just(.failure(error))
+        }
+        
+        public static func == (lhs: Repository.Response<Wrapped>, rhs: Repository.Response<Wrapped>) -> Bool {
+            String(describing: lhs) == String(describing: rhs)
         }
     }
 }
