@@ -42,6 +42,12 @@ struct TabBarContainerView<Content:View>: View {
                     previousButtonAction: { store.send(.previousButtonTap) },
                     isPlaying: store.state.isPlaying
                 )
+                .gesture(DragGesture(minimumDistance: 0, coordinateSpace: .local)
+                                    .onEnded({ value in
+                                        if value.translation.height > 0 {
+                                            ObserverAudioPlayer.shared.isShowingSmallPlayer = false
+                                        }
+                                    }))
             }
             
             if !hideTabBar {
