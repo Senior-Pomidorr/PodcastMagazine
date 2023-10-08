@@ -32,6 +32,7 @@ struct PlayerDomain {
         var image: String
         
         var isPlaying: Bool
+        var isShuffled: Bool = false
         
         // MARK: - init(:)
         init(
@@ -57,26 +58,26 @@ struct PlayerDomain {
         }
         
         // MARK: - Methods
-        func findEpisodeBy(id: Int) -> Episode {
-            return episodes.first { $0.id == id}!
-        }
+//        func findEpisodeBy(id: Int) -> Episode {
+//            return episodes.first { $0.id == id}!
+//        }
         
-        func findIndexBy(_ episode: Episode) -> Int? {
-            return episodes.firstIndex(of: episode)
-        }
-        
-        func findNextEpisode() -> Episode? {
-            guard currentIndex < episodes.count - 1 else { return nil }
-            let index = currentIndex + 1
-            return episodes[index]
-        }
-        
-        func findPreviousEpisode() -> Episode? {
-            guard (currentIndex - 1) >= 0 else { return nil }
-            let index = currentIndex - 1
-            return episodes[index]
-        }
-        
+//        func findIndexBy(_ episode: Episode) -> Int? {
+//            return episodes.firstIndex(of: episode)
+//        }
+//        
+//        func findNextEpisode() -> Episode? {
+//            guard currentIndex < episodes.count - 1 else { return nil }
+//            let index = currentIndex + 1
+//            return episodes[index]
+//        }
+//        
+//        func findPreviousEpisode() -> Episode? {
+//            guard (currentIndex - 1) >= 0 else { return nil }
+//            let index = currentIndex - 1
+//            return episodes[index]
+//        }
+//        
         func createUrl(from episode: Episode?) -> URL? {
             guard let url = episode.map(\.enclosureUrl) else { return nil }
             return URL(string: url)
@@ -112,8 +113,9 @@ struct PlayerDomain {
             }
             // first start
             state.screenStatus = .loading
+            PlayListManager.shared.setPlayList(state.episodes, and: state.selectedEpisode)
             AudioManager.shared.url = state.createUrl(from: state.selectedEpisode)
-            state.currentIndex = state.findIndexBy(state.selectedEpisode) ?? 0
+//            state.currentIndex = state.findIndexBy(state.selectedEpisode) ?? 0
             
             return AudioManager.shared.playMedia()
                 .map(Action._playerResponse)
@@ -142,10 +144,10 @@ struct PlayerDomain {
             state.isPlaying.toggle()
             
         case .nextButtonTap:
-            guard let episode = state.findNextEpisode() else { break }
+            guard let episode = PlayListManager.shared.getNextAudio() else { break }
             AudioManager.shared.pause()
             state.screenStatus = .loading
-            state.currentIndex = state.findIndexBy(episode) ?? 0
+//            state.currentIndex = state.findIndexBy(episode) ?? 0
             state.selectedEpisode = episode
             AudioManager.shared.url = state.createUrl(from: episode)
             
@@ -154,10 +156,10 @@ struct PlayerDomain {
                 .eraseToAnyPublisher()
             
         case .previousButtonTap:
-            guard let episode = state.findPreviousEpisode() else { break }
+            guard let episode = PlayListManager.shared.getPreviousAudio() else { break }
             AudioManager.shared.pause()
             state.screenStatus = .loading
-            state.currentIndex = state.findIndexBy(episode) ?? 0
+//            state.currentIndex = state.findIndexBy(episode) ?? 0
             state.selectedEpisode = episode
             AudioManager.shared.url = state.createUrl(from: episode)
             
@@ -180,7 +182,18 @@ struct PlayerDomain {
             .eraseToAnyPublisher()
             
         case .shuffleButtonTap:
-            state.episodes = state.episodes.shuffled()
+            guard let episodes = PlayListManager.shared.playList(state.isShuffled) else { break }
+            
+//            switch state.isShuffled {
+//            case true:
+//                state.episodes = state.episodes.shuffled()
+//            case false:
+//                state.episodes = state.episodes.sorted(by: {
+//                    $0.title.lowercased() < $1.title.lowercased()
+//                })
+//            }
+            
+            state.isShuffled.toggle()
             
         case ._playerResponse(_):
             break
