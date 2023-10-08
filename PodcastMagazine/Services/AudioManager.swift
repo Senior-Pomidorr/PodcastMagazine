@@ -15,6 +15,20 @@ class AudioManager {
     private var player: AVPlayer = AVPlayer()
     var url: URL?
     
+    func status() -> AnyPublisher<AVPlayer.Status, Never> {
+        player.publisher(for: \.status)
+            .removeDuplicates()
+            .receive(on: DispatchQueue.main)
+            .eraseToAnyPublisher()
+    }
+    
+    func currentItem() -> AnyPublisher<AVPlayerItem?, Never> {
+        player.publisher(for: \.currentItem)
+            .removeDuplicates()
+            .receive(on: DispatchQueue.main)
+            .eraseToAnyPublisher()
+    }
+    
     /// общая продолжительность трека
     var duration: TimeInterval {
         if player.status == .readyToPlay {
