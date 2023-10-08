@@ -1,23 +1,22 @@
 //
-//  AuthorizationDomainTests.swift
+//  LoginDomainTests.swift
 //  
 //
 //  Created by Илья Шаповалов on 06.10.2023.
 //
 
 import XCTest
-import AuthorizationDomain
+import LoginDomain
 import SwiftUDF
 import Models
 import Repository
 import Combine
 
-final class AuthorizationDomainTests: XCTestCase {
-    private var sut: AuthorizationDomain!
-    private var state: AuthorizationDomain.State!
-    private var spy: ReducerSpy<AuthorizationDomain.Action>!
+final class LoginDomainTests: XCTestCase {
+    private var sut: LoginDomain!
+    private var state: LoginDomain.State!
+    private var spy: ReducerSpy<LoginDomain.Action>!
     private var testUser: UserAccount!
-    private var exp: XCTestExpectation!
     
     override func setUp() async throws {
         try await super.setUp()
@@ -29,8 +28,7 @@ final class AuthorizationDomainTests: XCTestCase {
             validatePassword: { _ in false }
         )
         state = .init()
-        exp = .init(description: "AuthorizationDomainTests")
-        spy = .init(expectation: exp)
+        spy = .init()
     }
     
     override func tearDown() async throws {
@@ -38,7 +36,6 @@ final class AuthorizationDomainTests: XCTestCase {
         state = nil
         spy = nil
         testUser = nil
-        exp = nil
         
         try await super.tearDown()
     }
@@ -155,11 +152,11 @@ final class AuthorizationDomainTests: XCTestCase {
     
 }
 
-private extension AuthorizationDomainTests {
+private extension LoginDomainTests {
     func makeSUT(
         isCredValid: Bool = true,
         userResponse: Repository.Response<UserAccount> = .success(.sample)
-    ) -> AuthorizationDomain {
+    ) -> LoginDomain {
         .init(
             repository: .preview(userResponse: userResponse, delay: .zero),
             validateEmail: { _ in isCredValid },

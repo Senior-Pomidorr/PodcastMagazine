@@ -1,5 +1,5 @@
 //
-//  AuthorizationRepositoryProvider.swift
+//  LoginRepositoryProvider.swift
 //
 //
 //  Created by Илья Шаповалов on 06.10.2023.
@@ -9,7 +9,7 @@ import Foundation
 import Models
 import Combine
 
-public struct AuthorizationRepositoryProvider {
+public struct LoginRepositoryProvider {
     public var login: (_ email: String, _ password: String) -> Repository.ResponsePublisher<UserAccount>
     
     public init(login: @escaping (_: String, _: String) -> Repository.ResponsePublisher<UserAccount>) {

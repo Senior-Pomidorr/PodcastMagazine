@@ -14,8 +14,8 @@ let package = Package(
         .library(name: "Models", targets: ["Models"]),
         .library(name: "LoadableImage", targets: ["LoadableImage"]),
         .library(name: "RootDomain", targets: ["RootDomain"]),
-        .library(name: "AuthorizationDomain", targets: ["AuthorizationDomain"])
-//        .library(name: "SignInWithGoogle", targets: ["SignInWithGoogle"]),
+        .library(name: "LoginDomain", targets: ["LoginDomain"]),
+        .library(name: "RegistrationDomain", targets: ["RegistrationDomain"]),
     ],
     dependencies: Dependencies.allCases.map(\.package),
     targets: [
@@ -49,18 +49,26 @@ let package = Package(
                 "FirebaseAuthProvider",
             ]),
         .target(
-            name: "AuthorizationDomain",
+            name: "LoginDomain",
             dependencies: [
                 "Repository",
                 "Models",
                 Dependencies.SwiftUDF.target,
             ]),
         .target(
+            name: "RegistrationDomain",
+            dependencies: [
+                "Repository",
+                "Models",
+                Dependencies.SwiftUDF.target,
+               ]),
+        .target(
             name: "RootDomain",
             dependencies: [
                 "Repository",
                 "Models",
-                "AuthorizationDomain",
+                "LoginDomain",
+                "RegistrationDomain",
                 Dependencies.SwiftUDF.target,
             ]),
 //        .testTarget(
@@ -77,7 +85,7 @@ let package = Package(
                 "Models",
                 "RealmProvider",
                 "RootDomain",
-                "AuthorizationDomain"
+                "LoginDomain"
             ]),
     ]
 )

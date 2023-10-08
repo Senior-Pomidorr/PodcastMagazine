@@ -1,5 +1,5 @@
 //
-//  AuthorizationDomain.swift
+//  LoginDomain.swift
 //
 //
 //  Created by Илья Шаповалов on 06.10.2023.
@@ -11,7 +11,7 @@ import SwiftUDF
 import Combine
 import Models
 
-public struct AuthorizationDomain: ReducerDomain {
+public struct LoginDomain: ReducerDomain {
     //MARK: - State
     public struct State: Equatable {
         public var email: String
@@ -62,13 +62,13 @@ public struct AuthorizationDomain: ReducerDomain {
     }
     
     //MARK: - Dependencies
-    private let repository: AuthorizationRepositoryProvider
+    private let repository: LoginRepositoryProvider
     private let validateEmail: (String) -> Bool
     private let validatePassword: (String) -> Bool
     
     //MARK: - init(_:)
     public init(
-        repository: AuthorizationRepositoryProvider = .live,
+        repository: LoginRepositoryProvider = .live,
         validateEmail: @escaping (String) -> Bool = Validator.validate(email:),
         validatePassword: @escaping (String) -> Bool = Validator.validate(password:)
     ) {
@@ -90,7 +90,6 @@ public struct AuthorizationDomain: ReducerDomain {
                 state.email = email
                 state.isEmailValid = validateEmail(email)
             }
-            
         case .setPassword(let password):
             switch password.isEmpty {
             case true:
@@ -101,7 +100,6 @@ public struct AuthorizationDomain: ReducerDomain {
                 state.password = password
                 state.isPasswordValid = validatePassword(password)
             }
-            
         case .loginButtonTap:
             return run(._loginRequest)
             
@@ -120,17 +118,20 @@ public struct AuthorizationDomain: ReducerDomain {
         case let ._loginResponse(.failure(error)):
             state.isAlert = true
             state.alertText = error.errorDescription
-            
         }
-        
         return empty()
     }
     
     //MARK: - previewStore
-    public static let previewStore = Store(
+    static let previewStore = Store(
         state: Self.State(),
         reducer: Self(
             repository: .preview()
         )
+    )
+    
+    public static let liveStore = Store(
+        state: Self.State(),
+        reducer: Self()
     )
 }
