@@ -9,25 +9,32 @@ import SwiftUI
 import Models
 
 struct FavoritesView: View {
+    @StateObject var store: PlaylistStore = PlayListDomain.playlistDomainLive
     var mockFeed: [Feed] = [Feed.sample]
     var body: some View {
         NavigationView {
+            switch store.state.playlistStatus {
+            case .none:
             List {
-                ForEach(mockFeed, id: \.id) {feed in
-                    ForEach(1..<20) {repeatFeed in
-                        PlaylistCell(playlist: Playlist.sample)
+                ForEach(store.state.favoritesList) {item in
+                    FavoritesCellForAll(feed: item)
                             .listRowSeparator(.hidden)
                     }
                 }
-            }
             .listStyle(PlainListStyle())
+                default:
+                    EmptyView()
+                }
+            }
+        .onAppear {
+            store.send(.viewAppered)
         }
         .navigationTitle("Favorites")
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(leading: CustomBackButton())
         .padding(.horizontal)
+        }
     }
-}
 
 #Preview {
     FavoritesView()
