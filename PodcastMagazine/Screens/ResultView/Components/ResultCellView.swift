@@ -16,9 +16,7 @@ struct ResultCellView: View {
     var body: some View {
         RoundedRectangle(cornerRadius: 16)
             .fill(
-                isResultCell
-                ? .clear
-                : Color.color5.opacity(0.7)
+                isResultCell ? .clear : Color.color5.opacity(0.7)
             )
             .shadow(
                 color: .black.opacity(isResultCell ? 0 : 0.1),
@@ -30,9 +28,7 @@ struct ResultCellView: View {
                 HStack {
                     RoundedRectangle(cornerRadius: 16)
                         .fill(
-                            isResultCell
-                            ? .tintBlue2
-                            : .tintBlue1
+                            isResultCell ? .tintBlue2 : .tintBlue1
                         )
                         .frame(width: 56, height: 56)
                         .overlay {
@@ -64,14 +60,10 @@ struct ResultCellView: View {
                                 )
                                 
                                 Text(
-                                    isResultCell
-                                    ? "|"
-                                    : "•"
+                                    isResultCell ? "|" : "•"
                                 )
                                 .foregroundStyle(
-                                    isResultCell
-                                    ? .tintGray0
-                                    : .tintGray2
+                                    isResultCell ? .tintGray0 : .tintGray2
                                 )
                             }
                             

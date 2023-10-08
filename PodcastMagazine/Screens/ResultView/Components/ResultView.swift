@@ -41,10 +41,17 @@ struct ResultView: View {
                                   content: {
                             Section {
                                 ForEach(items, id: \.id) { item in
-                                    ResultCellView(
-                                        isResultCell: true,
-                                        item: item
-                                    )
+                                    NavigationLink {
+                                        PodcastDiscriptionView(
+                                            podcastID: item.id,
+                                            hideTabBar: false
+                                        )
+                                    } label: {
+                                        ResultCellView(
+                                            isResultCell: true,
+                                            item: item
+                                        )
+                                    }
                                     .frame(height: 72)
                                 }
                             } header: {
@@ -59,10 +66,18 @@ struct ResultView: View {
                             
                             Section {
                                 ForEach(podcastItems, id: \.id) { item in
-                                    ResultCellView(
-                                        isResultCell: false,
-                                        item: item
-                                    )
+                                    NavigationLink {
+                                        PodcastDiscriptionView(
+                                            podcastID: item.id,
+                                            hideTabBar: false
+                                        )
+//                                        Text("Podcast \(item.id)")
+                                    } label: {
+                                        ResultCellView(
+                                            isResultCell: false,
+                                            item: item
+                                        )
+                                    }
                                     .frame(height: 72)
                                 }
                             } header: {

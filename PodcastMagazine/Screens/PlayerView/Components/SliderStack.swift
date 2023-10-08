@@ -8,29 +8,22 @@
 import SwiftUI
 
 struct SliderStack: View {
-    var sliderValue: Binding<TimeInterval>
-    @Binding var isEditing: Bool
+    var value: Binding<TimeInterval>
     var duration: TimeInterval
-    
-    @State var startTime: String
-    @State var timeLeft: String
-    
+    var timeLeft: TimeInterval
     
     var body: some View {
         HStack {
-            Text(startTime)
+            Text(DateComponentsFormatter.positional.string(from: value.wrappedValue) ?? "0:00")
                 .foregroundStyle(Color("mainText"))
                 .font(.custom(.regular, size: 14))
-            
             Slider(
-                value: sliderValue,
+                value: value,
                 in: 0...duration
-            ) { editing in
-                isEditing = editing
-            }
+            )
             .padding()
             
-            Text(timeLeft)
+            Text(DateComponentsFormatter.positional.string(from: timeLeft) ?? "0:00")
                 .foregroundStyle(Color("mainText"))
                 .font(.custom(.regular, size: 14))
         }
@@ -38,7 +31,3 @@ struct SliderStack: View {
         .padding(.top, 38)
     }
 }
-//
-//#Preview {
-//    SliderStack(startTime: "", timeLeft: "", value: 0, duration: 3)
-//}

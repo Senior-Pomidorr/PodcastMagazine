@@ -26,15 +26,6 @@ struct AllCategoryView: View {
                     spacing: 20) {
                         ForEach(categories) { item in
                             CategoryCellView(store: store, categoryCellInputData: item)
-                            
-//                            NavigationLink(
-//                                destination: PodcastListView(category: item, store: store),
-//                                label: {
-//                                    CategoryCellView(
-//                                        categoryCellInputData: item
-//                                    )
-//                                }
-//                            )
                         }
                     }
             }

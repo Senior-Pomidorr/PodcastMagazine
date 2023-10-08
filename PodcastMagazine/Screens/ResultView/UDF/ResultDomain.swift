@@ -47,8 +47,8 @@ struct ResultDomain {
         case viewAppeared
         case _getQueryRequest
         case _getPodcastRequest
-        case _queryResponce(Repository.Response<FeedsResponse>)
-        case _podcastResponce(Repository.Response<FeedsResponse>)
+        case _queryResponse(Repository.Response<FeedsResponse>)
+        case _podcastResponse(Repository.Response<FeedsResponse>)
     }
     
     // MARK: - Dependencies
@@ -76,15 +76,15 @@ struct ResultDomain {
             
         case ._getQueryRequest:
             return provider.getFeedRequest(.feeds(byTitle: state.trimmingUserQuery))
-                .map(Action._queryResponce)
+                .map(Action._queryResponse)
                 .eraseToAnyPublisher()
             
         case ._getPodcastRequest:
             return provider.getFeedRequest(.trendingFeeds())
-                .map(Action._podcastResponce)
+                .map(Action._podcastResponse)
                 .eraseToAnyPublisher()
             
-        case let ._queryResponce(.success(result)):
+        case let ._queryResponse(.success(result)):
             state.searchScreenStatus = .none
             if result.feeds.isEmpty {
                 state.genres = fakeFeed()
@@ -92,15 +92,15 @@ struct ResultDomain {
                 state.genres = result.feeds
             }
             
-        case let ._queryResponce(.failure(error)):
+        case let ._queryResponse(.failure(error)):
             state.searchScreenStatus = .error(error)
 
             
-        case let ._podcastResponce(.success(result)):
+        case let ._podcastResponse(.success(result)):
             state.searchScreenStatus = .none
             state.podcasts = result.feeds
             
-        case let ._podcastResponce(.failure(error)):
+        case let ._podcastResponse(.failure(error)):
             state.searchScreenStatus = .error(error)
             state.genres = fakeFeed()
         }

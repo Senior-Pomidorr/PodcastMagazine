@@ -6,24 +6,31 @@
 //
 
 import SwiftUI
+import LoadableImage
 
 struct CreatePlaylistCells: View {
-    @State private var isTapped = false
-    //    private var podcastImage: UIImage
+    @State var isTapped = false
+    @State var image: String
+    @State var title: String
+    @State var author: String
     
     var body: some View {
         HStack {
-            Rectangle()
+            LoadableImage(image) { image in
+                image
+                    .resizable()
+                    .scaledToFill()
+            }
                 .foregroundColor(.clear)
                 .frame(width: 56, height: 56)
                 .background(Color(red: 0.73, green: 0.9, blue: 0.91))
                 .cornerRadius(16)
                 .padding(8)
             VStack(alignment: .leading, spacing: 4) {
-                Text("Title")
+                Text(title)
                     .font(.custom(.bold, size: 14))
                 HStack {
-                    Text("Author")
+                    Text(author)
                         .font(.custom(.regular, size: 12))
                     Image(systemName: "circle.fill")
                         .font(.custom(.regular, size: 6))
@@ -48,5 +55,5 @@ struct CreatePlaylistCells: View {
 }
 
 #Preview {
-    CreatePlaylistCells()
+    CreatePlaylistCells(isTapped: false, image: "", title: "Title", author: "Author")
 }
