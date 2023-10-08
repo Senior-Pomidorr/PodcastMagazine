@@ -19,10 +19,12 @@ public struct RegistrationDomain: ReducerDomain {
         public var firstName: String
         public var lastName: String
         public var password: String
+        public var alertText: String
         
         public var isEmailValid: Bool
         public var isPasswordValid: Bool
         public var completeAccountPresented: Bool
+        public var isAlert: Bool
         
         //MARK: - init(_:)
         public init(
@@ -30,17 +32,21 @@ public struct RegistrationDomain: ReducerDomain {
             firstName: String = .init(),
             lastName: String = .init(),
             password: String = .init(),
+            alertText: String = .init(),
             isEmailValid: Bool = true,
             isPasswordValid: Bool = true,
-            completeAccountPresented: Bool = false
+            completeAccountPresented: Bool = false,
+            isAlert: Bool = false
         ) {
             self.email = email
             self.firstName = firstName
             self.lastName = lastName
             self.password = password
+            self.alertText = alertText
             self.isEmailValid = isEmailValid
             self.isPasswordValid = isPasswordValid
             self.completeAccountPresented = completeAccountPresented
+            self.isAlert = isAlert
         }
     }
     
@@ -52,6 +58,7 @@ public struct RegistrationDomain: ReducerDomain {
         case setPassword(String)
         case continueButtonTap
         case dismissCompleteAccount
+        case dismissAlert
         case signUpButtonTap
         case _createNewUserRequest
         case _invalidCredentials
@@ -107,6 +114,10 @@ public struct RegistrationDomain: ReducerDomain {
         case .dismissCompleteAccount:
             state.completeAccountPresented = false
             
+        case .dismissAlert:
+            state.isAlert = false
+            state.alertText.removeAll(keepingCapacity: true)
+            
         case .signUpButtonTap:
             guard
                 state.isEmailValid,
@@ -121,7 +132,9 @@ public struct RegistrationDomain: ReducerDomain {
             return run(._createNewUserRequest)
             
         case ._invalidCredentials:
-            break
+            // TO DO: Create alert message builder.
+            state.alertText = "Baz"
+            state.isAlert = true
             
         case ._createNewUserRequest:
             break

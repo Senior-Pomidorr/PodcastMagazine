@@ -126,22 +126,6 @@ final class RegistrationDomainTests: XCTestCase {
         XCTAssertFalse(state.isPasswordValid)
     }
     
-    func test_signUpButtonTapWithValidCredentials() {
-        state.email = "Baz"
-        state.password = "Bar"
-        state.isEmailValid = true
-        state.isPasswordValid = true
-        state.firstName = "Baz"
-        state.lastName = "Bar"
-        
-        spy.schedule(
-            sut.reduce(&state, action: .signUpButtonTap)
-        )
-        
-        XCTAssertEqual(spy.actions.count, 1)
-        XCTAssertEqual(spy.actions.first, ._createNewUserRequest)
-    }
-    
     func test_signUoButtonTapWithInvalidCredentials() {
         state.email = .init()
         state.password = .init()
@@ -159,8 +143,40 @@ final class RegistrationDomainTests: XCTestCase {
     }
     
     func test_reduceInvalidCredentials() {
+        state.isAlert = false
+        
         _ = sut.reduce(&state, action: ._invalidCredentials)
         
+        XCTAssertTrue(state.isAlert)
+        XCTAssertEqual(state.alertText, "Baz")
+    }
+    
+    func test_reduceDismissAlert() {
+        state.isAlert = true
+        
+        _ = sut.reduce(&state, action: .dismissAlert)
+        
+        XCTAssertFalse(state.isAlert)
+        XCTAssertTrue(state.alertText.isEmpty)
+    }
+    
+    func test_signUpButtonTapWithValidCredentials() {
+        state.email = "Baz"
+        state.password = "Bar"
+        state.isEmailValid = true
+        state.isPasswordValid = true
+        state.firstName = "Baz"
+        state.lastName = "Bar"
+        
+        spy.schedule(
+            sut.reduce(&state, action: .signUpButtonTap)
+        )
+        
+        XCTAssertEqual(spy.actions.count, 1)
+        XCTAssertEqual(spy.actions.first, ._createNewUserRequest)
+    }
+    
+    func test_createNewUserRequestEndWithSuccess() {
         
     }
 }
