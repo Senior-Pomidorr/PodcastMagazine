@@ -29,15 +29,18 @@ struct FavoritesCell: View {
                     .foregroundColor(Color("tintGray1"))
                     .frame(width: 60, height: 60)
                     .cornerRadius(8)
-                    
-                    Text(feed.title)
-                        .font(.custom(.bold, size: 14))
-//                        .padding(.top, 6)
-                        .frame(width: 120)
-                        .multilineTextAlignment(.center)
-                    Text(feed.author ?? "unknown")
-                        .font(.custom(.regular, size: 12))
-                        .foregroundStyle(Color("GreyTextColor"))
+                    VStack(spacing: 0) {
+                        Text(feed.title)
+                            .font(.custom(.bold, size: 14))
+                        //                        .padding(.top, 6)
+                            .frame(width: 100)
+                            .multilineTextAlignment(.center)
+                        Text(feed.author ?? "unknown")
+                            .font(.custom(.regular, size: 12))
+                            .foregroundStyle(Color("GreyTextColor"))
+                            .frame(width: 100, height: 30)
+                            .multilineTextAlignment(.center)
+                    }
                 }
             }
         }
