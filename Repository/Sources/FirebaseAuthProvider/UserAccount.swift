@@ -17,4 +17,11 @@ extension UserAccount {
             email: user.email ?? .init()
         )
     }
+    
+    init(user: User?) throws {
+        guard let user = user else {
+            throw FirebaseManager.FirebaseError.noUser
+        }
+        self.init(user: user)
+    }
 }

@@ -28,6 +28,8 @@ public struct FirebaseManager {
             return createUserWith(email: email, password: password)
         case .currentUser:
             return currentUserPublisher()
+        case .authState:
+            return authStatePublisher()
         }
     }
     
@@ -46,6 +48,21 @@ public struct FirebaseManager {
         .eraseToAnyPublisher()
     }
     
+    /// Initiates a password reset for the given email address.
+    ///
+    /// The publisher will emit events on the **main** thread.
+    ///
+    /// - Parameter email: The email address of the user.
+    /// - Returns: A publisher that emits whether the call was successful or not. The publisher will
+    /// emit on the *main* thread.
+    /// - Remark: Possible error codes:
+    ///   - `AuthErrorCodeInvalidRecipientEmail` - Indicates an invalid recipient email was sent in
+    /// the request.
+    ///   - `AuthErrorCodeInvalidSender` - Indicates an invalid sender email is set in the console
+    /// for this action.
+    ///   - `AuthErrorCodeInvalidMessagePayload` - Indicates an invalid email template for sending
+    /// update email.
+    ///
     public func changePassword(email: String) -> AnyPublisher<Void, FirebaseError> {
         auth.sendPasswordReset(withEmail: email)
             .mapError(FirebaseError.resetPasswordFail)
@@ -55,6 +72,25 @@ public struct FirebaseManager {
 }
 
 private extension FirebaseManager {
+    /// Signs in a user with the given email address and password.
+    ///
+    /// The publisher will emit events on the **main** thread.
+    ///
+    /// - Parameters:
+    ///   - email: The user's email address.
+    ///   - password: The user's password.
+    /// - Returns: A publisher that emits the result of the sign in flow. The publisher will emit on
+    /// the *main* thread.
+    /// - Remark:
+    ///   Possible error codes:
+    ///   - `AuthErrorCodeOperationNotAllowed` - Indicates that email and password
+    ///     accounts are not enabled. Enable them in the Auth section of the
+    ///     Firebase console.
+    ///   - `AuthErrorCodeUserDisabled` - Indicates the user's account is disabled.
+    ///   - `AuthErrorCodeWrongPassword` - Indicates the user attempted
+    ///     sign in with an incorrect password.
+    ///   - `AuthErrorCodeInvalidEmail` - Indicates the email address is malformed.
+    ///
     func signItWith(email: String, password: String) -> AnyPublisher<UserAccount, FirebaseError> {
         auth.signIn(withEmail: email, password: password)
             .map(\.user)
@@ -91,6 +127,13 @@ private extension FirebaseManager {
         }
         .map(UserAccount.init)
         .eraseToAnyPublisher()
+    }
+    
+    func authStatePublisher() -> AnyPublisher<UserAccount, FirebaseError> {
+        auth.authStateDidChangePublisher()
+            .tryMap(UserAccount.init)
+            .mapError(FirebaseError.map(_:))
+            .eraseToAnyPublisher()
     }
     
 }

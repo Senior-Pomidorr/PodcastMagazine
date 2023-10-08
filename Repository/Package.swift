@@ -14,12 +14,14 @@ let package = Package(
         .library(name: "Models", targets: ["Models"]),
         .library(name: "LoadableImage", targets: ["LoadableImage"]),
         .library(name: "RootDomain", targets: ["RootDomain"]),
- //       .library(name: "AuthorizationDomain", targets: ["AuthorizationDomain"])
-//        .library(name: "SignInWithGoogle", targets: ["SignInWithGoogle"]),
+        .library(name: "LoginDomain", targets: ["LoginDomain"]),
+        .library(name: "RegistrationDomain", targets: ["RegistrationDomain"]),
+        .library(name: "Validator", targets: ["Validator"]),
     ],
     dependencies: Dependencies.allCases.map(\.package),
     targets: [
         .target(name: "Models"),
+        .target(name: "Validator"),
         .target(
             name: "APIProvider",
             dependencies: [
@@ -49,10 +51,28 @@ let package = Package(
                 "FirebaseAuthProvider",
             ]),
         .target(
+            name: "LoginDomain",
+            dependencies: [
+                "Repository",
+                "Models",
+                "Validator",
+                Dependencies.SwiftUDF.target,
+            ]),
+        .target(
+            name: "RegistrationDomain",
+            dependencies: [
+                "Repository",
+                "Models",
+                "Validator",
+                Dependencies.SwiftUDF.target,
+               ]),
+        .target(
             name: "RootDomain",
             dependencies: [
                 "Repository",
                 "Models",
+                "LoginDomain",
+                "RegistrationDomain",
                 Dependencies.SwiftUDF.target,
             ]),
 //        .testTarget(
@@ -68,6 +88,10 @@ let package = Package(
                 "APIProvider",
                 "Models",
                 "RealmProvider",
+                "RootDomain",
+                "LoginDomain",
+                "RegistrationDomain",
+                "Validator",
             ]),
     ]
 )

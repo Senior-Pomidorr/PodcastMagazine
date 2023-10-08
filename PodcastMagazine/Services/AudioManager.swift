@@ -9,6 +9,20 @@ import AVKit
 import Foundation
 import Combine
 
+extension Optional {
+    var throwingPublisher: AnyPublisher<Wrapped, Error> {
+        switch self {
+        case .none:
+            return Fail(error: URLError(.badURL))
+                .eraseToAnyPublisher()
+        case .some(let wrapped):
+            return Just(wrapped)
+                .setFailureType(to: Error.self)
+                .eraseToAnyPublisher()
+        }
+    }
+}
+
 class AudioManager {
     static let shared = AudioManager()
 
@@ -73,23 +87,14 @@ class AudioManager {
     /// автоматичести загружает по URL и отслеживает status
     /// так же добавляет item в AVPlayer
     /// - Returns: AnyPublisher<AVPlayerItem.Status, Never>
-    func playMedia() -> AnyPublisher<AVPlayerItem.Status, Never> {
-        guard let url = url else {
-            return Just(.failed).eraseToAnyPublisher()
-        }
-        
-        let asset = AVAsset(url: url)
-        let playerItem = AVPlayerItem(
-                asset: asset,
-                automaticallyLoadedAssetKeys: [.tracks, .duration, .commonMetadata]
-            )
-        
-        player.replaceCurrentItem(with: playerItem)
-
-        return playerItem.publisher(for: \.status)
-                .removeDuplicates()
-                .receive(on: DispatchQueue.main)
-                .eraseToAnyPublisher()
+    func playMedia(url: URL? = nil) -> AnyPublisher<AVPlayer.Status, Never> {
+        url.publisher
+            .map(AVAsset.init)
+            .map(playerWith(asset:))
+            .flatMap(replaceItem(in: player))
+            .removeDuplicates()
+            .receive(on: DispatchQueue.main)
+            .eraseToAnyPublisher()
     }
     
     func play() {
@@ -120,15 +125,33 @@ extension AudioManager {
 }
 
 // MARK: - Winamp intro
-extension AudioManager {
-    private func winampIntro() {
+private extension AudioManager {
+     func winampIntro() {
         guard let url = Bundle.main.url(forResource: "winampIntro", withExtension: ".mp3") else {
             return
         }
+        
         
 //        let intro = AVPlayerItem(asset: AVAsset(url: url))
         
         // пока нету реализации
         // если дойдут руки сделаю
     }
+    
+    func playerWith(asset: AVAsset) -> AVPlayerItem {
+        AVPlayerItem(
+            asset: asset,
+            automaticallyLoadedAssetKeys: [.tracks, .duration, .commonMetadata]
+        )
+    }
+    
+    func replaceItem(in player: AVPlayer) -> (AVPlayerItem) -> AnyPublisher<AVPlayer.Status, Never> {
+        { item in
+            player.replaceCurrentItem(with: item)
+            return player
+                .publisher(for: \.status)
+                .eraseToAnyPublisher()
+        }
+    }
+    
 }

@@ -12,5 +12,6 @@ public extension FirebaseManager {
         case logIn(email: String, password: String)
         case register(email: String, password: String)
         case currentUser
+        case authState
     }
 }

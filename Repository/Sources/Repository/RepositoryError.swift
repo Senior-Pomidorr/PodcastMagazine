@@ -53,6 +53,7 @@ public extension Repository {
             case .createUserFail(let error): self = .createUserError(error)
             case .noUser: self = .noUser
             case .resetPasswordFail(let error): self = .resetPasswordFail(error)
+            case .unknown(let error): self = .unknown(error)
             }
         }
     }
