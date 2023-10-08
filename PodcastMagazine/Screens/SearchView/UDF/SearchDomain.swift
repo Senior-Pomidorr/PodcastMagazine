@@ -53,8 +53,8 @@ struct SearchDomain {
         case viewAppeared
         case _getTrendRequest
         case _getCategoryRequest
-        case _trendResponce(Repository.Response<FeedsResponse>)
-        case _categoryResponce(Repository.Response<CategoryResponse>)
+        case _trendResponse(Repository.Response<FeedsResponse>)
+        case _categoryResponse(Repository.Response<CategoryResponse>)
     }
     
     // MARK: - Dependencies
@@ -81,26 +81,26 @@ struct SearchDomain {
             
         case ._getTrendRequest:
             return provider.getFeedRequest(.trendingFeeds(max: 10))
-                .map(Action._trendResponce)
+                .map(Action._trendResponse)
                 .eraseToAnyPublisher()
             
         case ._getCategoryRequest:
             return provider.getCategoryRequest()
-                .map(Action._categoryResponce)
+                .map(Action._categoryResponse)
                 .eraseToAnyPublisher()
             
-        case let ._trendResponce(.success(result)):
+        case let ._trendResponse(.success(result)):
             state.searchScreenStatus = .none
             state.trendPodcasts = result.feeds
             
-        case let ._trendResponce(.failure(error)):
+        case let ._trendResponse(.failure(error)):
             state.searchScreenStatus = .error(error)
             
-        case let ._categoryResponce(.success(result)):
+        case let ._categoryResponse(.success(result)):
             state.searchScreenStatus = .none
             state.categories = result.feeds
             
-        case let ._categoryResponce(.failure(error)):
+        case let ._categoryResponse(.failure(error)):
             state.searchScreenStatus = .error(error)
         }
         
