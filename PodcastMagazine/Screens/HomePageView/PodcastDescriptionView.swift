@@ -101,6 +101,10 @@ struct PodcastDiscriptionView: View {
 //            print("Пришел id =", podcastID)
             hideTabBar = true
             store.send(.viewAppeared(podcastID))
+            hideTabBar = false
+        }
+        .onDisappear {
+            hideTabBar = false
         }
         .background(Color.white)
         .navigationTitle("Podcast")
