@@ -6,7 +6,7 @@
 //
 
 import XCTest
-import AuthorizationDomain
+import Validator
 
 final class ValidatorTests: XCTestCase {
 

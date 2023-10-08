@@ -150,6 +150,16 @@ final class LoginDomainTests: XCTestCase {
         XCTAssertEqual(state.alertText, "Hello, \(testUser.firstName)!")
     }
     
+    func test_reduceDismissAlert() {
+        state.isAlert = true
+        state.alertText = "Baz"
+        
+        _ = sut.reduce(&state, action: .dismissAlert)
+        
+        XCTAssertFalse(state.isAlert)
+        XCTAssertTrue(state.alertText.isEmpty)
+    }
+    
 }
 
 private extension LoginDomainTests {

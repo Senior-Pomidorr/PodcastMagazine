@@ -16,10 +16,12 @@ let package = Package(
         .library(name: "RootDomain", targets: ["RootDomain"]),
         .library(name: "LoginDomain", targets: ["LoginDomain"]),
         .library(name: "RegistrationDomain", targets: ["RegistrationDomain"]),
+        .library(name: "Validator", targets: ["Validator"]),
     ],
     dependencies: Dependencies.allCases.map(\.package),
     targets: [
         .target(name: "Models"),
+        .target(name: "Validator"),
         .target(
             name: "APIProvider",
             dependencies: [
@@ -53,6 +55,7 @@ let package = Package(
             dependencies: [
                 "Repository",
                 "Models",
+                "Validator",
                 Dependencies.SwiftUDF.target,
             ]),
         .target(
@@ -60,6 +63,7 @@ let package = Package(
             dependencies: [
                 "Repository",
                 "Models",
+                "Validator",
                 Dependencies.SwiftUDF.target,
                ]),
         .target(
@@ -85,7 +89,9 @@ let package = Package(
                 "Models",
                 "RealmProvider",
                 "RootDomain",
-                "LoginDomain"
+                "LoginDomain",
+                "RegistrationDomain",
+                "Validator",
             ]),
     ]
 )

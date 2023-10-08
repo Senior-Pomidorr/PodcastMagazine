@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct CredentialTextField: View {
+struct CredentialTextField: View, Equatable {
     private struct Drawing {
         static let textFieldHeight: CGFloat = 55
         static let animationDuration: Double = 0.2
@@ -20,6 +20,7 @@ struct CredentialTextField: View {
     let placeholder: String
     @Binding var text: String
     @State var isSecure = false
+    let isValid: Bool
     
     var body: some View {
         VStack(
@@ -40,7 +41,6 @@ struct CredentialTextField: View {
                     }
                 }
                 .frame(height: Drawing.textFieldHeight)
-                .textContentType(.emailAddress)
                 .autocorrectionDisabled(true)
                 .textInputAutocapitalization(.never)
                 .animation(
@@ -59,17 +59,35 @@ struct CredentialTextField: View {
             .clipShape(RoundedRectangle(cornerRadius: Drawing.cornerRadius))
             .overlay {
                 RoundedRectangle(cornerRadius: Drawing.cornerRadius)
-                    .stroke(Color.gray)
+                    .stroke(isValid ? .gray : .red)
             }
         }
+    }
+    
+    static func == (lhs: CredentialTextField, rhs: CredentialTextField) -> Bool {
+        lhs.label == rhs.label
+        && lhs.placeholder == rhs.placeholder
+        && lhs.text == rhs.text
+        && lhs.isSecure == rhs.isSecure
+        && lhs.isValid == rhs.isValid
     }
 }
 
 
 #Preview {
-    CredentialTextField(
-        label: "Label",
-        placeholder: "Placeholder",
-        text: .constant("")
-    )
+    VStack {
+        CredentialTextField(
+            label: "Label",
+            placeholder: "Placeholder",
+            text: .constant(""), 
+            isValid: true
+        )
+        CredentialTextField(
+            label: "Label",
+            placeholder: "Placeholder",
+            text: .constant("Invalid"),
+            isValid: false
+        )
+    }
+    .padding(.horizontal)
 }

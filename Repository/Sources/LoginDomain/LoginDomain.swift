@@ -10,6 +10,7 @@ import Repository
 import SwiftUDF
 import Combine
 import Models
+import Validator
 
 public struct LoginDomain: ReducerDomain {
     //MARK: - State
@@ -38,17 +39,17 @@ public struct LoginDomain: ReducerDomain {
         public init(
             email: String = .init(),
             password: String = .init(),
-            errorDescription: String = .init(),
+            alertText: String = .init(),
             isEmailValid: Bool = true,
             isPasswordValid: Bool = true,
-            isError: Bool = false
+            isAlert: Bool = false
         ) {
             self.email = email
             self.password = password
-            self.alertText = errorDescription
+            self.alertText = alertText
             self.isEmailValid = isEmailValid
             self.isPasswordValid = isPasswordValid
-            self.isAlert = isError
+            self.isAlert = isAlert
         }
     }
     
@@ -59,6 +60,7 @@ public struct LoginDomain: ReducerDomain {
         case loginButtonTap
         case _loginRequest
         case _loginResponse(Repository.Response<UserAccount>)
+        case dismissAlert
     }
     
     //MARK: - Dependencies
@@ -118,6 +120,10 @@ public struct LoginDomain: ReducerDomain {
         case let ._loginResponse(.failure(error)):
             state.isAlert = true
             state.alertText = error.errorDescription
+            
+        case .dismissAlert:
+            state.isAlert = false
+            state.alertText.removeAll(keepingCapacity: true)
         }
         return empty()
     }
@@ -128,6 +134,11 @@ public struct LoginDomain: ReducerDomain {
         reducer: Self(
             repository: .preview()
         )
+    )
+    
+    static let alertStore = Store(
+        state: Self.State(alertText: "Some alert text", isAlert: true),
+        reducer: Self(repository: .preview())
     )
     
     public static let liveStore = Store(

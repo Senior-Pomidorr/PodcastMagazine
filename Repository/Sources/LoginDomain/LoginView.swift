@@ -22,18 +22,23 @@ public struct LoginView: View {
             CredentialTextField(
                 label: Localized.emailTextFieldLabel,
                 placeholder: Localized.emailPlaceholder,
-                text: bindEmail()
+                text: bindEmail(), 
+                isValid: store.isEmailValid
             )
+            .textContentType(.emailAddress)
             CredentialTextField(
                 label: Localized.passwordTextFieldLabel,
                 placeholder: Localized.passwordPlaceholder,
                 text: bindPassword(),
-                isSecure: true
+                isSecure: true, 
+                isValid: store.isPasswordValid
             )
+            .textContentType(.password)
             BigBlueButton(
                 title: Localized.loginButtonTitle,
                 action: { store.send(.loginButtonTap) }
             )
+            .disabled(!store.isLoginButtonActive)
             Spacer()
             HStack {
                 Text(Localized.registrationLink)
@@ -47,6 +52,17 @@ public struct LoginView: View {
             }
         }
         .padding()
+        .alert(
+            "",
+            isPresented: bindAlert()
+        ) {
+            Button(role: .cancel, action: {}) {
+                Text("Cancel")
+            }
+        } message: {
+            Text(store.alertText)
+        }
+
     }
     
     //MARK: - init(_:)
@@ -73,6 +89,13 @@ public struct LoginView: View {
         )
     }
     
+    private func bindAlert() -> Binding<Bool> {
+        .init(
+            get: { store.isAlert },
+            set: { _ in }
+        )
+    }
+    
 }
 
 #Preview("Default") {
@@ -80,5 +103,5 @@ public struct LoginView: View {
 }
 
 #Preview("Error") {
-    LoginView(store: LoginDomain.previewStore, registerButtonTap: {})
+    LoginView(store: LoginDomain.alertStore, registerButtonTap: {})
 }
