@@ -41,6 +41,25 @@ public struct EpisodesResponse: Decodable {
         self.description = description
     }
     
+    enum CodingKeys: CodingKey {
+        case status
+        case liveItems
+        case items
+        case count
+        case max
+        case description
+    }
+    
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.status = try container.decode(String.self, forKey: .status)
+        self.liveItems = try container.decodeIfPresent([Episode].self, forKey: .liveItems)
+        self.items = try container.decodeIfPresent([Episode].self, forKey: .items) ?? []
+        self.count = try container.decode(Int.self, forKey: .count)
+        self.max = try container.decodeIfPresent(Int.self, forKey: .max)
+        self.description = try container.decode(String.self, forKey: .description)
+    }
+    
     public static let sample = Self(
         status: "true",
         liveItems: nil,
