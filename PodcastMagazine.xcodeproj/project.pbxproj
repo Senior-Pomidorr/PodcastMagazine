@@ -31,6 +31,7 @@
 		101E81BD2AD1FC8300E354C2 /* SmallAudioPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 101E81BC2AD1FC8200E354C2 /* SmallAudioPlayerView.swift */; };
 		101E81BF2AD20AD100E354C2 /* SmallPlayerDomain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 101E81BE2AD20AD100E354C2 /* SmallPlayerDomain.swift */; };
 		101E81C12AD2198E00E354C2 /* PlayListManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 101E81C02AD2198D00E354C2 /* PlayListManager.swift */; };
+		101E81C32AD2A4DE00E354C2 /* ObserverAudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 101E81C22AD2A4DE00E354C2 /* ObserverAudioPlayer.swift */; };
 		107B45D32AC97253003A9C65 /* BackgroundGradient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 107B45D22AC97253003A9C65 /* BackgroundGradient.swift */; };
 		107B45D52AC97692003A9C65 /* Color + ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 107B45D42AC97692003A9C65 /* Color + ext.swift */; };
 		107B45D72AC9BE18003A9C65 /* TextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 107B45D62AC9BE18003A9C65 /* TextView.swift */; };
@@ -126,6 +127,7 @@
 		101E81BC2AD1FC8200E354C2 /* SmallAudioPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmallAudioPlayerView.swift; sourceTree = "<group>"; };
 		101E81BE2AD20AD100E354C2 /* SmallPlayerDomain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmallPlayerDomain.swift; sourceTree = "<group>"; };
 		101E81C02AD2198D00E354C2 /* PlayListManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayListManager.swift; sourceTree = "<group>"; };
+		101E81C22AD2A4DE00E354C2 /* ObserverAudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObserverAudioPlayer.swift; sourceTree = "<group>"; };
 		107B45D22AC97253003A9C65 /* BackgroundGradient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundGradient.swift; sourceTree = "<group>"; };
 		107B45D42AC97692003A9C65 /* Color + ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color + ext.swift"; sourceTree = "<group>"; };
 		107B45D62AC9BE18003A9C65 /* TextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextView.swift; sourceTree = "<group>"; };
@@ -375,6 +377,7 @@
 				10ACA70C2ACF3AC40080E116 /* AudioManager.swift */,
 				3C75CDF32ACC8F270055DD97 /* ImagePicker.swift */,
 				101E81C02AD2198D00E354C2 /* PlayListManager.swift */,
+				101E81C22AD2A4DE00E354C2 /* ObserverAudioPlayer.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -684,6 +687,7 @@
 				10AA8E482AC5A9EF001FF853 /* SearchHScrollView.swift in Sources */,
 				3C2E6F622AD03661002A96CD /* CalendarView.swift in Sources */,
 				3CA3A2382ACC19A300103A58 /* TabBarPreferenceKey.swift in Sources */,
+				101E81C32AD2A4DE00E354C2 /* ObserverAudioPlayer.swift in Sources */,
 				0D0C9B052AC60BE3000A4C29 /* OnboardingData.swift in Sources */,
 				A17F6E922AC36D9600819964 /* HomePageHeaderView.swift in Sources */,
 				A15054572ACB1A50001B70F0 /* AllCategoryView.swift in Sources */,

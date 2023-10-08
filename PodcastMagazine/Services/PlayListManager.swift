@@ -30,6 +30,7 @@ class PlayListManager {
         guard let episodes = episodes else { return nil }
         guard indexCurrentEpisode < episodes.count - 1 else { return nil }
         let index = indexCurrentEpisode + 1
+        currentEpisode = episodes[index]
         return episodes[index]
     }
     
@@ -37,6 +38,7 @@ class PlayListManager {
         guard let episodes = episodes else { return nil }
         guard (indexCurrentEpisode - 1) >= 0 else { return nil }
         let index = indexCurrentEpisode - 1
+        currentEpisode = episodes[index]
         return episodes[index]
     }
     

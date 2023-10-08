@@ -9,9 +9,11 @@ import SwiftUI
 import LoadableImage
 
 struct SmallAudioPlayerView: View {
-    let urlImage = "https://www.theincomparable.com/imgs/logos/logo-batmanuniversity-3x.jpg?cache-buster=2019-06-11"
-    
-    
+    var title: String
+    var urlImage: String
+    var playButtonAction: () -> Void
+    var nextButtonAction: () -> Void
+    var previousButtonAction: () -> Void
     var isPlaying: Bool = false
     
     var body: some View {
@@ -26,26 +28,26 @@ struct SmallAudioPlayerView: View {
                     }
                 }
             
-            Text("Batman University")
+            Text(title)
                 .lineLimit(1)
                 .frame(maxWidth: .infinity)
             
             HStack {
                 
                 Button {
-                    
+                    previousButtonAction()
                 } label: {
                     Image(systemName: "backward.end")
                 }
                 Button {
-                    
+                    playButtonAction()
                 } label: {
                     Image(systemName: 
                             isPlaying ? "pause.circle" : "play.circle")
                         .font(.title)
                 }
                 Button {
-                    
+                    nextButtonAction()
                 } label: {
                     Image(systemName: "forward.end")
                 }
@@ -61,8 +63,8 @@ struct SmallAudioPlayerView: View {
         .padding(.horizontal)
     }
 }
-
-#Preview {
-    SmallAudioPlayerView()
-}
-
+//
+//#Preview {
+//    SmallAudioPlayerView()
+//}
+//

@@ -11,6 +11,7 @@ import Models
 
 struct PlayerView: View {
     @StateObject private var store: PlayerStore
+    @AppStorage("isShowingSmallPlayer") var isShowingSmallPlayer: Bool = true
     
     let timer = Timer
         .publish(every: 0.1, on: .main, in: .common)
@@ -46,9 +47,14 @@ struct PlayerView: View {
         }
         .onAppear {
             store.send(.onAppeared)
+            isShowingSmallPlayer = true
+            ObserverAudioPlayer.shared.isShowingSmallPlayer = false
         }
         .onReceive(timer) { _ in
             store.send(.updateSliderValue)
+        }
+        .onDisappear {
+            ObserverAudioPlayer.shared.isShowingSmallPlayer = true
         }
     }
     
