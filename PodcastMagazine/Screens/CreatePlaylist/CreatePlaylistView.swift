@@ -53,14 +53,14 @@ struct CreatePlaylistView: View {
                             .onSubmit {
                                 store.send(.getSearchRequest)
                             }
+                        
                         switch store.state.playlistStatus {
                         case .none:
-                            ForEach(store.state.randomEpisodes) {feed in
+                            ForEach(store.state.randomEpisodes) { feed in
                                 VStack(spacing: 16) {
                                     CreatePlaylistCells(image: feed.image, title: feed.title, author: feed.description)
                                 }
                             }
-                            
                         case let .error(error):
                             Text(error.localizedDescription)
                         case .loading:
