@@ -87,15 +87,25 @@ class AudioManager {
     /// автоматичести загружает по URL и отслеживает status
     /// так же добавляет item в AVPlayer
     /// - Returns: AnyPublisher<AVPlayerItem.Status, Never>
-    func playMedia(url: URL? = nil) -> AnyPublisher<AVPlayer.Status, Never> {
-        url.publisher
-            .map(AVAsset.init)
-            .map(playerWith(asset:))
-            .flatMap(replaceItem(in: player))
-            .removeDuplicates()
-            .receive(on: DispatchQueue.main)
-            .eraseToAnyPublisher()
-    }
+    func playMedia() -> AnyPublisher<AVPlayerItem.Status, Never> {
+            guard let url = url else {
+                return Just(.failed).eraseToAnyPublisher()
+            }
+            
+            let asset = AVAsset(url: url)
+            let playerItem = AVPlayerItem(
+                    asset: asset,
+                    automaticallyLoadedAssetKeys: [.tracks, .duration, .commonMetadata]
+                )
+            
+            player.replaceCurrentItem(with: playerItem)
+
+            return playerItem.publisher(for: \.status)
+                    .removeDuplicates()
+                    .receive(on: DispatchQueue.main)
+                    .eraseToAnyPublisher()
+        }
+
     
     func play() {
         player.play()
