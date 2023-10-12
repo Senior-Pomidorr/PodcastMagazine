@@ -17,5 +17,5 @@
 + [Alexander Rodionov](https://github.com/alexrodionby) (Тимлид команды)
 + [Ilia Shapovalov](https://github.com/ShapovalovIlya)
 + [Daniil Kulikovskiy](https://github.com/Senior-Pomidorr)
-+ [PashaGriDev](https://github.com/pashaGriDev)
++ [Pavel Gritskov](https://github.com/pashaGriDev)
 + [Vladislav Golyakov](https://github.com/dsm5e)
