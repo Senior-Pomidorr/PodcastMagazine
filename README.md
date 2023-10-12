@@ -9,7 +9,7 @@
 * Сохранение: Realm
 * Проект разбит на SPM-модули
 ---
-<img width="1122" alt="Снимок экрана 2023-09-08 в 19 49 54" src="https://github.com/Senior-Pomidorr/PodcastMagazine/blob/develop/PodcastMagazine/Resources/Assets.xcassets/3%20cut.png">
+<img width="1122" alt="Снимок экрана 2023-09-08 в 19 49 54" src="https://github.com/alexrodionby/PodcastMagazine/blob/develop/PodcastMagazine/Resources/Assets.xcassets/3%20cut.png">
 
 ---
 
